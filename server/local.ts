@@ -1,11 +1,15 @@
 import { createServer } from 'node:http';
-import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync, existsSync, lstatSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { randomBytes, timingSafeEqual } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { createDatabase } from './database.js';
 import { HearingUnion } from './domain.js';
 import { createHearingMcp } from './mcp.js';
+import { consumeRateLimit } from './operations.js';
+import { renderPublicPage } from './pages.js';
+import { EventService } from './events.js';
+import type { WebhookTransport } from './webhook.js';
 
 export type LocalAuth = { ownerSubject: string; accounts: { name: string; subject: string; token: string }[] };
 
@@ -19,22 +23,43 @@ function localAuth(path: string): LocalAuth {
     };
     writeFileSync(path, JSON.stringify(data, null, 2), { mode: 0o600, flag: 'wx' });
   }
+  const stats = lstatSync(path);
+  if (!stats.isFile() || (stats.mode & 0o077) !== 0) throw new Error('Local authentication file must be a regular file readable only by its owner');
   const value = JSON.parse(readFileSync(path, 'utf8')) as LocalAuth;
   if (!value.ownerSubject || !Array.isArray(value.accounts) || value.accounts.length < 2 || value.accounts.some(a => !a.subject || !a.name || !/^[0-9a-f]{64}$/.test(a.token))) {
     throw new Error('Invalid local development authentication configuration');
   }
-  if (new Set(value.accounts.map(a => a.token)).size !== value.accounts.length) throw new Error('Duplicate local tokens');
+  if (new Set(value.accounts.map(a => a.token)).size !== value.accounts.length || new Set(value.accounts.map(a => a.subject)).size !== value.accounts.length) throw new Error('Duplicate local identities');
+  if (!value.accounts.some(account => account.subject === value.ownerSubject)) throw new Error('Configured local owner account is missing');
   return value;
 }
 
-export async function startLocal(options: { dbPath?: string; authPath?: string; port?: number } = {}) {
+/** Local persistent development keys; production secrets must come from the host. */
+function localSecret(path: string): Buffer {
+  if (!existsSync(path)) writeFileSync(path, randomBytes(32), {mode:0o600,flag:'wx'});
+  const stat = lstatSync(path);
+  if (!stat.isFile() || (stat.mode & 0o077) !== 0) throw new Error('Local secret must be an owner-only regular file.');
+  const key = readFileSync(path); if (key.length !== 32) throw new Error('Invalid local secret.');
+  return key;
+}
+
+export async function startLocal(options: { dbPath?: string; authPath?: string; port?: number; publisherName?: string; supportUrl?: string; eventKeyPath?:string; serviceTokenPath?:string; webhook?:WebhookTransport } = {}) {
   const dbPath = options.dbPath ?? resolve('.local/hearing-union.sqlite');
   const authPath = options.authPath ?? resolve('.local/auth.json');
   mkdirSync(dirname(dbPath), { recursive: true });
   const auth = localAuth(authPath);
+  const pageConfig = { publisherName: options.publisherName ?? process.env.PUBLISHER_NAME, supportUrl: options.supportUrl ?? process.env.SUPPORT_URL };
+  renderPublicPage('/support', pageConfig); // Reject invalid configuration at startup.
   const db = createDatabase(dbPath);
   const domain = new HearingUnion(db, { ownerSubject: auth.ownerSubject });
-  const handler = createHearingMcp(domain);
+  const eventKeyPath = options.eventKeyPath ?? `${authPath}.event-key`;
+  if (!existsSync(eventKeyPath) && db.prepare("SELECT 1 FROM event_subscriptions WHERE secret_ciphertext<>'' OR old_secret_ciphertext IS NOT NULL LIMIT 1").get()) {
+    db.close(); throw new Error('Existing encrypted subscriptions require their original event key. Restore the key before startup.');
+  }
+  const events = new EventService(db,{encryptionKey:localSecret(eventKeyPath),webhook:options.webhook});
+  try { await events.verifyEncryptionKey(); } catch { db.close(); throw new Error('Cannot decrypt stored subscriptions. Restore the matching event key.'); }
+  const drainToken = localSecret(options.serviceTokenPath ?? `${authPath}.drain-token`).toString('hex');
+  const handler = createHearingMcp(domain,events);
   const server = createServer(async (incoming, outgoing) => {
     const reply = (status: number, body: unknown) => {
       outgoing.writeHead(status, { 'content-type': 'application/json', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' });
@@ -48,11 +73,30 @@ export async function startLocal(options: { dbPath?: string; authPath?: string; 
       if (origin && origin !== `http://${host}`) return reply(403, { error: 'Forbidden origin' });
       const url = new URL(incoming.url ?? '/', `http://${host}`);
       if (url.pathname === '/health' && incoming.method === 'GET') return reply(200, { status: 'ok', mode: 'local-development' });
+      if (incoming.method === 'GET') {
+        const page = renderPublicPage(url.pathname, pageConfig);
+        if (page !== null) {
+          outgoing.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff', 'referrer-policy': 'no-referrer', 'content-security-policy': "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'" });
+          outgoing.end(page);
+          return;
+        }
+      }
+      if (url.pathname === '/internal/deliveries/drain') {
+        if (incoming.method !== 'POST') return reply(405,{error:'POST required'});
+        const supplied = /^Bearer ([0-9a-f]{64})$/.exec(incoming.headers.authorization ?? '')?.[1];
+        if (!supplied || !timingSafeEqual(Buffer.from(supplied),Buffer.from(drainToken))) return reply(401,{error:'Service authentication required'});
+        if (!consumeRateLimit(db,'service:deliveries',{limit:12}).allowed) return reply(429,{error:'Too many requests'});
+        return reply(200,await events.drain(Date.now(),1));
+      }
       if (url.pathname !== '/mcp') return reply(404, { error: 'Not found' });
       if (incoming.method !== 'POST') return reply(405, { error: 'POST required' });
       const token = /^Bearer ([0-9a-f]{64})$/.exec(incoming.headers.authorization ?? '')?.[1];
       const account = token && auth.accounts.find(a => timingSafeEqual(Buffer.from(a.token), Buffer.from(token)));
       if (!account) return reply(401, { error: 'Authentication required' });
+      const rate = consumeRateLimit(db, account.subject);
+      if (!rate.allowed) { outgoing.setHeader('retry-after', rate.retryAfterSeconds); return reply(429, { error: 'Too many requests' }); }
+      const contentLength = incoming.headers['content-length'];
+      if (contentLength && (!/^\d+$/.test(contentLength) || Number(contentLength) > 65536)) return reply(413, { error: 'Request too large' });
       const chunks: Buffer[] = [];
       let size = 0;
       for await (const chunk of incoming) {
@@ -77,6 +121,10 @@ export async function startLocal(options: { dbPath?: string; authPath?: string; 
       reply(500, { error: 'Internal error' });
     }
   });
+  server.requestTimeout = 15000;
+  server.headersTimeout = 10000;
+  server.keepAliveTimeout = 5000;
+  server.setTimeout(20000, socket => socket.destroy());
   await new Promise<void>((accept, reject) => {
     server.once('error', reject);
     server.listen(options.port ?? Number(process.env.PORT ?? 3000), '127.0.0.1', accept);

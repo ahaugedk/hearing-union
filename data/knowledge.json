@@ -1,0 +1,541 @@
+{
+  "nodes": [
+    {
+      "slug": "foreningen",
+      "parentSlug": null,
+      "title": "Om Høreforeningen",
+      "summary": "Høreforeningen arbejder landsdækkende for mennesker med høreproblemer og øresygdomme. Arbejdet omfatter politisk interessevaretagelse, vidensformidling og fællesskaber for berørte og pårørende.",
+      "keywords": [
+        "forening",
+        "hørelse",
+        "fællesskab"
+      ],
+      "relatedSlugs": [
+        "raadgivning",
+        "aktiviteter"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/om-hoereforeningen",
+          "title": "Om Høreforeningen"
+        }
+      ]
+    },
+    {
+      "slug": "medlemskab",
+      "parentSlug": "foreningen",
+      "title": "Medlemskab",
+      "summary": "Foreningen tilbyder medlemskab til mennesker med høreudfordringer, pårørende og andre, der ønsker at støtte arbejdet. Medlemstyper og adgang til de enkelte fordele fremgår af kilden; indmeldelse sker på foreningens hjemmeside.",
+      "keywords": [
+        "medlem",
+        "medlemsfordele",
+        "indmeldelse"
+      ],
+      "relatedSlugs": [
+        "raadgivning"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/bliv-medlem-hoereforeningen",
+          "title": "Medlemskab"
+        }
+      ]
+    },
+    {
+      "slug": "lokalafdelinger",
+      "parentSlug": "foreningen",
+      "title": "Find en lokalafdeling",
+      "summary": "Oversigten samler Høreforeningens lokalafdelinger efter region. Afdelingerne arrangerer blandt andet foredrag og sociale aktiviteter; medlemmer kan også deltage i andre afdelingers aktiviteter.",
+      "keywords": [
+        "lokal",
+        "region",
+        "fællesskab"
+      ],
+      "relatedSlugs": [
+        "aktiviteter"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/lokalafdelinger",
+          "title": "Find en lokalafdeling"
+        }
+      ]
+    },
+    {
+      "slug": "kontakt",
+      "parentSlug": "foreningen",
+      "title": "Find den rette kontakt",
+      "summary": "Kontaktsiden viser aktuelle kontaktveje til sekretariat, medlemsafdeling, rådgivning og Tolkeformidlingen. Brug kildens ajourførte oplysninger frem for at regne med tidligere gemte telefonnumre eller åbningstider.",
+      "keywords": [
+        "kontakt",
+        "sekretariat",
+        "medlemsafdeling"
+      ],
+      "relatedSlugs": [
+        "raadgivning",
+        "skrivetolk"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/kontakt-os",
+          "title": "Find den rette kontakt"
+        }
+      ]
+    },
+    {
+      "slug": "raadgivning",
+      "parentSlug": null,
+      "title": "Rådgivning og vejledning",
+      "summary": "Medlemmer kan få hjælp og vejledning om egne eller pårørendes høreudfordringer. Høreforeningen samler rådgivning til voksne, unge og børnefamilier og kan hjælpe med at finde vej i systemet.",
+      "keywords": [
+        "rådgivning",
+        "hjælp",
+        "vejledning"
+      ],
+      "relatedSlugs": [
+        "medlemskab",
+        "hoereproblemer"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/hjaelp-til-dig/hoereforeningens-raadgivning",
+          "title": "Rådgivning og vejledning"
+        }
+      ]
+    },
+    {
+      "slug": "raadgivning-voksne",
+      "parentSlug": "raadgivning",
+      "title": "Rådgivning til voksne",
+      "summary": "Voksne medlemmer kan søge rådgivning hos en hørekonsulent, psykolog og socialrådgiver. Tilbuddet handler om hverdagen med høreudfordringer og supplerer behandling og vejledning fra høreklinik og kommunikationscenter.",
+      "keywords": [
+        "voksne",
+        "socialrådgiver",
+        "psykolog"
+      ],
+      "relatedSlugs": [
+        "hoeretab"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/hjaelp-til-dig/hoereforeningens-raadgivning/raadgivning-til-voksne",
+          "title": "Rådgivning til voksne"
+        }
+      ]
+    },
+    {
+      "slug": "raadgivning-unge",
+      "parentSlug": "raadgivning",
+      "title": "Rådgivning til unge",
+      "summary": "Unge med høreudfordringer kan få rådgivning om hverdagen samt støtte på studie og job. Kilden beskriver rådgivernes forskellige roller og de gældende kontaktmuligheder og medlemsvilkår.",
+      "keywords": [
+        "unge",
+        "uddannelse",
+        "arbejde"
+      ],
+      "relatedSlugs": [
+        "ungeaktiviteter"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/hjaelp-til-dig/hoereforeningens-raadgivning/raadgivning-til-unge",
+          "title": "Rådgivning til unge"
+        }
+      ]
+    },
+    {
+      "slug": "raadgivning-boernefamilier",
+      "parentSlug": "raadgivning",
+      "title": "Rådgivning til børnefamilier",
+      "summary": "Forældre og andre pårørende kan finde rådgivning om familieliv, støtteordninger, kommunikation og barnets høremæssige udvikling. Rådgivningen supplerer den faglige indsats hos blandt andet audiologisk afdeling og kommunal tale-hørekonsulent.",
+      "keywords": [
+        "børn",
+        "familie",
+        "pårørende"
+      ],
+      "relatedSlugs": [
+        "hoereapparater"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/hjaelp-til-dig/hoereforeningens-raadgivning/raadgivning-til-boernefamilier",
+          "title": "Rådgivning til børnefamilier"
+        }
+      ]
+    },
+    {
+      "slug": "bisidder",
+      "parentSlug": "raadgivning",
+      "title": "Støtte fra en bisidder",
+      "summary": "Foreningens medlemmer kan få støtte fra en frivillig bisidder til at forberede og skabe overblik over møder. Bisidderen overtager ikke sagen eller beslutningerne og er ikke en erstatning for juridisk eller socialfaglig rådgivning.",
+      "keywords": [
+        "bisidder",
+        "møder",
+        "myndigheder"
+      ],
+      "relatedSlugs": [
+        "medlemskab"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/hjaelp-til-dig/bestil-bisidder",
+          "title": "Støtte fra en bisidder"
+        }
+      ]
+    },
+    {
+      "slug": "hoereproblemer",
+      "parentSlug": null,
+      "title": "Viden om høreproblemer",
+      "summary": "Høreforeningens oversigt forklarer hørelsens funktion og leder videre til viden om blandt andet høretab, tinnitus, lydfølsomhed og skelnetab. Oplysningerne er generel viden og kan ikke afgøre en persons diagnose.",
+      "keywords": [
+        "høreproblemer",
+        "hørelse",
+        "øre"
+      ],
+      "relatedSlugs": [
+        "raadgivning",
+        "hjaelpemidler"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/viden/hoereproblemer",
+          "title": "Viden om høreproblemer"
+        }
+      ]
+    },
+    {
+      "slug": "tinnitus",
+      "parentSlug": "hoereproblemer",
+      "title": "Tinnitus",
+      "summary": "Tinnitus beskrives som oplevede lyde uden en ydre lydkilde, eksempelvis ringen eller susen. Kilden gennemgår mulige sammenhænge, påvirkning af hverdagen og veje til faglig hjælp; resuméet stiller ikke en diagnose.",
+      "keywords": [
+        "tinnitus",
+        "susen",
+        "ringen"
+      ],
+      "relatedSlugs": [
+        "raadgivning-voksne",
+        "hoeretab"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/viden/hoereproblemer/tinnitus",
+          "title": "Tinnitus"
+        }
+      ]
+    },
+    {
+      "slug": "lydfoelsomhed",
+      "parentSlug": "hoereproblemer",
+      "title": "Lydfølsomhed",
+      "summary": "Ved lydfølsomhed kan almindelige hverdagslyde opleves som ubehagelige eller overvældende. Høreforeningen beskriver tilstanden og dens betydning i hverdagen; individuelle problemer bør vurderes gennem relevant faglig rådgivning.",
+      "keywords": [
+        "lydfølsomhed",
+        "hyperakusis",
+        "lyd"
+      ],
+      "relatedSlugs": [
+        "raadgivning-voksne"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/viden/hoereproblemer/lydfoelsomhed",
+          "title": "Lydfølsomhed"
+        }
+      ]
+    },
+    {
+      "slug": "hoeretab",
+      "parentSlug": "hoereproblemer",
+      "title": "Høretab",
+      "summary": "Høretab betyder, at hørelsen er svækket, og kan have forskellige årsager. Kilden beskriver blandt andet vanskeligheder med samtaler og baggrundsstøj; en konkret vurdering kræver en høreundersøgelse frem for konklusion ud fra et resumé.",
+      "keywords": [
+        "høretab",
+        "hørenedsættelse",
+        "høreundersøgelse"
+      ],
+      "relatedSlugs": [
+        "hoereapparater",
+        "raadgivning"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/viden/hoereproblemer/hoeretab",
+          "title": "Høretab"
+        }
+      ]
+    },
+    {
+      "slug": "skelnetab",
+      "parentSlug": "hoereproblemer",
+      "title": "Skelnetab",
+      "summary": "Skelnetab handler om vanskeligheder med at genkende og adskille sproglyde, selv om lydene kan høres. Kilden forklarer, hvorfor højere lydstyrke ikke nødvendigvis løser taleproblemer, og beskriver høreprøve og kommunikation som relevante emner.",
+      "keywords": [
+        "skelnetab",
+        "taleforståelse",
+        "kommunikation"
+      ],
+      "relatedSlugs": [
+        "hoereapparater"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/viden/hoereproblemer/skelnetab",
+          "title": "Skelnetab"
+        }
+      ]
+    },
+    {
+      "slug": "forebyggelse",
+      "parentSlug": "hoereproblemer",
+      "title": "Forebyggelse af høreskader",
+      "summary": "Høreforeningens forebyggelsessider samler viden om kraftig lyd, lyttevaner og beskyttelse af hørelsen. Der findes også undervisnings- og informationsmaterialer til skoler og ungdomsuddannelser.",
+      "keywords": [
+        "forebyggelse",
+        "støj",
+        "lyttevaner"
+      ],
+      "relatedSlugs": [
+        "tinnitus"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/viden/forebyg-hoereskader",
+          "title": "Forebyggelse af høreskader"
+        }
+      ]
+    },
+    {
+      "slug": "hjaelpemidler",
+      "parentSlug": null,
+      "title": "Høreapparater og anden høreteknologi",
+      "summary": "Oversigten introducerer høreapparater, benforankret høreteknologi og cochlear implant samt praktiske emner. Valg af løsning afhænger af den enkelte situation og bør drøftes med relevante fagpersoner.",
+      "keywords": [
+        "hjælpemidler",
+        "høreteknologi",
+        "CI"
+      ],
+      "relatedSlugs": [
+        "hoeretab",
+        "raadgivning"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/viden/hoereapparater-ci",
+          "title": "Høreapparater og anden høreteknologi"
+        }
+      ]
+    },
+    {
+      "slug": "hoereapparater",
+      "parentSlug": "hjaelpemidler",
+      "title": "Høreapparater",
+      "summary": "Kilden gennemgår typer af høreapparater og praktiske overvejelser ved valg og brug. Høreapparatet skal tilpasses den enkeltes behov i dialog med høreklinikken; resuméet anbefaler ikke et bestemt apparat.",
+      "keywords": [
+        "høreapparat",
+        "høreklinik",
+        "tilpasning"
+      ],
+      "relatedSlugs": [
+        "skelnetab",
+        "hoeretab"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/viden/hoereapparater-ci/hoereapparater",
+          "title": "Høreapparater"
+        }
+      ]
+    },
+    {
+      "slug": "cochlear-implant",
+      "parentSlug": "hjaelpemidler",
+      "title": "Cochlear implant",
+      "summary": "Et cochlear implant har en udvendig og en indopereret del og formidler lyd som elektriske impulser til hørenerven. Kilden beskriver teknologien og henviser til forløb for børn og voksne; egnethed kræver faglig udredning.",
+      "keywords": [
+        "cochlear implant",
+        "CI",
+        "implantat"
+      ],
+      "relatedSlugs": [
+        "hoeretab"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/viden/hoereapparater-ci/cochlear-implant",
+          "title": "Cochlear implant"
+        }
+      ]
+    },
+    {
+      "slug": "hoeretekniske-hjaelpemidler",
+      "parentSlug": "hjaelpemidler",
+      "title": "Høretekniske hjælpemidler",
+      "summary": "Ud over høreapparater findes blandt andet mikrofonløsninger, teleslynger, særlige alarmer og TV-udstyr. Kilden beskriver anvendelserne og peger på kommunikationscentret som indgang til behovsvurdering og vejledning om ansøgning.",
+      "keywords": [
+        "teleslynge",
+        "mikrofon",
+        "alarm",
+        "TV-boks"
+      ],
+      "relatedSlugs": [
+        "raadgivning"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/hjaelp-til-dig/hjaelpemidler/hoeretekniske-hjaelpemidler",
+          "title": "Høretekniske hjælpemidler"
+        }
+      ]
+    },
+    {
+      "slug": "skrivetolk",
+      "parentSlug": "hjaelpemidler",
+      "title": "Skrivetolkning",
+      "summary": "En skrivetolk gengiver det talte på en skærm, så brugeren kan følge samtaler eller møder. Kilden forklarer bestillingsvejen gennem Tolkeformidlingen og Tolkeplan samt hensyn til planlægning; læs aktuelle regler og vilkår hos foreningen.",
+      "keywords": [
+        "skrivetolk",
+        "tekst",
+        "tolkning"
+      ],
+      "relatedSlugs": [
+        "kontakt"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/hjaelp-til-dig/bestil-skrivetolk",
+          "title": "Skrivetolkning"
+        }
+      ]
+    },
+    {
+      "slug": "aktiviteter",
+      "parentSlug": null,
+      "title": "Aktiviteter og fællesskaber",
+      "summary": "Aktivitetskalenderen samler blandt andet foredrag, kurser, webinarer og sociale arrangementer. Den kan filtreres efter kategori og region, herunder online. Brug kalenderens aktuelle opslag; denne videnspost opretter ikke tilmeldinger i hjemmesidens system.",
+      "keywords": [
+        "aktiviteter",
+        "foredrag",
+        "webinar",
+        "kalender"
+      ],
+      "relatedSlugs": [
+        "lokalafdelinger",
+        "netvaerksgrupper"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/aktiviteter",
+          "title": "Aktiviteter og fællesskaber"
+        }
+      ]
+    },
+    {
+      "slug": "netvaerksgrupper",
+      "parentSlug": "aktiviteter",
+      "title": "Netværksgrupper",
+      "summary": "Netværksgrupper giver mulighed for at udveksle erfaringer med andre med høreudfordringer. Kilden samler foreningens medlemsgrupper og andre relevante netværk samt beskriver, hvordan man kan finde en gruppe.",
+      "keywords": [
+        "netværk",
+        "erfaringer",
+        "fællesskab"
+      ],
+      "relatedSlugs": [
+        "medlemskab"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/hjaelp-til-dig/netvaerksgrupper",
+          "title": "Netværksgrupper"
+        }
+      ]
+    },
+    {
+      "slug": "ungeaktiviteter",
+      "parentSlug": "aktiviteter",
+      "title": "Aktiviteter for unge",
+      "summary": "Høreforeningen beskriver fællesskaber for unge med høreudfordringer, herunder ungearrangementer og ungdomsudvalgets arbejde. Find kommende datoer og gældende deltagervilkår i den aktuelle aktivitetskalender frem for ældre datoer på oversigtssiden.",
+      "keywords": [
+        "unge",
+        "ungdom",
+        "fællesskab"
+      ],
+      "relatedSlugs": [
+        "raadgivning-unge"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/viden/ung-med-hoereudfordringer/arrangementer-unge-med-hoereudfordringer",
+          "title": "Aktiviteter for unge"
+        }
+      ]
+    },
+    {
+      "slug": "frivillig",
+      "parentSlug": "aktiviteter",
+      "title": "Bliv frivillig",
+      "summary": "Frivillige kan blandt andet bidrage ved lokale aktiviteter, som bisidder, som unge- eller høreguide eller i et udvalg. Kilden beskriver rollerne og den aktuelle vej til at høre mere om opgaverne.",
+      "keywords": [
+        "frivillig",
+        "bidrag",
+        "lokalafdeling"
+      ],
+      "relatedSlugs": [
+        "bisidder",
+        "foreningen"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/vaer-med-goer-forskel/bliv-frivillig-hoereforeningen",
+          "title": "Bliv frivillig"
+        }
+      ]
+    },
+    {
+      "slug": "nyhedsbrev",
+      "parentSlug": "aktiviteter",
+      "title": "Foreningens nyhedsbrev",
+      "summary": "Nyhedsbrevssiden tilbyder tilmelding til e-mails med viden, nyheder og aktiviteter. Den beskriver samtykke og afmelding. Tilmelding foregår på foreningens hjemmeside og er adskilt fra appens eventabonnementer.",
+      "keywords": [
+        "nyhedsbrev",
+        "nyheder",
+        "e-mail"
+      ],
+      "relatedSlugs": [
+        "foreningen"
+      ],
+      "verifiedAt": "2026-10-23T14:32:19.639Z",
+      "sources": [
+        {
+          "url": "https://hoereforeningen.dk/aktuelt/tilmeld-dig-vores-nyhedsbrev",
+          "title": "Foreningens nyhedsbrev"
+        }
+      ]
+    }
+  ]
+}

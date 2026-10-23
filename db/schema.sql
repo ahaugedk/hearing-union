@@ -77,6 +77,9 @@ CREATE TABLE IF NOT EXISTS admin_audit (
  action TEXT NOT NULL, target_id TEXT NOT NULL, version INTEGER, created_at INTEGER NOT NULL
 );
 CREATE TABLE IF NOT EXISTS usage_daily (
- date TEXT NOT NULL, tool TEXT NOT NULL, result TEXT NOT NULL, count INTEGER NOT NULL DEFAULT 0,
- PRIMARY KEY(date,tool,result)
+ date TEXT NOT NULL, tool TEXT NOT NULL, outcome TEXT NOT NULL,
+ action TEXT NOT NULL CHECK(action IN ('call','search_result','direct_lookup','tree_result')),
+ topic_id TEXT NOT NULL DEFAULT '', count INTEGER NOT NULL DEFAULT 0 CHECK(count>=0),
+ PRIMARY KEY(date,tool,outcome,action,topic_id),
+ CHECK((action='call' AND topic_id='') OR (action<>'call' AND topic_id<>''))
 );

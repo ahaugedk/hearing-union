@@ -4,7 +4,22 @@ En genbrugelig arbejdsgang fra produktretning og roadmap til reviewet, integrere
 
 ## Projektets udviklingsplan
 
-[Roadmappet](docs/roadmap/index.md) er indgangen til Høreforeningens ChatGPT-app. Planen har særskilt vision, brugerforløb og faseinddelt implementering; den beskriver planlagt arbejde, ikke et leveret system eller igangsat orkestrering.
+[Roadmappet](docs/roadmap/index.md) er indgangen til Høreforeningens ChatGPT-app. Planen har særskilt vision, brugerforløb og faseinddelt implementering; den beskriver planlagt arbejde, ikke et fuldt leveret system.
+
+## Lokal udvikling af Høreforeningens app
+
+Kræver Node.js 24 eller nyere samt Python 3.9+ til dokumentkontrollen. Kør fra projektroden:
+
+```sh
+npm ci
+npm run build
+npm run smoke
+npm run dev
+```
+
+Det lokale MCP-endpoint er `POST /mcp` på loopback, og `GET /health` viser udviklingsstatus. Første opstart opretter SQLite-database og tilfældige lokale identitetsnøgler i den ignorerede `.local/`-mappe. Smoke bruger sin egen midlertidige database og sletter den igen. Nøglerne i `.local/auth.json` bruges som Bearer-token af en lokal MCP-klient; del eller commit dem aldrig.
+
+Den lokale server har tre syntetiske konti: ejer og to brugere. Den er et udviklingsmiljø, ikke Sites-login eller en deploymentklar server. Sites-deployment er udskudt efter bestilling; faktisk ChatGPT-forbindelse, host-identitet og eventlevering valideres senere. [Projektprofilen](docs/drift/projektprofil.md) ejer de gældende kommandoer og afgrænsninger.
 
 ## Pak ud i et nyt projekt
 
@@ -16,7 +31,7 @@ En genbrugelig arbejdsgang fra produktretning og roadmap til reviewet, integrere
 
     python3 scripts/check_okf.py
 
-Pakken starter ingen agenter, timere, services eller reset. Den indeholder ingen projektkode og er ikke et færdigt softwaresystem. Produktets konkrete kerneforløb og kommandoer skal fastlægges før udviklingsleverancer.
+Den oprindelige startpakke starter ingen agenter, timere eller reset. Projektets lokale udviklingsserver startes særskilt som beskrevet ovenfor; roadmappets fulde produkt er endnu ikke leveret.
 
 ## Det følger med
 

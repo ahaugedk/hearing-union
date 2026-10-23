@@ -11,19 +11,19 @@ Profilen beskriver det tilgængelige cloud-miljø. Produktets runtime er endnu i
 | Felt | Faktisk værdi |
 |---|---|
 | Projektnavn og produktejer | Høreforeningens ChatGPT-app; Anders |
-| Produktfase | Før første produktions-v1; kun dokumentation og dokumentkontrol er implementeret |
+| Produktfase | Før første produktions-v1; lokalt database- og MCP-fundament implementeret og smoke-valideret; fuld MVP er ikke leveret |
 | Kildekode og integrationsgren | ahaugedk/hearing-union; main. HTTPS Git-læsning virker; push er ikke afprøvet |
 | Orkestrator, arbejder- og reviewværktøjer | `/root`; navngivne underagenter til afgrænset arbejde og uafhængigt review |
 | Arbejdsmapper, grenform og miljøejere | `/workspace/hearing-union`, ejet af `/root`; denne cloud-task er isoleret. Brug eksisterende checkout, og opret kun worktree ved udtrykkelig bestilling. Parallelle skrivere kræver adskilte ejergrænser og grene |
 | Adskilte porte, data og samtidige miljøer | Ikke udfyldt |
-| Statisk kontrol eller build | `python3 scripts/check_okf.py` fra projektroden; Python 3.9+ uden eksterne pakker. Miljøet har Python 3.12, Node 24 og npm 11 |
-| Opstart med aktuel kode | Ingen produktservice findes endnu. Sites-starter og deploymentadgang er ikke tilgængelige i denne session |
-| Smoke-kommando mod kørende miljø | Ikke fastlagt før platformforsøget; dokumentkontrol validerer ikke login, MCP eller produktadfærd |
-| Mindste kerneforløb og normale indgange | Ikke udfyldt |
+| Statisk kontrol eller build | `npm ci`, `npm run build` og `python3 scripts/check_okf.py` fra projektroden. Node 24+; Python 3.9+ til dokumentkontrol |
+| Opstart med aktuel kode | `npm run dev` fra projektroden; lokal Node/SQLite-adapter, kun 127.0.0.1. Sites-deployment er udskudt |
+| Smoke-kommando mod kørende miljø | `npm run smoke` starter eget lokalt miljø og afprøver autentificeret MCP, foredragstilmelding og genfinding efter genstart. Validerer ikke Sites-login eller faktisk ChatGPT-forbindelse |
+| Mindste kerneforløb og normale indgange | Lokal Bearer-identitet, ejer publicerer foredrag, bruger tilmelder gennem MCP og genfinder efter genstart; anden konto ser ingen af tilmeldingerne |
 | Kerneflader og relevant mobilbredde | Ikke udfyldt; 390 px er et muligt udgangspunkt |
-| Browser til visuel kontrol | Ikke udfyldt |
+| Browser til visuel kontrol | Chromium findes, men headless screenshotforsøg i cloud-miljøet timed out. Visuel MCP App-kontrol og faktisk ChatGPT-host er endnu ikke valideret |
 | Særskilt dev-reset og genopbygning | Ikke udfyldt |
-| Diagnose og midlertidige artefakter | Ikke udfyldt; uden for versionerede docs |
+| Diagnose og midlertidige artefakter | `.local/` til lokal database og syntetiske identitetsnøgler; smoke bruger midlertidig mappe uden for checkout. Ingen secrets eller persondata i logs |
 | Forbrugspuljer og aflæsningsvej | Denne sessions værktøjer er tilgængelige; forbrug, rest og nulstillingstid kan ikke aflæses. Ingen ekstra puljer aktiveres på antagelser |
 | Puljeprioritet, reserver og pausegrænser | Ikke udfyldt |
 | Deployment og driftsansvar | Mål: OpenAI Sites efter platformkontrakten. Ingen Sites-/automationsværktøjer er eksponeret i denne session; faktisk deployment og timegenoptagelse er ikke verificeret |

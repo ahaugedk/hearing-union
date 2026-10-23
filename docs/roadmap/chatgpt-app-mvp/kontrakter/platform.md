@@ -36,3 +36,9 @@ Platformdetaljer skal genkontrolleres ved implementering; dokumentationen ændre
 - [OpenAI MCP Extensions: implementeringsvejledning](https://github.com/openai/mcp-extensions/blob/main/AGENTS.md)
 
 Sites-starterens aktuelle instruktioner for MCP, identitet, D1-migrationer og ubemandede opdateringer læses før de relevante faser. Der antages ikke yderligere hostingfunktioner ud over det, der er verificeret i denne afprøvning.
+
+## Aktuelle forudsætninger for forsøget
+
+Det officielle [MCP Extensions-grundlag](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md) beskriver `server/discover` og protokolversionen, men fastlægger ikke Sites-login, hostingmanifest eller ubemandet eventlevering. Repositoryets README henviser til Plugin Creator som byggeindgang; den funktion er ikke tilgængelig i den aktuelle session. Ingen identitetsheader eller manifeststruktur må udledes alene af planens forslag.
+
+De officielle platformkilder på `developers.openai.com` afvises aktuelt af cloud-miljøets netværksproxy med CONNECT 403. Domæneadgang og Sites-starter/deploymentværktøjer er nødvendige for det faktiske forsøg. Arbejdsoversigten ejer næste handling; ingen af forsøgene ovenfor er gennemført.

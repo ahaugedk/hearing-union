@@ -12,7 +12,7 @@ role: "implementation"
 
 ## Eksisterende afsæt
 
-Projektmappen indeholder planlægningsmateriale og den genbrugelige OKF-arbejdsgang. Der er ingen produktkode, database, hostingmanifest, implementeret login eller verificeret MCP-forbindelse. Ved denne dokumentoverførsel er mappen ikke et Git-repository. Ingen fase nedenfor er leveret.
+Projektmappen indeholder planlægningsmateriale og den genbrugelige OKF-arbejdsgang. Der er ingen produktkode, database, hostingmanifest, implementeret login eller verificeret MCP-forbindelse. Projektet ligger nu i Git-repositoriet `ahaugedk/hearing-union`; `main` er integrationsgren. Ingen fase nedenfor er leveret.
 
 Før udviklingsbestilling konkretiseres projektprofil, procesmandat, integrationsvej og miljøansvar efter [ibrugtagningen](../../ibrugtagning.md). Teknisk platformusikkerhed modnes i fase 0; øvrige faser er planlagt målform, ikke allerede implementeringsklare leverancer.
 

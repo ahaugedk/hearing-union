@@ -6,6 +6,6 @@ status: "stable"
 ---
 # Færdige forbedringer
 
-Ingen forbedringer er registreret i dette projekt endnu. Når en større logisk ændring er færdig, erstattes denne tekst af en tæt liste med én linje pr. ændring: faktisk dato, forbedringen i én sætning og commit. Saml beslægtede ændringer; detaljeret udviklingshistorik bliver i Git.
+- 23. oktober 2026: Lokalt persistent MCP-fundament med konti, roller, gyldig viden og foredragstilmelding; smoke og uafhængigt review bestået. Commit `13904a3`.
 
 Registrering følger [completion](arbejdsregler/planer/levering/completion.md) og beviser ikke i sig selv, at en capability virker.

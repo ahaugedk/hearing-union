@@ -1,0 +1,15 @@
+# Arbejdsinstruktioner
+
+Gældende principper og arbejdsregler i [OKF](docs/index.md) er bindende, når projektet har taget dem i brug; planforslag er ikke. Læs relevante blade og nødvendige links, aldrig hele træet. Find planer gennem [roadmappet](docs/roadmap/index.md).
+
+- Brug [produktets kompas](docs/produkt/retning/kompas.md) med dømmekraft. Agenterne ejer research, konkretisering, teknisk korrekthed og fuldstændig levering efter [arbejdsdelingen](docs/arbejdsregler/samarbejde/arbejdsdeling.md). Almindelige kodevalg træffes selv; [væsentlige valg](docs/arbejdsregler/beslutninger/afklaring/vaesentlige-valg.md) forelægges konkret med bevaret godkendelsesstatus.
+- Følg [arkitekturen](docs/arkitektur/index.md) og [projektprofilen](docs/drift/projektprofil.md). Bevar ét ansvar og én autoritativ vej pr. fakta og beslutning; indfør ingen parallel model eller særvej uden begrundet behov.
+- Planer har [tre sammenhængende roller](docs/arbejdsregler/planer/struktur/tre-roller.md): vision, scenarier og implementering. Hold dem [implementeringsklare](docs/arbejdsregler/planer/forfatning/gennemgang.md), detaljerede og uden leverings- eller bevisbogføring.
+- Følg [orkestreringen](docs/orkestrering/index.md): én orkestrator, tydelige ejergrænser, egne grene og review af hele ændringen før main. Produktspørgsmål klar til svar samles i [afklaringerne](docs/orkestrering/afklaringer/index.md). Arbejd selvstændigt inden for projektets dokumenterede procesmandat.
+- Kræv [konkret gevinst](docs/arbejdsregler/udvikling/oekonomi/indsats.md) af forebyggelse. Reducér ikke aftalt v1 for at spare byggetid. Begrund [bred refaktorering](docs/arbejdsregler/udvikling/arkitektur/refaktorering.md) i en fælles produktgevinst.
+- Lever hele aftalte capabilities efter [færdigkriteriet](docs/validering/kriterier/leverancestatus.md). Aflever kort: resultat, gren og commit, smoke-resultat og mangler.
+- Følg [modelændringsreglen](docs/arbejdsregler/levering/modelaendringer.md): før første produktions-v1 ingen legacybroer, bagudkompatibilitet eller rettelsesmigrationer; ret oprindelige definitioner, omskriv afhængigt indhold og vælg dev-reset særskilt. Efter v1 bevares data.
+- [Valider](docs/arbejdsregler/levering/risikobaseret-validering.md) med smoke ved hver task og milepæl, let visuel kontrol ved UI-ændringer og gennemgang med rettelsesrunder før en større feature erklæres færdig. Ingen suite, performancemål eller bevisbogføring. [Kode, der åbenlyst ikke skalerer](docs/arbejdsregler/levering/skalering.md), accepteres ikke.
+- Følg [completion](docs/arbejdsregler/planer/levering/completion.md): fold varig viden, registrér én linje i udviklingsoversigten og fjern først planen, når hele dens scope er leveret.
+- Udelad docs/roadmap/parkeret/ fra søgning, læsning og kontrol uden [eksplicit genoptagelse](docs/arbejdsregler/planer/afgraensning/parkerede-planer.md).
+- Følg [dokumentreglerne](docs/arbejdsregler/dokumentation/index.md): koden ejer implementeringsdetaljer; gældende betydning har ét hjem. Omskriv frem for at ophobe, og kontrollér indhold, struktur og links. Hold AGENTS kort.

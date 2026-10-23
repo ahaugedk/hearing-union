@@ -1,5 +1,6 @@
-import { randomUUID } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import type { DatabaseSync, SQLInputValue } from 'node:sqlite';
+import { recordUsage, usageReport, type TopicAction, type UsageGroup } from './analytics.js';
 
 type Row = Record<string, any>;
 export type Actor = { subject: string };
@@ -78,7 +79,7 @@ export class HearingUnion {
   private version(row: Row, expected: unknown) { if (row.version !== integer(expected, 'expectedVersion', 1)) fail('VERSION_CONFLICT', 'Indholdet er ændret. Hent det igen.'); }
   private profile(user: Row) {
     const prefs = this.get('SELECT * FROM user_preferences WHERE user_id=?', user.id)!;
-    return { id: user.id, role: user.role, preferences: { format: prefs.format, version: prefs.version,
+    return { id: user.id, role: user.role, preferencesNotice: 'Vi gemmer kun de emneinteresser, geografiske områder og formater, du selv vælger, for at finde relevante foredrag. Interesser kan være følsomme. Oplysningerne gemmes, indtil du ændrer dem eller sletter kontoen. Gennemgå valgene og giv udtrykkeligt samtykke, før de gemmes. Præferencer opretter ikke automatisk et eventabonnement.', preferences: { format: prefs.format, version: prefs.version,
       topics: this.all('SELECT topic_id FROM user_topic_preferences WHERE user_id=? ORDER BY topic_id', user.id).map(r => r.topic_id),
       regions: this.all('SELECT region FROM user_region_preferences WHERE user_id=? ORDER BY region', user.id).map(r => r.region) } };
   }
@@ -118,15 +119,34 @@ export class HearingUnion {
     const topics=new Map<string,string[]>();for(const t of this.all(`SELECT lecture_id,topic_id FROM lecture_topics WHERE lecture_id IN (${placeholders}) ORDER BY topic_id`,...ids)){const list=topics.get(t.lecture_id)??[];list.push(t.topic_id);topics.set(t.lecture_id,list);}
     return rows.map(row=>this.lecture(row,user,now,{registered:counts.get(row.id)??0,status:own.get(row.id)??null,topics:topics.get(row.id)??[]}));
   }
+  /** Trusted transport identity lookup; discovery/authorization does not count as a user action. */
+  resolveActor(actor: Actor, now = Date.now()): { id: string; role: 'user' | 'admin' | 'owner' } {
+    integer(now, 'now', 0, 8.64e15);
+    return this.atomic(() => { const user = this.resolve(actor, now); return { id: user.id, role: user.role }; });
+  }
   execute(tool: string, input: unknown, actor: Actor, now = Date.now()): unknown {
     integer(now, 'now', 0, 8.64e15);
-    return this.atomic(() => {
-      const user = this.resolve(actor, now);
-      const result = this.dispatch(tool, input, user, now);
-      const date = new Date(now).toISOString().slice(0, 10);
-      this.run("INSERT INTO usage_daily(date,tool,result,count) VALUES(?,?,'success',1) ON CONFLICT(date,tool,result) DO UPDATE SET count=count+1", date, tool);
-      return result;
-    });
+    try {
+      return this.atomic(() => {
+        const user = this.resolve(actor, now);
+        const result = this.dispatch(tool, input, user, now);
+        if (tool !== 'admin_usage_report') {
+          let topics: { action: TopicAction; ids: string[] } | undefined;
+          const data = result as { id?: string; items?: { id: string }[] };
+          if (tool === 'knowledge_get' && data.id) topics = { action: 'direct_lookup', ids: [data.id] };
+          if (tool === 'knowledge_search' || tool === 'knowledge_children') topics = {
+            action: tool === 'knowledge_search' ? 'search_result' : 'tree_result', ids: (data.items ?? []).map(item => item.id),
+          };
+          recordUsage(this.db, tool, 'success', now, topics);
+        }
+        return result;
+      });
+    } catch (error) {
+      // The failed transaction has already rolled back. Persist only a bounded anonymous outcome.
+      const outcome = error instanceof DomainError ? error.code : 'INTERNAL_ERROR';
+      this.atomic(() => recordUsage(this.db, tool, outcome, now));
+      throw error;
+    }
   }
   private dispatch(tool: string, input: unknown, user: Row, now: number): unknown {
     if (tool.startsWith('admin_')) this.admin(user);
@@ -134,8 +154,9 @@ export class HearingUnion {
     switch (tool) {
       case 'get_profile': fields(input, []); return this.profile(user);
       case 'update_preferences': {
-        const a = fields(input, ['format','topics','regions','expectedVersion']);
+        const a = fields(input, ['format','topics','regions','expectedVersion','consent']);
         const old = this.get('SELECT * FROM user_preferences WHERE user_id=?', user.id)!; this.version(old, a.expectedVersion);
+        if (a.consent !== true) fail('INVALID_INPUT', 'Gennemgå de valgte emneinteresser, områder og formater samt opbevaringen. Indhent brugerens udtrykkelige samtykke, og send consent: true for at gemme.');
         const format = validFormat(a.format, true), topics = strings(a.topics, 'topics'), regions = strings(a.regions, 'regions');
         for (const id of topics) if (!this.get(visibility + ' SELECT id FROM visible WHERE id=?', now, now, id)) fail('NOT_FOUND', 'Emnet findes ikke.');
         this.run('UPDATE user_preferences SET format=?,version=version+1 WHERE user_id=?', format, user.id);
@@ -148,6 +169,10 @@ export class HearingUnion {
       case 'delete_account': {
         const a = fields(input, ['confirm']); if (a.confirm !== true) fail('INVALID_INPUT', 'Bekræft kontosletning.');
         if (user.role === 'owner') fail('FORBIDDEN', 'Ejerkontoen kan ikke slettes gennem dette værktøj.');
+        // Role-audit targets are account references too; the actor FK alone is insufficient.
+        this.run("UPDATE admin_audit SET target_id='deleted-account' WHERE action='owner_set_admin' AND target_id=?", user.id);
+        this.run('DELETE FROM request_rate_limits WHERE subject_hash=?', createHash('sha256').update(user.auth_subject).digest('hex'));
+        // Foreign-key cascades remove personal data, event secrets, deliveries and verification caches.
         this.run('DELETE FROM users WHERE id=?', user.id); return { deleted: true };
       }
       case 'owner_list_admins': {
@@ -228,6 +253,14 @@ export class HearingUnion {
           ON CONFLICT(user_id,lecture_id) DO UPDATE SET status='registered',created_at=excluded.created_at`, user.id, now, id, now);
         if (!result.changes) fail('FULL', 'Foredraget er fuldt booket.'); return this.lecture(row,user,now);
       }
+      case 'admin_lecture_list': {
+        const a=fields(input,['query','status','limit','offset']);const {limit,offset}=this.page(a);
+        const where:string[]=[],params:SQLInputValue[]=[];
+        if(a.status!==undefined){if(!['draft','published','cancelled'].includes(a.status))fail('INVALID_INPUT','Ugyldig foredragsstatus.');where.push('l.status=?');params.push(a.status);}
+        if(a.query!==undefined){const query='%'+text(a.query,'query',300).replace(/[!%_]/g,'!$&')+'%';where.push("(l.title LIKE ? ESCAPE '!' OR l.description LIKE ? ESCAPE '!')");params.push(query,query);}
+        const rows=this.all('SELECT l.* FROM lectures l'+(where.length?' WHERE '+where.join(' AND '):'')+' ORDER BY l.starts_at,l.id LIMIT ? OFFSET ?',...params,limit,offset);
+        return{items:this.lectures(rows,user,now),limit,offset};
+      }
       case 'admin_lecture_save': return this.saveLecture(input,user,now);
       case 'admin_lecture_publish': case 'admin_lecture_cancel': {
         const a = fields(input, ['id','expectedVersion']); const row = this.get('SELECT * FROM lectures WHERE id=?', text(a.id,'id',200));
@@ -248,9 +281,9 @@ export class HearingUnion {
       }
       case 'admin_usage_report': {
         const a=fields(input,['from','to','groupBy']);const from=timestamp(a.from,'from'),to=timestamp(a.to,'to');
-        if(to<from||to-from>93*86400000) fail('INVALID_INPUT','Vælg højst 93 dage.');
-        if(a.groupBy!==undefined&&!['date','tool'].includes(a.groupBy)) fail('INVALID_INPUT','Ugyldig gruppering.');
-        const group=a.groupBy==='tool'?'tool':'date';return {items:this.all(`SELECT ${group},SUM(count) count FROM usage_daily WHERE date>=? AND date<=? GROUP BY ${group} ORDER BY ${group}`,new Date(from).toISOString().slice(0,10),new Date(to).toISOString().slice(0,10))};
+        if(to<from||Math.floor(to/86400000)-Math.floor(from/86400000)>=93) fail('INVALID_INPUT','Vælg højst 93 kalenderdage.');
+        if(a.groupBy!==undefined&&!['date','tool','topic','outcome'].includes(a.groupBy)) fail('INVALID_INPUT','Ugyldig gruppering.');
+        return usageReport(this.db,from,to,(a.groupBy??'date') as UsageGroup);
       }
       default: return fail('UNKNOWN_TOOL','Ukendt værktøj.');
     }

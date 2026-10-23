@@ -8,10 +8,13 @@
   },
   "scripts": {
     "dev": "tsx server/local.ts",
-    "build": "tsc --noEmit && esbuild mcp-ui/lectures.ts --bundle --format=esm --outfile=.local/lectures.js",
+    "build": "tsc --noEmit && esbuild mcp-ui/lectures.ts mcp-ui/analytics.ts --bundle --format=esm --minify --outdir=.local",
     "typecheck": "tsc --noEmit",
     "smoke": "tsx scripts/smoke.ts",
-    "check:docs": "python3 scripts/check_okf.py"
+    "check:docs": "python3 scripts/check_okf.py",
+    "import:knowledge": "tsx scripts/import-knowledge.ts",
+    "backup": "tsx scripts/backup.ts",
+    "events:drain": "tsx scripts/drain-events.ts"
   },
   "devDependencies": {
     "@types/node": "26.6.5",

@@ -18,3 +18,5 @@ Fase 7 i [implementeringen](../implementering.md). Følg [visionens scope](../vi
 - Klargør udgiveroplysninger, logo, beskrivelser, eksempelsamtaler, permissions og revieweradgang med syntetiske data. Verificér den accepterede reviewvej for Sites/OpenAI-login; indfør ingen produktions-bypass til reviewer.
 
 **Færdig når:** Reviewmateriale, offentlige sider, sletning og driftsvejledning svarer til den faktiske implementering. Indholdet er informationsformidling med kilder, ikke personlig diagnosticering.
+
+Et lokalt [metadata- og reviewudkast](../../../../release/README.md) indeholder de planlagte fem positive og tre negative indsendelsescases. Det erstatter ikke faktisk hostgennemgang, revieweradgang, ikonmateriale eller en komplet MCP-pakke.

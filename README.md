@@ -19,7 +19,7 @@ npm run dev
 
 Det lokale MCP-endpoint er `POST /mcp` på loopback, og `GET /health` viser udviklingsstatus. Første opstart opretter SQLite-database og tilfældige lokale identitetsnøgler i den ignorerede `.local/`-mappe. Smoke bruger sin egen midlertidige database og sletter den igen. Nøglerne i `.local/auth.json` bruges som Bearer-token af en lokal MCP-klient; del eller commit dem aldrig.
 
-Den lokale server har tre syntetiske konti: ejer og to brugere. Den er et udviklingsmiljø, ikke Sites-login eller en deploymentklar server. Sites-deployment er udskudt efter bestilling; faktisk ChatGPT-forbindelse, host-identitet og eventlevering valideres senere. [Projektprofilen](docs/drift/projektprofil.md) ejer de gældende kommandoer og afgrænsninger.
+Den lokale server har tre syntetiske konti: ejer og to brugere. Den understøtter viden, foredrag, eventabonnementer og anonym statistik. `npm run import:knowledge -- --verify-sources` importerer det afgrænsede kildeudsnit; gentagelse bevarer eksisterende indhold. `npm run events:drain` genoptager en begrænset passage af den holdbare eventkø. Den er et udviklingsmiljø, ikke Sites-login eller en deploymentklar server. Sites-deployment er udskudt efter bestilling; faktisk ChatGPT-forbindelse, host-identitet og eventlevering valideres senere. [Projektprofilen](docs/drift/projektprofil.md) ejer de gældende kommandoer og afgrænsninger. [Udgivelsesudkastet](release/README.md) samler metadata og reviewcases til den senere platformgennemgang; det er ikke uploadklart.
 
 ## Pak ud i et nyt projekt
 

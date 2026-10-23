@@ -91,7 +91,7 @@ Planlagt værktøjskatalog:
 | Viden | `knowledge_search`, `knowledge_get`, `knowledge_children` |
 | Foredrag | `lecture_search`, `lecture_get`, `lecture_register`, `lecture_unregister`, `my_registrations` |
 | Indholdsadministration | `admin_knowledge_list`, `admin_knowledge_save`, `admin_knowledge_publish` |
-| Foredragsadministration | `admin_lecture_save`, `admin_lecture_publish`, `admin_lecture_cancel`, `admin_lecture_registrations` |
+| Foredragsadministration | `admin_lecture_list`, `admin_lecture_save`, `admin_lecture_publish`, `admin_lecture_cancel`, `admin_lecture_registrations` |
 | Indsigt | `admin_usage_report`, `admin_audit_log` |
 | Ejer | `owner_list_admins`, `owner_set_admin` |
 

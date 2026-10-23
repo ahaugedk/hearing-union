@@ -12,9 +12,9 @@ role: "implementation"
 
 ## Eksisterende afsæt
 
-Projektmappen indeholder planlægningsmateriale og den genbrugelige OKF-arbejdsgang. Der er ingen produktkode, database, hostingmanifest, implementeret login eller verificeret MCP-forbindelse. Projektet ligger nu i Git-repositoriet `ahaugedk/hearing-union`; `main` er integrationsgren. Ingen fase nedenfor er leveret.
+Projektet har et lokalt Node/SQLite-fundament med konti, roller, viden, foredrag og en autentificeret MCP-indgang, valideret gennem lokale HTTP-kald. MCP App-kilde og build findes, men den visuelle hostoplevelse er ikke afprøvet. Sites-hosting, faktisk ChatGPT-login, eventlevering og offentlig udgivelse er endnu ikke leveret. Projektet ligger i Git-repositoriet `ahaugedk/hearing-union`; `main` er integrationsgren. Den lokale delleverance afslutter ikke nogen af de fulde platformafhængige faser nedenfor.
 
-Før udviklingsbestilling konkretiseres projektprofil, procesmandat, integrationsvej og miljøansvar efter [ibrugtagningen](../../ibrugtagning.md). Teknisk platformusikkerhed modnes i fase 0; øvrige faser er planlagt målform, ikke allerede implementeringsklare leverancer.
+Anders har efterfølgende bestilt lokal udvikling uden at afvente Sites-deployment. Lokale domænefunktioner, database og MCP-indgang udvikles og valideres nu; hostens identitet, D1-integration, faktisk ChatGPT-rendering og eventlevering verificeres ved den senere platformafprøvning. Lokal SQLite og lokal udviklingsidentitet dokumenterer ikke disse platformegenskaber. Faseafhængighederne gælder fortsat endelig capability-validering og udgivelse, men blokerer ikke det udtrykkeligt bestilte lokale arbejde.
 
 ## Milepæle og afhængigheder
 

@@ -6,7 +6,7 @@ status: "draft"
 ---
 # Mandat for udviklingsorkestrering
 
-Anders har den 23. oktober 2026 i projektets orkestratorsamtale bestilt: »start udviklingen som orkestrator i projektet«. Den efterfølgende bestilling fastlægger én koordineringsrunde i timen. Mandatet gælder [MVP-planens scope](../roadmap/chatgpt-app-mvp/vision.md), ikke nye væsentlige produktvalg. [Projektprofilen](../drift/projektprofil.md) ejer værktøjer og miljøer.
+Anders har den 23. oktober 2026 i projektets orkestratorsamtale bestilt: »start udviklingen som orkestrator i projektet«. Den efterfølgende bestilling fastlægger én koordineringsrunde i timen. Anders har efterfølgende bestilt, at udviklingen fortsætter lokalt, mens Sites-deployment udskydes. Kravet om automatisk genoptagelse mindst hver time er fastholdt; faktisk aktivering står i de planlagte kørsler. Mandatet gælder [MVP-planens scope](../roadmap/chatgpt-app-mvp/vision.md), ikke nye væsentlige produktvalg. [Projektprofilen](../drift/projektprofil.md) ejer værktøjer og miljøer.
 
 | Mandatfelt | Faktisk aftale |
 |---|---|

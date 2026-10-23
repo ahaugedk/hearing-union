@@ -6,7 +6,7 @@ status: "stable"
 ---
 # Planlagte udviklingskørsler
 
-Anders har bestilt timebaseret genoptagelse den 23. oktober 2026 og præciseret, at både Site og automation skal oprettes fra bunden. Tidligere tekst om en aktiveret automation er derfor afløst. Den aktuelle session har intet automationsværktøj og kan ikke oprette tidsplanen. Ingen timer er oprettet, og timebaseret genoptagelse er ikke verificeret.
+Anders har bestilt timebaseret genoptagelse den 23. oktober 2026 og præciseret, at både Site og automation skal oprettes fra bunden. Tidligere tekst om en aktiveret automation er derfor afløst. Den aktuelle session har intet automationsværktøj. En direkte test af Codex CLI kunne heller ikke gennemføre et modelkald: den eksisterende CLI-loginbinding blev afvist med HTTP 401 og krav om fornyet login. Miljøet har ingen aktiv systemd-tjeneste eller crontab. Ingen timer er oprettet, og timebaseret genoptagelse er ikke verificeret. Det kræver en understøttet vedvarende runner med fungerende agentlogin eller ChatGPT-automation; et lokalt sleep-loop løser ikke disse forudsætninger.
 
 | Kørsel eller pulje | Kadence eller udløser | Faktisk status | Ansvar og aktiveringsgrundlag |
 |---|---|---|---|

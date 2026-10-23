@@ -10,7 +10,7 @@ MVP-udviklingen er igangsat efter [mandatet](mandat.md). Først konkretiseres pl
 
 | Leverance og planlink | Igangsættelse og reference | Ejer, gren og arbejdsmappe | Mærke | Afhængighed og næste handling |
 |---|---|---|---|---|
-| [MVP: platformresearch](../roadmap/chatgpt-app-mvp/kontrakter/platform.md) | Igangsat 23. oktober 2026; se mandat | `/root` overtager efter read-only research fra `/root/platform_research`; `orchestration/platform-readiness` | Afventer | Officielt MCP-grundlag undersøgt; Sites-starter, auth, Events og reviewvej kræver platformadgang. `developers.openai.com` afvises af proxyen; domænet er tilføjet i konfigurationskladde, endnu ikke anvendt |
+| [MVP: platformresearch](../roadmap/chatgpt-app-mvp/kontrakter/platform.md) | Igangsat 23. oktober 2026; se mandat | `/root` overtager efter read-only research fra `/root/platform_research`; `orchestration/platform-readiness` | Afventer | Officielle dokumenter kan nu læses. Sites-oprettelse/deployment kræver ChatGPT web/desktop med Sites-værktøjer; de mangler her. Næste handling er oprettelse og faktisk forsøg med login, Events og reviewvej |
 | [MVP: udviklingsfundament](../roadmap/chatgpt-app-mvp/implementering.md) | MVP'en er igangsat; afhængig kode følger verificeret platformgrundlag | `/root`; eksisterende cloud-checkout | Afventer | Git-læsning og dokumentkontrol virker. Næste handling er Sites-starter og faktisk platformforsøg; ingen produktkode eller deployment er leveret |
 | [Timebaseret orkestrering](planlagte-koersler.md) | Bestilt 23. oktober 2026 | `/root` | Afventer | Sessionsværktøjerne kan ikke administrere automationer. Ny automation skal oprettes og genoptagelse med projektadgang verificeres; Anders har bekræftet, at ingen eksisterende automation skal genbruges |
 

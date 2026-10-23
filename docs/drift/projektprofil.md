@@ -26,6 +26,6 @@ Profilen beskriver det tilgængelige cloud-miljø. Produktets runtime er endnu i
 | Diagnose og midlertidige artefakter | `.local/` til lokal database og syntetiske identitetsnøgler; smoke bruger midlertidig mappe uden for checkout. Ingen secrets eller persondata i logs |
 | Forbrugspuljer og aflæsningsvej | Denne sessions værktøjer er tilgængelige; forbrug, rest og nulstillingstid kan ikke aflæses. Ingen ekstra puljer aktiveres på antagelser |
 | Puljeprioritet, reserver og pausegrænser | Ikke udfyldt |
-| Deployment og driftsansvar | Mål: OpenAI Sites efter platformkontrakten. Ingen Sites-/automationsværktøjer er eksponeret i denne session; faktisk deployment og timegenoptagelse er ikke verificeret |
+| Deployment og driftsansvar | Eksisterende Site: https://hearing-union.ahaugedk.chatgpt.site (oplyst af Anders). Uautentificeret HTTP-kald svarer 401; indhold og kobling til dette checkout er ikke verificeret. Deployment er fortsat udskudt. Ingen Sites-/automationsværktøjer er eksponeret her |
 
 Kerneforløbet skal være lille og repræsentativt: faktisk login, central brugerhandling, gemt og genfundet resultat og eventuel agent- eller API-indgang, hvis den er central for produktet. Den ændrede feature afprøves særskilt uden at vokse ind i smoke. Profilen er ingen kørsel eller leveringsrapport.

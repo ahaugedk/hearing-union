@@ -27,7 +27,9 @@ I dette administrerede miljø uden skrivbar standardkonfigurationsmappe kan Wran
 
 ## Identitet og roller
 
-Sites leverer `oai-authenticated-user-id`, `oai-authenticated-user-email` og eventuelt `oai-authenticated-user-full-name`. Appen bruger kun det stabile **user-id** som subject. E-mail og navn giver ingen rettigheder og gemmes ikke uden produktbehov. Manglende eller ugyldigt user-id afvises; et Bearer-token eller en e-mail alene er utilstrækkeligt. Der findes ingen egne login-, callback-, OAuth-metadata- eller sessionroutes.
+Sites leverer `oai-authenticated-user-id`, `oai-authenticated-user-email` og eventuelt `oai-authenticated-user-full-name`. Appen bruger kun det stabile **user-id** som subject. E-mail og navn giver ingen rettigheder og gemmes ikke uden produktbehov. Beskyttede routes afviser manglende eller ugyldigt user-id; et Bearer-token eller en e-mail alene er utilstrækkeligt. Der findes ingen egne login-, callback-, OAuth-metadata- eller sessionroutes.
+
+Kun `GET /`, `/purpose`, `/privacy`, `/terms` og `/support` leverer faste informationssider uden brugeridentitet eller databasekald. `/mcp`, `/health` og øvrige indgange er fortsat beskyttede; host-/origin-kontrol og sikkerhedsheaders gælder også informationssiderne. Det private Sites-ingress kræver stadig login, indtil adgangspolitikken ændres særskilt. Lokal routingkontrol beviser derfor ikke offentligt læsbare live-URL'er.
 
 Det private Sites-ingress er tillidsgrænsen: platformen skal fjerne klientangivne identitetsheaders og indsætte den autentificerede bruger. Workeren må kun være tilgængelig gennem det eksisterende Site; `workers_dev`, preview-URL'er og separate offentlige routes er deaktiveret. Lokal headerinjektion i smoke simulerer platformen og beviser ikke den faktiske ingressbeskyttelse.
 
@@ -47,7 +49,7 @@ Abonnementer, filtre, lease, genlevering og signering bruger de eksisterende dom
 
 En tilfældig eventkrypteringsnøgle genereres ved første brug og gemmes i D1, så deployment og Worker-genstart ikke mister abonnementernes nøgler. Der findes ingen fast eller manuelt indsat nøgle i kode, manifest eller pakke. D1-adgang og fulde eksporter skal beskyttes som hemmeligheder: backup indeholder både applikationsnøglen og krypterede abonnementer og giver derfor ikke nøgleadskillelse. Lokal udvikling beholder sin eksisterende ejerbeskyttede nøglefil uden for SQLite. Kopiér aldrig udviklingsnøgler til sitet.
 
-`EVENT_CALLBACK_HOSTS` er en valgfri kommasepareret liste over præcise betroede ChatGPT-callbackværter, uden wildcard. Indtil de faktiske værter er verificeret, afvises nye callbackdestinationer sikkert; resten af appen fungerer. Ingen ekstra hemmelighed kræves. HTTPS-levering har størrelses- og tidsgrænser og følger ikke redirects. `PUBLISHER_NAME` og `SUPPORT_URL` kan valgfrit tilpasse de eksisterende udgiveroplysninger.
+`EVENT_CALLBACK_HOSTS` er en valgfri kommasepareret liste over præcise betroede ChatGPT-callbackværter, uden wildcard. Indtil de faktiske værter er verificeret, afvises nye callbackdestinationer sikkert; resten af appen fungerer. Ingen ekstra hemmelighed kræves. HTTPS-levering har størrelses- og tidsgrænser og følger ikke redirects. `PUBLISHER_NAME` og `SUPPORT_URL` sættes kun til bekræftede udgiver-/supportoplysninger; uden dem viser supportsiden en kort afventende status og ingen standardkontakt.
 
 `CHATGPT_APP_URL` sættes i Sites til appens verificerede HTTPS-adresse i ChatGPTs app-/pluginkatalog. Forsiden viser én installationsknap; manglende eller ugyldig adresse giver en besked om, at installation endnu ikke er klar. Opfind intet katalog-id. Manifestets `mcp`-capability aktiverer Sites' native MCP-provisionering; endpointet er `/mcp`.
 

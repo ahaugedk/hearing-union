@@ -1,26 +1,27 @@
 {
   "schema_version": 1,
-  "status": "deployed",
+  "status": "ready",
   "source": {
-    "branch": "fix/sites-d1-binding-string",
-    "commit": "41fbbc8798113783eceba9a59a2b834a58f82a61"
+    "branch": "feature/install-home",
+    "commit": "d8faa287b6bd9e94228f19692e44182a57f7b8a4"
   },
   "validation": {
     "result": "passed",
     "commands": [
-      "npm ci --cache /tmp/hearing-npm-cache --loglevel=error",
-      "npm run build",
-      "npm run smoke",
-      "npm run smoke:worker",
-      "npm run check:deployment",
-      "npm run check:docs",
-      "npm run pack",
-      "npm run check:package"
+      "node node_modules/typescript/bin/tsc --noEmit",
+      "node --import tsx scripts/build.ts",
+      "wrangler deploy --dry-run --outdir dist/worker",
+      "node --import tsx scripts/smoke.ts",
+      "node --import tsx scripts/smoke-worker.ts",
+      "node --import tsx scripts/check-deployment.ts",
+      "node --import tsx scripts/pack.ts",
+      "node --import tsx scripts/check-package.ts",
+      "npm run check:docs"
     ],
     "notes": [
-      "GitHub Actions Validate deployment package passed with the Sites manifest declaring d1 as the logical binding string DB.",
-      "The validated Worker bundle was placed at the Sites Worker ESM entrypoint dist/server/index.js without changing its bytes; Sites accepted the archive.",
-      "Sites deployment succeeded. Native Site MCP provisioning is not declared (has_mcp=false), so signed-in /health and /mcp behavior remain post-deploy checks."
+      "Root reviewed full code and architecture; implementation delegated to subagent.",
+      "Destination URL validation passed. No verified store URL exists yet; initial deployment provisions native MCP and shows unavailable installation state until CHATGPT_APP_URL is set.",
+      "Visual preview failed to become healthy: local dev listens on port 3000 while managed preview requires port 4173. Browser live access is sign-in gated."
     ]
   },
   "database": {
@@ -31,15 +32,14 @@
     ]
   },
   "release_notes": [
-    "Existing hearing-union project and private custom access were preserved; the Worker uses Sites identity headers without custom login, callback, or session routes.",
-    "Shared asynchronous D1 persistence covers knowledge, lectures, preferences, roles, statistics, and the event queue.",
-    "Verify the signed-in /health and /mcp paths plus callback delivery and scheduled redelivery before declaring those runtime behaviors fully accepted."
+    "Single installation action configured by CHATGPT_APP_URL with honest unavailable state when unset.",
+    "Declare native MCP and reproducible Sites server entrypoint; retain private access and data."
   ],
   "blockers": [],
   "deployment": {
-    "site_version": 2,
-    "deployed_commit": "41fbbc8798113783eceba9a59a2b834a58f82a61",
-    "deployed_at": "2026-10-24T12:10:03.896061Z",
-    "live_url": "https://hearing-union.ahaugedk.chatgpt.site"
+    "site_version": null,
+    "deployed_commit": null,
+    "deployed_at": null,
+    "live_url": null
   }
 }

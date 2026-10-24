@@ -21,7 +21,7 @@ const runtime=new Miniflare(convertV4MiniflareOptions({
     }
     throw new Error('Unexpected outbound request');
   },
-  bindings:{EVENT_CALLBACK_HOSTS:'callbacks.example.test',PUBLISHER_NAME:'Smoke fixture',SUPPORT_URL:'https://example.test/support'},
+  bindings:{EVENT_CALLBACK_HOSTS:'callbacks.example.test',PUBLISHER_NAME:'Smoke fixture',SUPPORT_URL:'https://example.test/support',CHATGPT_APP_URL:'https://chatgpt.com/apps/smoke-fixture'},
 }));
 try {
   const db=await runtime.getD1Database('DB');
@@ -43,6 +43,11 @@ try {
     assert.equal((await runtime.dispatchFetch(`${origin}/mcp`,{method:'POST',headers})).status,401);
   }
   const identityHeaders={'oai-authenticated-user-id':'fixture-owner'};
+  const homepage=await runtime.dispatchFetch(`${origin}/`,{headers:identityHeaders});
+  assert.equal(homepage.status,200);
+  const homepageHtml=await homepage.text();
+  assert.match(homepageHtml,/href="https:\/\/chatgpt.com\/apps\/smoke-fixture"/);
+  assert.equal((homepageHtml.match(/<a /g)??[]).length,1,'Homepage has one installation action');
   assert.equal((await runtime.dispatchFetch(`${origin}/health`,{headers:identityHeaders})).status,200);
   for(const path of ['/login','/callback','/session','/.well-known/oauth-protected-resource'])assert.equal((await runtime.dispatchFetch(`${origin}${path}`,{headers:identityHeaders})).status,404);
   const owner=await call('get_profile');assert.equal(owner.role,'owner');
@@ -68,6 +73,8 @@ try {
     const response=await runtime.dispatchFetch(`${origin}/mcp`,{method:'POST',headers:{'oai-authenticated-user-id':winner,'content-type':'application/json',accept:'application/json, text/event-stream','MCP-Protocol-Version':'2026-07-28','Mcp-Method':method},body:JSON.stringify({jsonrpc:'2.0',id:++id,method,params:{...(params as object),_meta:{'io.modelcontextprotocol/protocolVersion':'2026-07-28','io.modelcontextprotocol/clientCapabilities':{}}}})});
     assert.equal(response.status,200);const message=await response.json() as any;assert.equal(message.error,undefined,JSON.stringify(message));return message.result;
   };
+  assert.ok(await eventCall('server/discover',{}),'Hosted stateless discovery succeeds');
+  assert.ok((await eventCall('tools/list',{})).tools.length>0,'Hosted tools are discoverable');
   const subscription={name:'lecture.relevant_published',arguments:{format:'online'},delivery:{mode:'webhook',url:'https://callbacks.example.test/events',secret:eventSecret}};
   const subscribed=await eventCall('events/subscribe',subscription);assert.ok(subscribed.id);
   assert.equal((await eventCall('events/subscribe',subscription)).id,subscribed.id,'Refresh keeps subscription identity');

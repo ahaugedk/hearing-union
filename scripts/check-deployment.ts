@@ -4,6 +4,7 @@ const hosting=JSON.parse(await readFile('.openai/hosting.json','utf8'));
 assert.equal(hosting.project_id,'appgprj_6adb6ca4b9a0819187d043ebb4c091a5');
 assert.equal(hosting.d1,'DB');
 assert.equal(hosting.r2,null);
+assert.ok(hosting.capabilities.includes('mcp'));
 const config=JSON.parse(await readFile('wrangler.jsonc','utf8'));
 assert.equal(config.workers_dev,false);assert.equal(config.preview_urls,false);
 assert.equal(config.routes,undefined);assert.equal(config.account_id,undefined);

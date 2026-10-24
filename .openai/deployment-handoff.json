@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "ready",
+  "status": "deployed",
   "source": {
     "branch": "fix/sites-d1-binding-string",
     "commit": "41fbbc8798113783eceba9a59a2b834a58f82a61"
@@ -19,27 +19,27 @@
     ],
     "notes": [
       "GitHub Actions Validate deployment package passed with the Sites manifest declaring d1 as the logical binding string DB.",
-      "Two earlier Sites save attempts stopped during manifest validation; neither deployment nor D1 migration started.",
-      "source.commit is the deployable code commit. The following commit only refreshes this handoff."
+      "The validated Worker bundle was placed at the Sites Worker ESM entrypoint dist/server/index.js without changing its bytes; Sites accepted the archive.",
+      "Sites deployment succeeded. Native Site MCP provisioning is not declared (has_mcp=false), so signed-in /health and /mcp behavior remain post-deploy checks."
     ]
   },
   "database": {
     "migration_required": true,
     "notes": [
-      "Anvend db/migrations/0001_initial.sql gennem Sites på den logiske DB-binding i .openai/hosting.json; ingen konto-id, fysisk D1-id eller Cloudflare-nøgle kræves.",
-      "Første versionerede grundskema; bevar eksisterende data og binding ved deployment. Ingen reset eller destruktiv datamigrering er bestilt."
+      "Sites accepted db/migrations/0001_initial.sql with the logical DB binding; no account ID, physical D1 ID, or Cloudflare credential was supplied.",
+      "Preserve the provisioned binding and data on later deployments. Do not reset or perform a destructive migration."
     ]
   },
   "release_notes": [
-    "Eksisterende hearing-union-projekt og privat adgang bevares; Worker bruger Sites-headeren oai-authenticated-user-id uden egne login-, callback- eller sessionroutes.",
-    "Fælles asynkron SQLite/D1-persistens bevarer viden, foredrag, præferencer, roller, statistik og eventkø; deterministisk pakke kan bygges fra Git uden secrets.",
-    "Sites-udgiveren ejer publicering, migrationsanvendelse og livekontrol. Kontrollér runtime-callbackværter og understøttet genlevering, før live eventlevering erklæres aktiveret."
+    "Existing hearing-union project and private custom access were preserved; the Worker uses Sites identity headers without custom login, callback, or session routes.",
+    "Shared asynchronous D1 persistence covers knowledge, lectures, preferences, roles, statistics, and the event queue.",
+    "Verify the signed-in /health and /mcp paths plus callback delivery and scheduled redelivery before declaring those runtime behaviors fully accepted."
   ],
   "blockers": [],
   "deployment": {
-    "site_version": null,
-    "deployed_commit": null,
-    "deployed_at": null,
-    "live_url": null
+    "site_version": 2,
+    "deployed_commit": "41fbbc8798113783eceba9a59a2b834a58f82a61",
+    "deployed_at": "2026-10-24T12:10:03.896061Z",
+    "live_url": "https://hearing-union.ahaugedk.chatgpt.site"
   }
 }

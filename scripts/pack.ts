@@ -13,6 +13,8 @@ await copyFile('data/knowledge.json','dist/knowledge.json');
 await mkdir('dist/.openai',{recursive:true});
 await copyFile('.openai/hosting.json','dist/.openai/hosting.json');
 await copyFile('release/plugin.json','dist/plugin.json');
+await mkdir('dist/assets/review-icons',{recursive:true});
+for(const file of ['logo.png','composer-icon.png'])await copyFile(`assets/review-icons/${file}`,`dist/assets/review-icons/${file}`);
 await copyFile('release/README.md','dist/DEPLOYMENT.md');
 const files=await readdir('dist/worker');
 if(!files.includes('worker.js')||files.filter(f=>f.endsWith('.txt')).length!==2)throw new Error('Run build before pack');
@@ -22,7 +24,7 @@ await copyFile('dist/worker/worker.js','dist/server/index.js');
 await copyFile('dist/worker/worker.js.map','dist/server/worker.js.map');
 for(const file of files.filter(file=>file.endsWith('.txt')))await copyFile(`dist/worker/${file}`,`dist/server/${file}`);
 // Match Sites' shared packager: every hosted file is beneath the archive's dist/ root.
-const entries=['wrangler.json','.openai/hosting.json','.openai/drizzle','plugin.json','DEPLOYMENT.md','server','db','knowledge.json'].map(path=>`dist/${path}`);
+const entries=['wrangler.json','.openai/hosting.json','.openai/drizzle','plugin.json','assets/review-icons/logo.png','assets/review-icons/composer-icon.png','DEPLOYMENT.md','server','db','knowledge.json'].map(path=>`dist/${path}`);
 const tar=execFileSync('tar',['--sort=name','--mtime=@0','--owner=0','--group=0','--numeric-owner','--mode=u+rwX,go+rX','-cf','-',...entries],{maxBuffer:32*1024*1024});
 await writeFile('dist/hearing-union-deployment.tar.gz',gzipSync(tar,{level:9}));
 const archive=await readFile('dist/hearing-union-deployment.tar.gz');

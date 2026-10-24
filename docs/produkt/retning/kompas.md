@@ -1,15 +1,13 @@
 ---
 type: "Product Principle"
 title: "Produktets kompas"
-description: "Tre projektspecifikke spørgsmål forbinder konkrete valg med langsigtet værdi."
-status: "draft"
+description: "Tre spørgsmål forbinder konkrete valg med tryg, handlingsklar støtte fra Høreforeningen."
+status: "stable"
 ---
 # Produktets kompas
 
-Erstat spørgsmålene med projektets egne, når [visionen](vision.md) er konkret. Indtil da er disse et forslag:
+1. Gør ændringen Høreforeningens aktuelle, kildebaserede viden eller aktiviteter lettere at forstå og handle på direkte i ChatGPT?
+2. Bevarer ændringen brugerens kontrol over identitet, præferencer, tilmeldinger og proaktive beskeder uden at opsamle følsomme eller unødvendige data?
+3. Kan Høreforeningen selv holde indhold, foredrag og adgang ajour gennem de fælles ChatGPT-indgange uden en parallel administrationsvej?
 
-1. Giver ændringen den tiltænkte bruger en konkret forbedring i den centrale opgave?
-2. Gør ændringen produktet mere selvbærende og nyttigt uden løbende indgreb fra byggerne?
-3. Kan det, projektet lærer og bygger nu, gøre næste brugssituation bedre?
-
-Brug dømmekraft: ingen score, gate eller krav om, at hver ændring fremmer alle tre. Nødvendige forudsætninger tæller også. Spørgsmålene udgør ingen godkendelse af nyt scope.
+Brug spørgsmålene med dømmekraft. De er ingen score eller mekanisk gate, og nødvendige tekniske forudsætninger kan skabe værdi indirekte. Et valg, der udvider [produktvisionen](vision.md) eller MVP'ens dokumenterede scope, kræver stadig en eksplicit produktbeslutning.

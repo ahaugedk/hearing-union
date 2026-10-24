@@ -2,7 +2,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 const hosting=JSON.parse(await readFile('.openai/hosting.json','utf8'));
 assert.equal(hosting.project_id,'appgprj_6adb6ca4b9a0819187d043ebb4c091a5');
-assert.deepEqual(hosting.d1_databases,[{binding:'DB',migrations_dir:'db/migrations'}]);
+assert.deepEqual(hosting.d1,{binding:'DB',migrations_dir:'db/migrations'});\nassert.equal(hosting.r2,null);
 const config=JSON.parse(await readFile('wrangler.jsonc','utf8'));
 assert.equal(config.workers_dev,false);assert.equal(config.preview_urls,false);
 assert.equal(config.routes,undefined);assert.equal(config.account_id,undefined);

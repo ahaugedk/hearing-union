@@ -2,8 +2,8 @@
   "schema_version": 1,
   "status": "ready",
   "source": {
-    "branch": "fix/sites-d1-manifest",
-    "commit": "3c53d04325143e364f7bff85d35f00c1e99ea345"
+    "branch": "fix/sites-d1-binding-string",
+    "commit": "41fbbc8798113783eceba9a59a2b834a58f82a61"
   },
   "validation": {
     "result": "passed",
@@ -18,8 +18,8 @@
       "npm run check:package"
     ],
     "notes": [
-      "GitHub Actions Validate deployment package passed after changing the hosting manifest to the Sites-native d1 object.",
-      "The previous Sites save attempt stopped at manifest validation; no deployment or D1 migration was started.",
+      "GitHub Actions Validate deployment package passed with the Sites manifest declaring d1 as the logical binding string DB.",
+      "Two earlier Sites save attempts stopped during manifest validation; neither deployment nor D1 migration started.",
       "source.commit is the deployable code commit. The following commit only refreshes this handoff."
     ]
   },

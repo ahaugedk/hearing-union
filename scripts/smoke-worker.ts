@@ -58,10 +58,12 @@ try {
   const winner=competing[0].isError?'fixture-user2':'fixture-user',loser=winner==='fixture-user'?'fixture-user2':'fixture-user';
   assert.equal((await call('my_registrations',{},winner)).items.length,1);assert.equal((await call('my_registrations',{},loser)).items.length,0);
   const node=await call('admin_knowledge_save',{slug:'smoke-topic',title:'Smoke-emne',summary:'Kildebaseret smoke',keywords:['smoke'],sources:[{url:'https://example.test/source',title:'Kilde'}]});
+  const secondNode=await call('admin_knowledge_save',{slug:'second-smoke-topic',title:'Andet smoke-emne',summary:'Anden kildebaseret smoke',keywords:['smoke'],sources:[{url:'https://example.test/second-source',title:'Anden kilde'}]});
   await call('admin_knowledge_publish',{id:node.id,expectedVersion:node.version});
-  assert.equal((await call('knowledge_search',{query:'smoke'},winner)).items.length,1);
-  await call('update_preferences',{format:'online',topics:[node.id],regions:['Danmark'],consent:true,expectedVersion:1},winner);
-  assert.deepEqual((await call('get_profile',{},winner)).preferences.topics,[node.id]);
+  await call('admin_knowledge_publish',{id:secondNode.id,expectedVersion:secondNode.version});
+  assert.equal((await call('knowledge_search',{query:'smoke'},winner)).items.length,2);
+  await call('update_preferences',{format:'online',topics:[node.id,secondNode.id],regions:['Danmark'],consent:true,expectedVersion:1},winner);
+  assert.deepEqual((await call('get_profile',{},winner)).preferences.topics.sort(),[node.id,secondNode.id].sort());
   const eventCall=async(method:string,params:unknown)=>{
     const response=await runtime.dispatchFetch(`${origin}/mcp`,{method:'POST',headers:{'oai-authenticated-user-id':winner,'content-type':'application/json',accept:'application/json, text/event-stream','MCP-Protocol-Version':'2026-07-28','Mcp-Method':method},body:JSON.stringify({jsonrpc:'2.0',id:++id,method,params:{...(params as object),_meta:{'io.modelcontextprotocol/protocolVersion':'2026-07-28','io.modelcontextprotocol/clientCapabilities':{}}}})});
     assert.equal(response.status,200);const message=await response.json() as any;assert.equal(message.error,undefined,JSON.stringify(message));return message.result;

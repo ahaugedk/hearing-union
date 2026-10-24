@@ -17,9 +17,13 @@ npm run pack
 npm run check:package
 ```
 
-`build` typekontrollerer, bygger begge MCP Apps som tekstmoduler, kontrollerer den versionerede D1-migration og udfører kun Wrangler dry-run. Outputtet er `dist/worker/worker.js` med to tekstmoduler. Pakningen placerer uændrede Worker-bytes ved Sites' understøttede `dist/server/index.js` med tekstmodulerne ved siden af. Arkivet `dist/hearing-union-deployment.tar.gz` indeholder også `.openai/hosting.json`, `db/migrations/0001_initial.sql`, portabel Wrangler-konfiguration, kildeudsnit og pluginmetadata. Ingen lokale databaser, udviklingstokens eller nøglemateriale indgår. Pakning normaliserer rækkefølge, filrettigheder, ejer og tidsstempler; `check:package` sammenligner to pakninger byte for byte og afprøver den udpakkede Worker med dry-run.
+`build` typekontrollerer, bygger begge MCP Apps som tekstmoduler, kontrollerer den versionerede D1-migration og udfører kun Wrangler dry-run. Outputtet er `dist/worker/worker.js` med to tekstmoduler. Pakningen placerer uændrede Worker-bytes ved Sites' understøttede `dist/server/index.js` med tekstmodulerne ved siden af. Arkivet `dist/hearing-union-deployment.tar.gz` indeholder også `.openai/hosting.json`, `db/migrations/0001_initial.sql`, portabel Wrangler-konfiguration, kildeudsnit, pluginmetadata og de to officielle PNG-reviewikoner. Ingen lokale databaser, udviklingstokens eller nøglemateriale indgår. Pakning normaliserer rækkefølge, filrettigheder, ejer og tidsstempler; `check:package` sammenligner to pakninger byte for byte og afprøver den udpakkede Worker med dry-run.
 
 I dette administrerede miljø uden skrivbar standardkonfigurationsmappe kan Wrangler køres med `XDG_CONFIG_HOME=/tmp/hearing-config`; npm kan bruge `--cache /tmp/hearing-npm-cache`. Bevar miljøets proxy og CA-tillid.
+
+## Reviewudkast i samme Sites-pakke
+
+`release/plugin.json` og de indeholdte `assets/review-icons/`-PNG'er er reviewmateriale for den eksisterende kanoniske Sites-app. Pakningen kontrollerer ikonreferencer, PNG-format, størrelse og dimensioner samt fem positive og tre negative cases. Den opretter ingen ekstra plugin eller særskilt indsendelses-ZIP og er ikke indsendelsesklar: bekræftet udgiver, lande, offentligt læsbare politik-/supportsider, faktisk optaget demo og revieweradgang mangler fortsat. Cases er forberedte forløb, ikke en erklæring om bestået liveafprøvning.
 
 ## Identitet og roller
 

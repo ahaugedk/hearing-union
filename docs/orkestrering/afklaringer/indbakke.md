@@ -14,4 +14,4 @@ Hvem skal være formel udgiver og ansvarlig for appens persondata, og hvilken su
 
 **Ejer:** Anders. **Blokeret scope:** Kun endelige udgiveroplysninger, privatlivspolitikkens ansvarlige og offentlig reviewmetadata efter [udgivelsesplanen](../../roadmap/chatgpt-app-mvp/kontrakter/udgivelse.md). Udvikling, test og privat deployment fortsætter. Spørgsmålet beder ikke om accept af juridiske vilkår.
 
-**Mailsporing:** Modtager `anders.hauge.dk@gmail.com` er verificeret. Gmail-tråd-id: afventer afsendelse. Udgående besked-id: afventer afsendelse. Senest behandlede svar-id: intet. Orkestratoren sender spørgsmålet med dette HU-Q-id i emnet efter GitHub-registreringen og opdaterer referencerne.
+**Mailsporing:** Modtager `anders.hauge.dk@gmail.com` er verificeret. Gmail-tråd-id: `1a16dec966e6c58f`. Udgående besked-id: `1a16dec966e6c58f`. Senest behandlede svar-id: intet. Mailen er sendt; Anders kan svare i samme tråd.

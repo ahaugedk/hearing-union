@@ -15,3 +15,11 @@ Hvem skal være formel udgiver og ansvarlig for appens persondata, og hvilken su
 **Ejer:** Anders. **Blokeret scope:** Kun endelige udgiveroplysninger, privatlivspolitikkens ansvarlige og offentlig reviewmetadata efter [udgivelsesplanen](../../roadmap/chatgpt-app-mvp/kontrakter/udgivelse.md). Udvikling, test og privat deployment fortsætter. Spørgsmålet beder ikke om accept af juridiske vilkår.
 
 **Mailsporing:** Modtager `anders.hauge.dk@gmail.com` er verificeret. Gmail-tråd-id: `1a16dec966e6c58f`. Udgående besked-id: `1a16dec966e6c58f`. Senest behandlede svar-id: intet. Mailen er sendt; Anders kan svare i samme tråd.
+
+## HU-Q-20261024-02: Aktivér den private app til slutbrugertest
+
+Gør det eksisterende private `hearing-union`-plugin tilgængeligt i en samtale her i projektet: Åbn ChatGPT på web eller desktop, find det under Plugins → Personlige → Oprettet af dig, vælg Installér/Forbind hvis nødvendigt, og tilføj det til samtalen. Opret ikke en ny app. Hvis det allerede er installeret, er det nok at vælge det i samtalen. Svar derefter »klar« på mailen, eller beskriv den konkrete fejl.
+
+**Hvorfor:** Sites har oprettet det kanoniske private plugin, men dets værktøjer er ikke eksponeret her; adgangsværktøjet angiver ikke installeret. Orkestratoren kan ikke gennemføre denne brugeraktivering gennem de tilgængelige værktøjer. **Ejer:** Anders. **Blokeret scope:** Kun autentificeret slutbrugertest, rigtig MCP App-visning og demooptagelse. Orkestratoren udfører test og rettelser; øvrig udvikling fortsætter.
+
+**Mailsporing:** Modtager `anders.hauge.dk@gmail.com` er verificeret. Gmail-tråd-id: afventer afsendelse. Udgående besked-id: afventer afsendelse. Senest behandlede svar-id: intet.

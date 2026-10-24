@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "ready",
+  "status": "deployed",
   "source": {
     "branch": "integration/verified-release-brand",
     "commit": "fa7c170bc682a3b0c9f1c6a2f2d126179daece21"
@@ -25,7 +25,8 @@
       "Public submission metadata remains an explicit draft; unconfirmed publisher removed, category and fixture setup corrected. No fake icon/demo/targeting or public URL verification claims.",
       "HU-Q01 publisher/support and HU-Q02 private app activation were sent and tracked. Unblocked release preparation continues while replies are pending.",
       "Verified official favicon source SHA matches saved SVG; inspected 512/96 PNGs and exact official #BCCE41/#434445 colors. Root visually checked generated single-button page with synthetic destination.",
-      "Actual native get_profile succeeded with owner role in fresh context. HU-Q02 activation request closed and cancellation emailed; full end-user acceptance remains root-owned."
+      "Actual native get_profile succeeded with owner role in fresh context. HU-Q02 activation request closed and cancellation emailed; full end-user acceptance remains root-owned.",
+      "Combined PR16+PR17 deployed as private Sites version 6. No errors in sampled worker log window. Full authenticated acceptance and public review are not claimed."
     ]
   },
   "database": {
@@ -42,11 +43,14 @@
     "Remove invented publisher identity from release metadata; preserve canonical Sites plugin and no duplicate wrapper.",
     "Official source logo/favicon and derived review PNGs prepared as drafts; exact official colors applied. This combined release also includes reviewed PR16 event writer and release completion path."
   ],
-  "blockers": [],
+  "blockers": [
+    "Full end-user acceptance, hosted content import, real events/unattended scheduling and public reviewer material are not complete; root owns next actions in work queue.",
+    "Public publisher/data-controller/support identity awaits HU-Q-20261024-01. Private activation HU-Q02 was resolved via successful native owner diagnostic in fresh context and closed."
+  ],
   "deployment": {
-    "site_version": null,
-    "deployed_commit": null,
-    "deployed_at": null,
-    "live_url": null
+    "site_version": 6,
+    "deployed_commit": "fa7c170bc682a3b0c9f1c6a2f2d126179daece21",
+    "deployed_at": "2026-10-24T13:22:37.805165+00:00",
+    "live_url": "https://hearing-union.ahaugedk.chatgpt.site"
   }
 }

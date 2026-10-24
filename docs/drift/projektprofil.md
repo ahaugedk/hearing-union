@@ -6,7 +6,7 @@ status: "draft"
 ---
 # Projektets konkrete arbejdsgrundlag
 
-Profilen beskriver værktøjerne i projektsamtalen. Sites-deployment er gennemført; hosted databaseskema og privat MCP-plugin er verificeret, mens autentificerede brugerforløb stadig mangler. Produktvalg og procesmandat har hjem i [mandatet](../orkestrering/mandat.md) eller den relevante plan.
+Profilen beskriver værktøjerne i projektsamtalen. Sites-deployment er gennemført; hosted databaseskema og privat MCP-plugin er verificeret. Native ejerprofil er læst i en frisk kontekst; den samlede autentificerede brugeroplevelse er stadig åben. Produktvalg og procesmandat har hjem i [mandatet](../orkestrering/mandat.md) eller den relevante plan.
 
 | Felt | Faktisk værdi |
 |---|---|
@@ -27,7 +27,7 @@ Profilen beskriver værktøjerne i projektsamtalen. Sites-deployment er gennemf�
 | Forbrugspuljer og aflæsningsvej | Denne sessions værktøjer er tilgængelige; forbrug, rest og nulstillingstid kan ikke aflæses. Ingen ekstra puljer aktiveres på antagelser |
 | Puljeprioritet, reserver og pausegrænser | Ikke udfyldt |
 | Kildeimport | `npm run import:knowledge -- --verify-sources`; 25 verificerede kildeposter. Genkørsel bevarer eksisterende poster; `--refresh` kræver konkrete slugs |
-| Eventkø | Første forsøg startes efter publicering. `npm run events:drain` udfører en begrænset lokal køpassage; særskilt serviceautentificeret `POST /internal/deliveries/drain` kan kaldes af en senere host-trigger. Ingen vedvarende trigger er aktiveret |
+| Eventkø | Administratorens `admin_deliver_events` genbruger den begrænsede leveringsfunktion gennem autentificeret MCP; faktisk cloud-planlægning er endnu ikke aktiveret. Første forsøg startes efter publicering. `npm run events:drain` udfører en begrænset lokal køpassage; særskilt serviceautentificeret `POST /internal/deliveries/drain` kan kaldes af en senere host-trigger. Ingen vedvarende trigger er aktiveret |
 | Lokal backup og restore | `npm run backup -- backup .local/hearing-union.sqlite NY-FIL` og `npm run backup -- restore BACKUP NY-FIL`; eksisterende destinationer overskrives ikke. Den matchende eventkrypteringsnøgle skal sikres separat |
 | Deployment og driftsansvar | Orkestratoren udgiver til https://hearing-union.ahaugedk.chatgpt.site med eksisterende privat adgang. Projekt-id og seneste udgivelse står i `.openai/hosting.json` og `.openai/deployment-handoff.json`. Følg [deploymentvejledningen](../../release/README.md). Native MCP er erklæret, privat plugin er oprettet og hosted schema verificeret; autentificeret `/health`, `/mcp`, brugerrolle og eventlevering kræver stadig livekontrol |
 

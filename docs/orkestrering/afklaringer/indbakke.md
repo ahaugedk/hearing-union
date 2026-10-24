@@ -22,4 +22,4 @@ Gør det eksisterende private `hearing-union`-plugin tilgængeligt i en samtale 
 
 **Hvorfor:** Sites har oprettet det kanoniske private plugin, men dets værktøjer er ikke eksponeret her; adgangsværktøjet angiver ikke installeret. Orkestratoren kan ikke gennemføre denne brugeraktivering gennem de tilgængelige værktøjer. **Ejer:** Anders. **Blokeret scope:** Kun autentificeret slutbrugertest, rigtig MCP App-visning og demooptagelse. Orkestratoren udfører test og rettelser; øvrig udvikling fortsætter.
 
-**Mailsporing:** Modtager `anders.hauge.dk@gmail.com` er verificeret. Gmail-tråd-id: afventer afsendelse. Udgående besked-id: afventer afsendelse. Senest behandlede svar-id: intet.
+**Mailsporing:** Modtager `anders.hauge.dk@gmail.com` er verificeret. Gmail-tråd-id: `1a16dff07bfed9c1`. Udgående besked-id: `1a16dff07bfed9c1`. Senest behandlede svar-id: intet. Mailen er sendt.

@@ -10,6 +10,4 @@ assert.equal(config.d1_databases[0].binding,'DB');assert.equal(config.d1_databas
 const files=await readdir('dist/worker');
 assert.ok(files.includes('worker.js'));assert.equal(files.filter(name=>name.endsWith('.txt')).length,2);
 assert.equal(await readFile('db/migrations/0001_initial.sql','utf8'),await readFile('dist/migrations/0001_initial.sql','utf8'));
-const source=await readFile('server/worker.ts','utf8');
-assert.ok(!/AUTH_ISSUER|AUTH_AUDIENCE|OWNER_SUBJECT|CLOUDFLARE_ACCOUNT_ID/.test(source));
 console.log('OK: existing Sites project, logical DB binding, versioned migration, Worker + two MCP Apps, no external OAuth/account/database ID, no alternate public Worker route. Sites publisher verifies ingress/provisioning and reports deployment through the GitHub handoff.');

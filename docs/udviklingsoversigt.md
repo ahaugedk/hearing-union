@@ -6,6 +6,8 @@ status: "stable"
 ---
 # Færdige forbedringer
 
+- 2026-10-24 — 25 kildeposter publiceret gennem native adminværktøjer; live kilde-/udløbs- og syntetisk tilmeldingsforløb samt aggregeret statistik afprøvet. Officielle ikoner indgår i den eksisterende reviewpakke; samlet accept og offentlig review er fortsat åbne — [PR #18](https://github.com/ahaugedk/hearing-union/pull/18).
+
 - 2026-10-24 — Afgrænset administratorværktøj til event-genforsøg og officielle reviewikoner/farver; faktisk eventaktivering og offentlig review er fortsat åbne — [PR #16](https://github.com/ahaugedk/hearing-union/pull/16), [PR #17](https://github.com/ahaugedk/hearing-union/pull/17).
 
 - 2026-10-24 — Konkret resterende udgivelsesvej og kø; fjernet ubekræftet udgiver fra metadata, valgt uddannelseskategori og præciseret reviewcasenes forberedelse — `orchestration/release-completion`.

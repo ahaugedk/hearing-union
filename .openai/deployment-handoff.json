@@ -19,14 +19,12 @@
       "npm run check:docs"
     ],
     "notes": [
-      "Root reviewed both subagent deliveries and integrated changes; build/typecheck, local MCP and Worker smoke, deployment/package/unpacked checks and docs check passed.",
-      "New admin-only admin_deliver_events reuses existing bounded delivery service, rechecks role and returns aggregate counts only. Outbound annotation fixed for lecture publication too.",
-      "This private deployment prepares an authenticated writer; actual unattended scheduling, real callbacks and authenticated end-user acceptance remain open.",
-      "Public submission metadata remains an explicit draft; unconfirmed publisher removed, category and fixture setup corrected. No fake icon/demo/targeting or public URL verification claims.",
-      "HU-Q01 publisher/support and HU-Q02 private app activation were sent and tracked. Unblocked release preparation continues while replies are pending.",
-      "Verified official favicon source SHA matches saved SVG; inspected 512/96 PNGs and exact official #BCCE41/#434445 colors. Root visually checked generated single-button page with synthetic destination.",
-      "Actual native get_profile succeeded with owner role in fresh context. HU-Q02 activation request closed and cancellation emailed; full end-user acceptance remains root-owned.",
-      "Combined PR16+PR17 deployed as private Sites version 6. No errors in sampled worker log window. Full authenticated acceptance and public review are not claimed."
+      "Root reviewed and integrated PR16/17; the recorded runtime source remains deployed as private Sites version 6. Its validation commands passed.",
+      "PR18 draft review packaging merged after complete root review, independent deterministic/unpacked archive validation, docs check and GitHub CI. It changes no runtime behavior or audience and has not caused another deployment.",
+      "25 curated knowledge nodes imported and published through authenticated native admin tools; all source URLs returned HTTPS 200. Native search/tree/relations and expiry across parent/child reads passed; original content restored and all 25 remain published.",
+      "Native owner test: synthetic lecture publication/search, registration, idempotent repeated registration, persisted readback and unregister passed. Fixture cancelled, no active test registration remains; personal preferences unchanged. Aggregate usage read succeeded.",
+      "Canonical event source/filter discovery and authenticated empty queue drain succeeded. Existing hourly coordination prompt includes one bounded drain; actual callback, notification receipt and later retry are unverified. No new automation or subscription was created.",
+      "HU-Q02 activation resolved automatically and cancelled by email. HU-Q01 publisher/support remains pending: stored thread contains only its known outbound message. Multiple real users, preferences/deletion, MCP App host, backup/restore and public release acceptance remain open."
     ]
   },
   "database": {
@@ -44,8 +42,9 @@
     "Official source logo/favicon and derived review PNGs prepared as drafts; exact official colors applied. This combined release also includes reviewed PR16 event writer and release completion path."
   ],
   "blockers": [
-    "Full end-user acceptance, hosted content import, real events/unattended scheduling and public reviewer material are not complete; root owns next actions in work queue.",
-    "Public publisher/data-controller/support identity awaits HU-Q-20261024-01. Private activation HU-Q02 was resolved via successful native owner diagnostic in fresh context and closed."
+    "Full acceptance still requires another real normal-user identity for consent/preferences, role/isolation/deletion and capacity concurrency; actual MCP App host interaction is unverified. Owner-only live tests are not complete end-user acceptance.",
+    "Real event subscription/callback, notification receipt, later unattended retry and hosted D1 restore remain unverified. Canonical event discovery and empty drain do not prove delivery.",
+    "Public publisher/data-controller/support identity awaits HU-Q-20261024-01. Public policies, countries, actual recorded demo, normal reviewer access, canonical public submission/review and actual directory install link are incomplete."
   ],
   "deployment": {
     "site_version": 6,

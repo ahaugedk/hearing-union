@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "ready",
+  "status": "deployed",
   "source": {
     "branch": "integration/minimal-site",
     "commit": "a1e4ffd246f132d36be593a49b26635473312617"
@@ -38,11 +38,15 @@
     "Roadmap, implementation queue and changelog updated; Gmail reply reconciliation documented.",
     "Canonical migration SQL unchanged, packed in documented Sites Drizzle sidecar with journal and complete statement boundaries."
   ],
-  "blockers": [],
+  "blockers": [
+    "No verified ChatGPT directory URL; Sites returned private plugin ID plugin_asdk_app_sites_2a44f2a3a7f48191ad5e85365cdba550, but plugin search returned no listing. CHATGPT_APP_URL remains unset.",
+    "Post-deploy DB overview returned zero tables; hosted migration application is not verified. Follow-up packaging boundary fix delegated to subagent.",
+    "Final public publisher/data-controller/support metadata awaits HU-Q-20261024-01; question emailed with tracked Gmail thread."
+  ],
   "deployment": {
-    "site_version": null,
-    "deployed_commit": null,
-    "deployed_at": null,
-    "live_url": null
+    "site_version": 4,
+    "deployed_commit": "a1e4ffd246f132d36be593a49b26635473312617",
+    "deployed_at": "2026-10-24T12:42:09.534886Z",
+    "live_url": "https://hearing-union.ahaugedk.chatgpt.site"
   }
 }

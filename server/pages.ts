@@ -1,4 +1,4 @@
-export type PublicPageConfig = { publisherName?: string; supportUrl?: string };
+export type PublicPageConfig = { publisherName?: string; supportUrl?: string; hosted?: boolean };
 const escape = (value: string) => value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]!);
 export function renderPublicPage(path: string, config: PublicPageConfig = {}): string | null {
   const publisher = config.publisherName?.trim() ?? 'Luffe Hansen';
@@ -19,7 +19,14 @@ export function renderPublicPage(path: string, config: PublicPageConfig = {}): s
     '/connection': { title: 'Forbindelse og adgang', body: '<p>Den lokale MCP-server lytter kun på 127.0.0.1 og bruger særskilte udviklingskonti med lokale tokens. Den er ikke et offentligt endpoint og implementerer ikke Sites-login.</p><p>Sites-identitet, faktisk ChatGPT-forbindelse, eventmodtagelse og offentlig revieweradgang skal afprøves særskilt før deployment. Kopiér aldrig lokale udviklingstokens til et Site.</p>' },
   };
   if (path === '/purpose') path = '/';
+  if(config.hosted) {
+    pages['/'].body='<p>Find kildebaseret viden, vælg egne interesser og tilmeld dig foredrag gennem ChatGPT. Informationen er ikke personlig diagnosticering.</p><p>Det private Site bruger ChatGPT Sites’ indbyggede identitet. Tjenesten er under afprøvning før offentlig udgivelse.</p>';
+    pages['/connection'].body='<p>Sites autentificerer brugeren og leverer det stabile bruger-id til /mcp. Appen har ingen egne login-, callback- eller sessionroutes. Roller og adgang til egne data kontrolleres i databasen ved hvert kald.</p><p>Eventbeskeder kræver et særskilt, udtrykkeligt tilvalg. Faktisk ChatGPT-forbindelse og modtagelse af eventbeskeder skal godkendes gennem den normale platformafprøvning før offentlig udgivelse.</p>';
+    pages['/privacy'].title='Privatliv i udviklingsversionen';
+    pages['/privacy'].body=pages['/privacy'].body.replace('Lokale sikkerhedskopier','Sikkerhedskopier').replace('Brug syntetiske data i denne udviklingsversion.','Hosting bruger Cloudflare Workers og D1 med Sites’ indbyggede identitet. Brug syntetiske data under afprøvningen.');
+    pages['/terms'].body=pages['/terms'].body.replace('lokal udviklingsversion','udviklingsversion');
+  }
   const page = pages[path];
   if (!page) return null;
-  return `<!doctype html><html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escape(page.title)}</title><style>body{font:1rem/1.6 system-ui;max-width:48rem;padding:1.5rem;margin:auto;color:#172b35;background:#fff}nav{display:flex;flex-wrap:wrap;gap:1rem}a{color:#075c96}a:focus-visible{outline:3px solid #075c96;outline-offset:3px}</style></head><body><nav aria-label="Information"><a href="/">Formål</a><a href="/privacy">Privatliv</a><a href="/terms">Vilkår</a><a href="/support">Support</a><a href="/connection">Forbindelse</a></nav><main><h1>${escape(page.title)}</h1>${page.body}</main><footer><p>Lokal udviklingsversion · ikke udgivet</p></footer></body></html>`;
+  return `<!doctype html><html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escape(page.title)}</title><style>body{font:1rem/1.6 system-ui;max-width:48rem;padding:1.5rem;margin:auto;color:#172b35;background:#fff}nav{display:flex;flex-wrap:wrap;gap:1rem}a{color:#075c96}a:focus-visible{outline:3px solid #075c96;outline-offset:3px}</style></head><body><nav aria-label="Information"><a href="/">Formål</a><a href="/privacy">Privatliv</a><a href="/terms">Vilkår</a><a href="/support">Support</a><a href="/connection">Forbindelse</a></nav><main><h1>${escape(page.title)}</h1>${page.body}</main><footer><p>${config.hosted ? 'Udviklingsversion · under afprøvning' : 'Lokal udviklingsversion · ikke udgivet'}</p></footer></body></html>`;
 }

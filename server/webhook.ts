@@ -3,7 +3,7 @@ import { lookup } from 'node:dns/promises';
 import { isIP } from 'node:net';
 import { createHmac } from 'node:crypto';
 import { DomainError } from './domain.js';
-export type WebhookTransport = (url:string, body:string, headers:Record<string,string>, authorize?:()=>void)=>Promise<{status:number;body:string}>;
+export type WebhookTransport = (url:string, body:string, headers:Record<string,string>, authorize?:()=>void|Promise<void>)=>Promise<{status:number;body:string}>;
 export function callbackUrl(input:string): URL {
  let url:URL;try{url=new URL(input);}catch{throw new DomainError('INVALID_INPUT','Ugyldig callback-URL.');}
  if(url.protocol!=='https:'||url.username||url.password||url.hash||url.port&&url.port!=='443')throw new DomainError('INVALID_INPUT','Callback kræver HTTPS på port 443 uden credentials eller fragment.');
@@ -56,7 +56,7 @@ export const secureWebhook:WebhookTransport=async(input,body,headers,authorize)=
  if(!addresses.length||addresses.some(a=>!isPublicAddress(a.address)))throw new DomainError('CALLBACK_BLOCKED','Callbackdestinationen er ikke en offentlig adresse.');
  const address=addresses[0];
  // DNS lookup was asynchronous: authorization is checked again immediately before opening the pinned connection.
- authorize?.();
+ await authorize?.();
  if(Buffer.byteLength(body)>256*1024)throw new DomainError('CALLBACK_TOO_LARGE','Webhookpayload er for stor.');
  return new Promise((resolve,reject)=>{
   const req=https.request(url,{method:'POST',headers:{...headers,'Content-Length':String(Buffer.byteLength(body))},agent:false,servername:isIP(hostname)?undefined:hostname,

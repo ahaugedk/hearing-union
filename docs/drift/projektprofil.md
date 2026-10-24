@@ -12,12 +12,12 @@ Profilen beskriver det tilgængelige cloud-miljø. Den hostede Sites-runtime er 
 |---|---|
 | Projektnavn og produktejer | Høreforeningens ChatGPT-app; Anders |
 | Produktfase | Før første produktions-v1; lokale domænefunktioner, kildeimport, MCP Apps, events og drift implementeret; smoke og målrettede kontroller består; fuld MVP er ikke leveret |
-| Kildekode og integrationsgren | ahaugedk/hearing-union; main. HTTPS Git-læsning virker; push er ikke afprøvet |
+| Kildekode og integrationsgren | ahaugedk/hearing-union; main; implementeret udgangspunkt på orchestration/platform-readiness. Deploymentarbejdet ligger på deployment/cloudflare-sites |
 | Orkestrator, arbejder- og reviewværktøjer | `/root`; navngivne underagenter til afgrænset arbejde og uafhængigt review |
 | Arbejdsmapper, grenform og miljøejere | `/workspace/hearing-union`, ejet af `/root`; denne cloud-task er isoleret. Brug eksisterende checkout, og opret kun worktree ved udtrykkelig bestilling. Parallelle skrivere kræver adskilte ejergrænser og grene |
 | Adskilte porte, data og samtidige miljøer | Ikke udfyldt |
 | Statisk kontrol eller build | `npm ci`, `npm run build` og `python3 scripts/check_okf.py` fra projektroden. Node 24+; Python 3.9+ til dokumentkontrol |
-| Opstart med aktuel kode | `npm run dev` fra projektroden; lokal Node/SQLite-adapter, kun 127.0.0.1. Sites-deployment er udskudt |
+| Opstart med aktuel kode | `npm run dev` fra projektroden; lokal Node/SQLite-adapter, kun 127.0.0.1. hostet adapter: server/worker.ts med D1 og Sites-identitet |
 | Smoke-kommando mod kørende miljø | `npm run smoke` starter eget lokalt miljø og afprøver autentificeret MCP, foredragstilmelding og genfinding efter genstart. Validerer ikke Sites-login eller faktisk ChatGPT-forbindelse |
 | Mindste kerneforløb og normale indgange | Lokal Bearer-identitet, ejer publicerer foredrag, bruger tilmelder gennem MCP og genfinder efter genstart; anden konto ser ingen af tilmeldingerne |
 | Kerneflader og relevant mobilbredde | Ikke udfyldt; 390 px er et muligt udgangspunkt |
@@ -29,6 +29,6 @@ Profilen beskriver det tilgængelige cloud-miljø. Den hostede Sites-runtime er 
 | Kildeimport | `npm run import:knowledge -- --verify-sources`; 25 verificerede kildeposter. Genkørsel bevarer eksisterende poster; `--refresh` kræver konkrete slugs |
 | Eventkø | Første forsøg startes efter publicering. `npm run events:drain` udfører en begrænset lokal køpassage; særskilt serviceautentificeret `POST /internal/deliveries/drain` kan kaldes af en senere host-trigger. Ingen vedvarende trigger er aktiveret |
 | Lokal backup og restore | `npm run backup -- backup .local/hearing-union.sqlite NY-FIL` og `npm run backup -- restore BACKUP NY-FIL`; eksisterende destinationer overskrives ikke. Den matchende eventkrypteringsnøgle skal sikres separat |
-| Deployment og driftsansvar | Eksisterende Site: https://hearing-union.ahaugedk.chatgpt.site (oplyst af Anders). Uautentificeret HTTP-kald svarer 401; indhold og kobling til dette checkout er ikke verificeret. Deployment er fortsat udskudt. Ingen Sites-/automationsværktøjer er eksponeret her |
+| Deployment og driftsansvar | Eksisterende Site: https://hearing-union.ahaugedk.chatgpt.site. Projekt-id ligger i `.openai/hosting.json`. Worker-build, logisk D1-binding og Sites-identitet følger [deploymentvejledningen](../../release/README.md). Sites-værktøjer, Sites-provisionering og identitetsvideresendelse skal verificeres før aktivering |
 
 Kerneforløbet skal være lille og repræsentativt: faktisk login, central brugerhandling, gemt og genfundet resultat og eventuel agent- eller API-indgang, hvis den er central for produktet. Den ændrede feature afprøves særskilt uden at vokse ind i smoke. Profilen er ingen kørsel eller leveringsrapport.

@@ -1,30 +1,57 @@
-# Udkast til offentlig pluginpakke
+# Deployment til det eksisterende private Site
 
-Dette er redaktionelt reviewmateriale, **ikke en uploadklar pakke**. Intet er indsendt, godkendt eller publiceret. `plugin.json` følger Agent Plugins-formatets metadata og placerer OpenAI-felter under `extensions.com.openai`. Det er ikke et Sites-hostingmanifest.
+Bevar https://hearing-union.ahaugedk.chatgpt.site og projekt `appgprj_6adb6ca4b9a0819187d043ebb4c091a5`. [.openai/hosting.json](../.openai/hosting.json) deklarerer projektet og den logiske D1-binding `DB`; Sites skal provisionere og forbinde databasen. Ingen egen Cloudflare-konto, ekstern OAuth-udsteder, audience eller eksisterende database-id skal konfigureres.
 
-Udgiver er angivet som Luffe Hansen efter produktejerens oplysninger. Support er Høreforeningen, `mail@hoereforeningen.dk`, Blekinge Boulevard 2, 2630 Taastrup. Adressen og kontaktvejen er kildekontrolleret på [foreningens kontaktside](https://hoereforeningen.dk/kontakt-os). Disse oplysninger dokumenterer ikke juridisk mandat, verificeret udgiveridentitet eller accepterede vilkår.
+## Byg, kontrollér og pak
 
-Listingens fire HTTPS-adresser bruger det eksisterende Site som planlagt base. Det anonyme Site-kald har svaret 401; ingen af undersidernes hostede indhold eller revieweradgang er derfor verificeret. Lokale informationssider er udviklingstekster, ikke godkendte produktionsvilkår.
+Kræver Node 24+ og Python 3.9+. Fra projektroden:
 
-## Før pakken kan uploades og indsendes
+```sh
+npm ci
+npm run build
+npm run smoke
+npm run smoke:worker
+npm run check:deployment
+npm run check:docs
+npm run pack
+```
 
-- Verificér Sites-kildekodekobling, D1, serverafledt stabil identitet, login og adgangsisolering. Udfyld derefter en rigtig `mcp.json` med den verificerede HTTPS-MCP-adresse og authkonfiguration. Filen er bevidst udeladt her: et beskyttet endpoint må ikke deklareres som uden auth, og der indsættes ingen fiktive credentials. Serveren skal være med ved første MCP-pluginupload; en senere konvertering fra skills-only understøttes ikke.
-- Bekræft udgiverens organisations-/projektadgang og individuelle eller erhvervsmæssige verifikation i portalen. Vælg den faktiske kategori fra dashboardets tilladte kategorier; feltet er udeladt frem for at gætte. Fastlæg eventuelle landebegrænsninger særskilt.
-- Afprøv reviewerens normale hostede loginvej. Den officielle portal understøtter OAuth, ingen auth eller mixed adgang; Sites-loginets samlede kompatibilitet skal demonstreres. Gennemfør domænechallenge på den præcise adresse og med den præcise token fra portalen. Opret ingen token på forhånd.
-- Forbered syntetisk reviewdata: to adskilte brugerkonti, en administrator med særskilt adgang, en reviewpost og fremtidige foredrag med matchende/ikke-matchende filtre. Indtast reviewercredentials og private logininstruktioner **kun i dashboardets sikre Review details**, aldrig i pakken. Login skal virke uden menneskelig MFA-godkendelse, engangskoder, magic links eller privat netværksadgang.
-- Kør samtlige fem positive og tre negative cases i manifestet gennem den faktiske ChatGPT-forbindelse. Cases er forventet adfærd, ikke allerede beståede hosttests. Eventcasen kræver understøttet Work/Cloud-host, faktisk modtagelse i inaktiv chat og en vedvarende retry-trigger. Kontroller begge MCP Apps visuelt på desktop og mobil samt efter tilbagekaldt rolle.
-- Optag en reel, reviewer-tilgængelig gennemgang og udfyld `review.demo_recording_url`. Der er ingen eksempelvideo, dummy-URL eller opdigtede screenshots i udkastet. Tilføj kun faktiske screenshots efter gennemgangen.
-- Gennemgå offentlige formåls-, support-, privatlivs- og vilkårssider, datalivscyklus, nøglehåndtering og D1-backup/restore. Bekræft at listingens fire URL’er er tilgængelige som tilsigtet. Endelige juridiske vilkår og ansvar skal være fastlagt før udgivelse.
-- Udfyld den faktiske pakkelicens; ingen licens er antaget i manifestet. Pak alle refererede filer korrekt, løs portalfund og indsend først derefter til review. Godkendelse og efterfølgende publicering er særskilte trin.
+`build` typekontrollerer, bygger begge MCP Apps som tekstmoduler, kontrollerer den versionerede D1-migration og udfører kun Wrangler dry-run. Outputtet er `dist/worker/worker.js` med to tekstmoduler; det er en Worker, ikke en statisk `index.html`-mappe. Arkivet `dist/hearing-union-deployment.tar.gz` indeholder Worker, tekstmoduler, `.openai/hosting.json`, `db/migrations/0001_initial.sql`, portabel Wrangler-konfiguration, kildeudsnit og pluginmetadata. Ingen lokale databaser, udviklingstokens eller nøglemateriale indgår.
 
-## Officielt logo som kildemateriale
+I dette administrerede miljø uden skrivbar standardkonfigurationsmappe kan Wrangler køres med `XDG_CONFIG_HOME=/tmp/hearing-config`; npm kan bruge `--cache /tmp/hearing-npm-cache`. Bevar miljøets proxy og CA-tillid.
 
-`../assets/hoereforeningen-source-logo.svg` er hentet uændret over HTTPS den 23. oktober 2026 fra hjemmesidens [officielle logo-URL](https://hoereforeningen.dk/sites/hoereforeningen.dk/themes/novus/logo.svg). SVG’en indeholder lokale vektorformer og ingen scripts eller eksterne billedreferencer. Licens og ret til distribution i en offentlig pluginpakke er ikke fastlagt; tilstedeværelsen er ingen godkendelse af brugen.
+## Identitet og roller
 
-Originalens dimensioner er 300 × 47. Den opfylder ikke indsendelsens krav om et kvadratisk ikon på mindst 48 × 48. Den er derfor ikke deklareret som `logo` eller `composerIcon`. Der er ikke tegnet ny branding, omformet et logo eller fabrikeret en mørk variant. Tilføj et kvadratisk appikon, før obligatoriske ikonfelter udfyldes.
+Sites leverer `oai-authenticated-user-id`, `oai-authenticated-user-email` og eventuelt `oai-authenticated-user-full-name`. Appen bruger kun det stabile **user-id** som subject. E-mail og navn giver ingen rettigheder og gemmes ikke uden produktbehov. Manglende eller ugyldigt user-id afvises; et Bearer-token eller en e-mail alene er utilstrækkeligt. Der findes ingen egne login-, callback-, OAuth-metadata- eller sessionroutes.
 
-## Officielt formatgrundlag
+Det private Sites-ingress er tillidsgrænsen: platformen skal fjerne klientangivne identitetsheaders og indsætte den autentificerede bruger. Workeren må kun være tilgængelig gennem det eksisterende Site; `workers_dev`, preview-URL'er og separate offentlige routes er deaktiveret. Lokal headerinjektion i smoke simulerer platformen og beviser ikke den faktiske ingressbeskyttelse.
 
-- [Offentlig indsendelse og Agent Plugins-manifest](https://developers.openai.com/plugins/deploy/submission): metadata, feltgrænser, præcis fem positive og tre negative cases, sikker revieweradgang og ikonkrav.
-- [Agent Plugins-schema](https://agent-plugins.org/schemas/1.0.0/plugin.schema.json): deklareret format; denne leverance er et ufuldstændigt indsendelsesudkast, ikke dokumentation for portalvalidering.
-- [MCP Events](https://developers.openai.com/plugins/build/mcp-events): understøttede hosts, abonnementer, signeret webhooklevering og callbackverifikation.
+Sitet er foreløbig privat til ejeren. Ved første autentificerede domænekald etableres denne bruger atomisk som ejer; den gemte ejer er derefter autoritativ. Efterfølgende bruger-id'er får almindelig brugerrolle, også hvis e-mailadressen matcher ejerens. Bevar privat ejeradgang, til ejeren er etableret, og verificér ejerrollen før deling udvides. Der er ikke et konfigurationskrav om et manuelt ejer-subject. Alle rolleændringer og adgang til egne data kontrolleres i databasen.
+
+## D1 og migrationer
+
+`db/schema.sql`, `db/events.sql`, `db/operations.sql`, `db/concurrency.sql` og `db/runtime.sql` ejer skemaet. `npm run db:generate` regenererer den versionerede første migration før produktions-v1. Build afviser drift mellem skemafiler og migration. Skema oprettes aldrig under requests; Sites skal anvende den pakkede migration ved deployment. `npm run db:local` anvender den kun på lokal D1.
+
+`0001_initial.sql` er før-v1-grundskemaet og ikke en datamigration til en ukendt produktionsdatabase. Sites skal bevare bindingen og data ved efterfølgende deployment. Eksisterende lokal SQLite, lokale tokens og lokale krypteringsnøgler kopieres ikke automatisk til det hostede miljø. Inden en eksisterende database ændres, skal skema og backup være kendt; nulstil ingen data som del af deploymentforberedelsen.
+
+Domæneændringer samles i en atomisk D1-batch med revisionskontrol. En revisionskonflikt genlæses og genprøves højst otte gange; en ukendt netværks-/skrivefejl genafspilles ikke automatisk. Ingen netværkslevering udføres i en transaktion, der kan genprøves. Forespørgsler opdeles efter D1's parametergrænse.
+
+## Events, nøglemateriale og kildeimport
+
+Abonnementer, filtre, lease, genlevering og signering bruger de eksisterende domænefunktioner. Workeren har en scheduled-handler og cron-deklaration; faktisk understøttelse af tidsstyret genlevering skal verificeres i Sites før dette loves som aktiveret. Efter publicering forsøger Workeren også en begrænset levering via `waitUntil`.
+
+En tilfældig eventkrypteringsnøgle genereres ved første brug og gemmes i D1, så deployment og Worker-genstart ikke mister abonnementernes nøgler. Der findes ingen fast eller manuelt indsat nøgle i kode, manifest eller pakke. D1-adgang og fulde eksporter skal beskyttes som hemmeligheder: backup indeholder både applikationsnøglen og krypterede abonnementer og giver derfor ikke nøgleadskillelse. Lokal udvikling beholder sin eksisterende ejerbeskyttede nøglefil uden for SQLite. Kopiér aldrig udviklingsnøgler til sitet.
+
+`EVENT_CALLBACK_HOSTS` er en valgfri kommasepareret liste over præcise betroede ChatGPT-callbackværter, uden wildcard. Indtil de faktiske værter er verificeret, afvises nye callbackdestinationer sikkert; resten af appen fungerer. Ingen ekstra hemmelighed kræves. HTTPS-levering har størrelses- og tidsgrænser og følger ikke redirects. `PUBLISHER_NAME` og `SUPPORT_URL` kan valgfrit tilpasse de eksisterende udgiveroplysninger.
+
+Det kuraterede kildeudsnit følger med som `knowledge.json` i pakken. Import til hostet D1 skal ske gennem ejerens autentificerede administrationsværktøjer og de fælles domæneregler. Den eksisterende lokale kommando `npm run import:knowledge -- --verify-sources` fungerer fortsat; genkørsel bevarer eksisterende poster, og `--refresh` kræver konkrete slugs. Importér ikke ved at sende selvvalgte Sites-identitetsheaders til en offentlig endpoint eller ved at kopiere lokale konti.
+
+## Platformafprøvning ved aktivering
+
+1. Læs det eksisterende Site og dets kildekode med Sites-værktøjerne. Bevar projekt-id og privat ejeradgang; opret intet nyt Site.
+2. Kontrollér deploymentkontrakten mod den faktiske Sites-starter, herunder manifestets logiske DB-binding, migrationernes placering og Workerens tekstmoduler. Lad Sites provisionere/forbinde D1 og anvende migrationen; brug ingen privat Cloudflare-konto eller database-id.
+3. Gem en version af det eksisterende projekt og deploy kun gennem Sites' normale workflow, når det er bestilt.
+4. Afprøv `/health`, ejerens stabile identitet og rolle, begge MCP Apps, viden, præferencer og foredrag. Bekræft at klientangivne identitetsheaders ikke kan ændre bruger eller rolle gennem platformens ingress. Verificér kontoisolation med en særskilt konto, når sitets deling senere udvides.
+5. Afprøv faktisk eventmodtagelse i ChatGPT og understøttet tidsstyret genlevering. Bevar platformens D1-data og genererede nøgle ved en ny version. Afklar offentligt review og juridiske driftsvilkår før offentlig udgivelse.
+
+Denne session eksponerer fortsat ingen Sites-værktøjer til læsning, kildekodeadgang, versionslagring eller deployment. Derfor kan den konkrete platformkontrakt, D1-provisionering, ingressbeskyttelse og faktisk ChatGPT-eventmodtagelse først endeligt verificeres i en session med de værktøjer. Pakken og lokal workerd/D1-validering er forberedt uden at deploye eller oprette eksterne ressourcer.

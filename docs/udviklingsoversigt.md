@@ -12,3 +12,5 @@ status: "stable"
 - 23. oktober 2026: Lokale eventabonnementer og leveringskø, 25 kildeposter, anonym statistik, backup/restore og reviewudkast med brugerens kontaktoplysninger. Commit `2b821c7`.
 
 Registrering følger [completion](arbejdsregler/planer/levering/completion.md) og beviser ikke i sig selv, at en capability virker.
+
+- 2026-10-24: Fælles asynkron persistens, Cloudflare Worker/D1, Sites’ indbyggede brugeridentitet og reproducerbar deploymentpakke til det eksisterende Site; se Git-commit på deployment/cloudflare-sites. Ekstern aktivering kræver Sites-provisionering og platformadgang.

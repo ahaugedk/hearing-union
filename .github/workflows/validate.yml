@@ -1,0 +1,30 @@
+name: Validate deployment package
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          WRANGLER_SEND_METRICS: 'false'
+      - run: npm run smoke
+      - run: npm run smoke:worker
+      - run: npm run check:deployment
+      - run: npm run check:docs
+      - run: npm run pack
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hearing-union-deployment
+          path: dist/hearing-union-deployment.tar.gz
+          if-no-files-found: error

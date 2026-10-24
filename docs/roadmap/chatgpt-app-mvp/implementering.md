@@ -30,7 +30,7 @@ Anders har efterfølgende bestilt lokal udvikling uden at afvente Sites-deployme
 | 7: udgivelsesklarhed | [Sider, datalivscyklus, drift og reviewadgang](kontrakter/udgivelse.md) | Afprøvet platformgrundlag og fuldt brugerflow | Kontosletning og reviewerens normale adgang virker med syntetiske data |
 | 8: samlet gennemgang | Integreret capability, løste arkitektur-/UI-fund og klargjort offentlig indsendelse | Hele aftalte scope og konkret publiceringsmandat | Alle målforløb kan gennemføres gennem normale indgange; deployment og ekstern reviewstatus skelnes |
 
-Faserne angiver rækkefølge, ikke tilladelse til at reducere v1 til et tidligt udsnit. Offentlige reviewkrav undersøges tidligt og færdiggøres i fase 7. Der er ingen aktuel parallel bestilling; ved senere igangsættelse fordeler orkestratoren kodeejerskab, grene og fælles kontrakter gennem arbejdsoversigten.
+Faserne angiver rækkefølge, ikke tilladelse til at reducere v1 til et tidligt udsnit. Offentlige reviewkrav undersøges tidligt og færdiggøres i fase 7. Den [minimale installations- og reviewwebdel](kontrakter/udgivelse.md) er særskilt bestilt; den udvider ikke produktet med en hjemmeside ved siden af ChatGPT. Orkestratoren fordeler kodeejerskab, grene og fælles kontrakter gennem arbejdsoversigten.
 
 ## Validering gennem udviklingen
 

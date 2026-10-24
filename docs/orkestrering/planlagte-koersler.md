@@ -12,7 +12,7 @@ ChatGPT-automationen **Hearing Union koordinering** er aktiveret med timebaseret
 |---|---|---|---|
 | Hearing Union koordinering | Hver time; Europe/Copenhagen | Aktiveret i ChatGPT | Denne projektsamtale, `/root`, efter mandatet |
 
-Prompten læser AGENTS, relevante planer, mandat, arbejdsoversigt og GitHub-afleveringer. Den kontrollerer eksisterende arbejdere før bestilling, delegerer implementering til underagenter og beholder arkitekturreview, code review, slutbrugertest og deployment hos orkestratoren. [Udgivelseskontrakten](../drift/sites-udgivelse.md) gælder også ved genoptagelse; allerede udgivne commits springes over. Dokumentændringer udløser ikke alene en ny produktudgivelse.
+Prompten læser AGENTS, relevante planer, mandat, arbejdsoversigt og GitHub-afleveringer. Den kontrollerer eksisterende arbejdere før bestilling, delegerer implementering til underagenter og beholder arkitekturreview, code review, slutbrugertest og deployment hos orkestratoren. Nye svar i indbakkens registrerede HU-Q-mailtråde behandles efter [afklaringsarbejdsgangen](afklaringer/arbejdsgang.md). [Udgivelseskontrakten](../drift/sites-udgivelse.md) gælder også ved genoptagelse; allerede udgivne commits springes over. Dokumentændringer udløser ikke alene en ny produktudgivelse.
 
 Giv kun besked efter en handling, fejl eller et nødvendigt svar. Hver fremtidig kørsel verificerer selv adgang til GitHub, terminal, underagenter og Sites og registrerer præcise begrænsninger. Aktivering beviser ikke, at alle fremtidige værktøjskald eller tests kan gennemføres.
 

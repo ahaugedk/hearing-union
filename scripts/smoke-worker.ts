@@ -25,9 +25,9 @@ const runtime=new Miniflare(convertV4MiniflareOptions({
 }));
 try {
   const db=await runtime.getD1Database('DB');
-  // D1 exec parses lines; preserve trigger bodies by executing each complete statement.
-  const schema=await readFile('dist/migrations/0001_initial.sql','utf8');
-  const statements=schema.match(/\s*CREATE TRIGGER[\s\S]*?\bEND;|[^;]+;/g)??[];
+  // Exercise the same Drizzle statement boundaries that Sites consumes.
+  const schema=await readFile('dist/.openai/drizzle/0001_initial.sql','utf8');
+  const statements=schema.split('--> statement-breakpoint');
   for(const sql of statements)await db.prepare(sql).run();
   let id=0;
   const rpc=async(name:string,args:unknown={},subject='fixture-owner')=>{

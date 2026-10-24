@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "status": "ready",
+  "status": "not_ready",
   "source": {
-    "branch": "deployment/cloudflare-sites",
-    "commit": "a34ba04ff4e621ef9acc64073792113cba58fca5"
+    "branch": "fix/sites-d1-manifest",
+    "commit": "3baf2c2f0459dcd680a5c6f3b58800451da1ab32"
   },
   "validation": {
-    "result": "passed",
+    "result": "not_run",
     "commands": [
       "npm ci --cache /tmp/hearing-npm-cache --loglevel=error",
       "npm run build",
@@ -18,9 +18,8 @@
       "npm run check:package"
     ],
     "notes": [
-      "Alle dokumenterede valideringskommandoer bestod på den oprindelige deploymentleverance.",
-      "GitHub Actions Validate deployment package bestod efter reviewrettelserne i source.commit; Worker-smoke dækker nu flere valgte emner, og deployment-gaten bruger behaviorale identitetskontroller.",
-      "source.commit er den deployerbare kodecommit. PR-head kan være en senere handoff- eller integrationscommit."
+      "Sites rejected the prior archive before deployment because d1_databases is not a valid hosting manifest field.",
+      "The manifest now uses the Sites-native d1 object and awaits the full GitHub Actions validation workflow."
     ]
   },
   "database": {
@@ -35,7 +34,9 @@
     "Fælles asynkron SQLite/D1-persistens bevarer viden, foredrag, præferencer, roller, statistik og eventkø; deterministisk pakke kan bygges fra Git uden secrets.",
     "Sites-udgiveren ejer publicering, migrationsanvendelse og livekontrol. Kontrollér runtime-callbackværter og understøttet genlevering, før live eventlevering erklæres aktiveret."
   ],
-  "blockers": [],
+  "blockers": [
+    "Awaiting GitHub Actions validation of the corrected Sites manifest."
+  ],
   "deployment": {
     "site_version": null,
     "deployed_commit": null,

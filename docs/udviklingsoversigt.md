@@ -6,6 +6,8 @@ status: "stable"
 ---
 # Færdige forbedringer
 
+- 2026-10-24 — Minimale informationssider forberedt til anonym læsning uden database; beskyttede værktøjer og privat Sites-adgang bevaret, ubekræftet supportkontakt fjernet. Udgivet som privat version 7 — [PR #19](https://github.com/ahaugedk/hearing-union/pull/19).
+
 - 2026-10-24 — 25 kildeposter publiceret gennem native adminværktøjer; live kilde-/udløbs- og syntetisk tilmeldingsforløb samt aggregeret statistik afprøvet. Officielle ikoner indgår i den eksisterende reviewpakke; samlet accept og offentlig review er fortsat åbne — [PR #18](https://github.com/ahaugedk/hearing-union/pull/18).
 
 - 2026-10-24 — Afgrænset administratorværktøj til event-genforsøg og officielle reviewikoner/farver; faktisk eventaktivering og offentlig review er fortsat åbne — [PR #16](https://github.com/ahaugedk/hearing-union/pull/16), [PR #17](https://github.com/ahaugedk/hearing-union/pull/17).

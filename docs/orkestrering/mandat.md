@@ -6,7 +6,7 @@ status: "stable"
 ---
 # Mandat for udviklingsorkestrering
 
-Anders har igangsat [MVP'en](../roadmap/chatgpt-app-mvp/vision.md). Bestillingen den 24. oktober 2026 fastlægger udvikling i denne projektsamtale med underagenter; Codex Cloud indgår ikke. Timebaseret genoptagelse fortsætter efter [planlagte kørsler](planlagte-koersler.md). Mandatet godkender ingen nye væsentlige produktvalg. [Projektprofilen](../drift/projektprofil.md) ejer værktøjer og miljøer.
+Anders har igangsat [MVP'en](../roadmap/chatgpt-app-mvp/vision.md). Bestillingen den 24. oktober 2026 fastlægger udvikling i denne projektsamtale med underagenter; Codex Cloud indgår ikke. Planlagt genoptagelse er efterfølgende standset af Anders; aktuel status står i [planlagte kørsler](planlagte-koersler.md). Mandatet godkender ingen nye væsentlige produktvalg. [Projektprofilen](../drift/projektprofil.md) ejer værktøjer og miljøer.
 
 | Mandatfelt | Faktisk aftale |
 |---|---|

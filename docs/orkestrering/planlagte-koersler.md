@@ -1,19 +1,13 @@
 ---
 type: "Operational Configuration"
 title: "Planlagte udviklingskørsler"
-description: "Opsætning, faktisk aktivering og pause er forskellige oplysninger."
+description: "Faktisk aktivering, pause og genoptagelse dokumenteres her."
 status: "stable"
 ---
 # Planlagte udviklingskørsler
 
-ChatGPT-automationen **Hearing Union koordinering** er aktiveret med timebaseret kadence i Europe/Copenhagen. Den genoptager orkestratorens arbejde i `ahaugedk/hearing-union` efter [mandatet](mandat.md). Faktisk aktivering og seneste resultat kontrolleres gennem automationsværktøjet.
+**Standset efter Anders’ bestilling den 24. oktober 2026.** Den eksisterende ChatGPT-opgave **Hearing Union koordinering** er deaktiveret. Opret ingen erstatning og genaktivér ikke uden en ny bestilling.
 
-| Kørsel eller pulje | Kadence eller udløser | Faktisk status | Ansvar og aktiveringsgrundlag |
-|---|---|---|---|
-| Hearing Union koordinering | Hver time; Europe/Copenhagen | Aktiveret i ChatGPT | Denne projektsamtale, `/root`, efter mandatet |
+Der starter ingen nye automatiske koordineringer, Gmail-svartjek eller kald til event-genforsøg. Gemte mailtråde og arbejdsstatus bevares; aktive samtaleopgaver kan færdiggøres efter [mandatet](mandat.md).
 
-Prompten læser AGENTS, relevante planer, mandat, arbejdsoversigt og GitHub-afleveringer. Den kontrollerer eksisterende arbejdere før bestilling, delegerer implementering til underagenter og beholder arkitekturreview, code review, slutbrugertest og deployment hos orkestratoren. Nye svar i indbakkens registrerede HU-Q-mailtråde behandles efter [afklaringsarbejdsgangen](afklaringer/arbejdsgang.md). [Udgivelseskontrakten](../drift/sites-udgivelse.md) gælder også ved genoptagelse; allerede udgivne commits springes over. Dokumentændringer udløser ikke alene en ny produktudgivelse. Efter verificeret native adminadgang kalder den samme opgave `admin_deliver_events` én gang med højst 25 forfaldne leveringer. Den opretter intet abonnement og ændrer ingen præferencer; tom kø er intet leveringsbevis. Den konfigurerede kadence er timebaseret, og faktisk senere genlevering verificeres særskilt.
-
-Giv kun besked efter en handling, fejl eller et nødvendigt svar. Hver fremtidig kørsel verificerer selv adgang til GitHub, terminal, underagenter og Sites og registrerer præcise begrænsninger. Aktivering beviser ikke, at alle fremtidige værktøjskald eller tests kan gennemføres.
-
-Dokumentér begrænsninger som appens levetid, sessionens tilgængelighed og maskinens dvale, hvor de faktisk gælder. Ved pause startes ingen ny runde; gem sikkert arbejdsgrundlag og commit. Faktisk rest og nulstillingstid noteres efter [kvoteværnet](kvotevaern.md). Genoptagelse følger [mandatet](mandat.md).
+Ved manuel genoptagelse læses [arbejdsoversigten](arbejdsoversigt.md), GitHub-status og eksisterende arbejdere først. De allerede publicerede commits gentages ikke. En eventuel senere planlagt genoptagelse skal genbruge den eksisterende opgave og verificere faktisk adgang; en gemt konfiguration beviser ingen udført kørsel.

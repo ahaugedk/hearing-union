@@ -1,6 +1,17 @@
-export type PublicPageConfig = { publisherName?: string; supportUrl?: string; hosted?: boolean };
+export type PublicPageConfig = { publisherName?: string; supportUrl?: string; chatGPTAppUrl?: string; hosted?: boolean };
 const escape = (value: string) => value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]!);
+function installPage(address?: string): string {
+  let destination: string | undefined;
+  if (address?.trim()) {
+    try {
+      const url = new URL(address.trim());
+      if (url.protocol === 'https:' && url.hostname === 'chatgpt.com' && !url.port && !url.username && !url.password && /^\/(?:apps|plugins)\/[^/]+(?:\/[^/]+)*\/?$/.test(url.pathname)) destination = url.href;
+    } catch { /* Invalid configuration is an unavailable installation, never a guessed link. */ }
+  }
+  return `<!doctype html><html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Installér Høreforeningens app</title><style>*{box-sizing:border-box}body{margin:0;min-height:100svh;display:grid;place-items:center;padding:1.5rem;font:1.1rem/1.5 system-ui;background:#f7faf9;color:#14352f}main{text-align:center;max-width:30rem}a{display:inline-block;max-width:100%;padding:1rem 1.5rem;border-radius:.75rem;background:#143f35;color:#fff;font-weight:650;text-decoration:none;overflow-wrap:anywhere}a:hover{background:#205b4c}a:focus-visible{outline:3px solid #0b7462;outline-offset:5px}p{margin:0}</style></head><body><main aria-label="Høreforeningens app">${destination ? `<a href="${escape(destination)}">Installér Høreforeningens app i ChatGPT</a>` : '<p role="status">Høreforeningens app er endnu ikke klar til installation i ChatGPT.</p>'}</main></body></html>`;
+}
 export function renderPublicPage(path: string, config: PublicPageConfig = {}): string | null {
+  if (path === '/' || path === '/purpose') return installPage(config.chatGPTAppUrl);
   const publisher = config.publisherName?.trim() ?? 'Luffe Hansen';
   let support: string | undefined;
   const supportAddress = config.supportUrl ?? 'mailto:mail@hoereforeningen.dk';
@@ -12,15 +23,12 @@ export function renderPublicPage(path: string, config: PublicPageConfig = {}): s
     support = url.href;
   }
   const pages: Record<string, { title: string; body: string }> = {
-    '/': { title: 'Høreforeningens ChatGPT-app', body: '<p>Find kildebaseret viden, vælg egne interesser og tilmeld dig foredrag gennem ChatGPT. Informationen er ikke personlig diagnosticering.</p><p>Dette er en lokal udviklingsversion. Der er endnu ingen udgivet Sites-forbindelse eller offentlig godkendelse.</p>' },
     '/privacy': { title: 'Privatliv i den lokale udviklingsversion', body: '<p>Databasen gemmer en serverafledt kontoidentitet, rolle, udtrykkeligt valgte emner og områder samt tilmeldinger. Eventabonnementer kan gemme filtre, callback, krypteret signeringsnøgle, udløb og leveringsstatus.</p><p>Kontodata, præferencer og tilmeldinger opbevares, indtil kontoen slettes. Sletning fjerner kontoens personlige data og abonnementer; nødvendige indholdsrevisioner og administratorhandlinger bevares uden reference til den slettede konto. Ejerkontoen kan ikke slettes med det almindelige kontoværktøj.</p><p>Indholdsrevisioner og aggregerede tællere har ingen automatisk slettefrist i udviklingsversionen. Tællerne indeholder ikke samtaletekst, søgetekst, IP-adresser eller bruger-id. Hashbaseret ratebegrænsning udløber efter ét minut; udløbne rækker ryddes ved næste autentificerede kald.</p><p>Lokale sikkerhedskopier kan indeholde kontodata. Miljøejeren skal beskytte og slette dem særskilt; kontosletning fjerner ikke tidligere sikkerhedskopier. Brug syntetiske data i denne udviklingsversion. Frister og produktionsvilkår skal fastlægges før udgivelse.</p>' },
     '/terms': { title: 'Vilkår og begrænsninger', body: '<p>Dette er en lokal udviklingsversion til afprøvning med syntetiske data. Den er ikke en færdig offentlig tjeneste eller et tilbud om sundhedsfaglig behandling. Kontrollér kilder og aktuelle oplysninger.</p><p>Endelige brugsvilkår, udgiveroplysninger og driftsforpligtelser er ikke fastlagt her. Siden udgør ikke en påstand om godkendte juridiske vilkår.</p>' },
     '/support': { title: 'Support og udgiver', body: `<p>${publisher ? `Konfigureret udgiver: ${escape(publisher)}.` : 'Udgivernavn mangler. Miljøejeren skal angive PUBLISHER_NAME før udgivelse.'}</p><p>${support ? `<a href="${escape(support)}" rel="noopener noreferrer">Kontakt support</a>.` : 'Supportkontakt mangler. Miljøejeren skal angive en HTTPS-adresse i SUPPORT_URL før udgivelse.'}</p><address>Høreforeningen<br>Blekinge Boulevard 2<br>2630 Taastrup</address><p>Del ikke kontotokens, signeringsnøgler eller persondata i fejlbeskrivelser.</p>` },
     '/connection': { title: 'Forbindelse og adgang', body: '<p>Den lokale MCP-server lytter kun på 127.0.0.1 og bruger særskilte udviklingskonti med lokale tokens. Den er ikke et offentligt endpoint og implementerer ikke Sites-login.</p><p>Sites-identitet, faktisk ChatGPT-forbindelse, eventmodtagelse og offentlig revieweradgang skal afprøves særskilt før deployment. Kopiér aldrig lokale udviklingstokens til et Site.</p>' },
   };
-  if (path === '/purpose') path = '/';
   if(config.hosted) {
-    pages['/'].body='<p>Find kildebaseret viden, vælg egne interesser og tilmeld dig foredrag gennem ChatGPT. Informationen er ikke personlig diagnosticering.</p><p>Det private Site bruger ChatGPT Sites’ indbyggede identitet. Tjenesten er under afprøvning før offentlig udgivelse.</p>';
     pages['/connection'].body='<p>Sites autentificerer brugeren og leverer det stabile bruger-id til /mcp. Appen har ingen egne login-, callback- eller sessionroutes. Roller og adgang til egne data kontrolleres i databasen ved hvert kald.</p><p>Eventbeskeder kræver et særskilt, udtrykkeligt tilvalg. Faktisk ChatGPT-forbindelse og modtagelse af eventbeskeder skal godkendes gennem den normale platformafprøvning før offentlig udgivelse.</p>';
     pages['/privacy'].title='Privatliv i udviklingsversionen';
     pages['/privacy'].body=pages['/privacy'].body.replace('Lokale sikkerhedskopier','Sikkerhedskopier').replace('Brug syntetiske data i denne udviklingsversion.','Hosting bruger Cloudflare Workers og D1 med Sites’ indbyggede identitet. Brug syntetiske data under afprøvningen.');

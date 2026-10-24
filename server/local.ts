@@ -59,6 +59,7 @@ export async function startLocal(options: {
     port?: number;
     publisherName?: string;
     supportUrl?: string;
+    chatGPTAppUrl?: string;
     eventKeyPath?: string;
     serviceTokenPath?: string;
     webhook?: WebhookTransport;
@@ -67,7 +68,7 @@ export async function startLocal(options: {
     const authPath = options.authPath ?? resolve('.local/auth.json');
     mkdirSync(dirname(dbPath), { recursive: true });
     const auth = localAuth(authPath);
-    const pageConfig = { publisherName: options.publisherName ?? process.env.PUBLISHER_NAME, supportUrl: options.supportUrl ?? process.env.SUPPORT_URL };
+    const pageConfig = { publisherName: options.publisherName ?? process.env.PUBLISHER_NAME, supportUrl: options.supportUrl ?? process.env.SUPPORT_URL, chatGPTAppUrl: options.chatGPTAppUrl ?? process.env.CHATGPT_APP_URL };
     renderPublicPage('/support', pageConfig); // Reject invalid configuration at startup.
     const db = createDatabase(dbPath);
     const domain = new HearingUnion(db, { ownerSubject: auth.ownerSubject });

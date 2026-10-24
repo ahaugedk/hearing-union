@@ -8,6 +8,11 @@ const directory = await mkdtemp(join(tmpdir(), 'hearing-union-smoke-'));
 const config = { dbPath: join(directory, 'data.sqlite'), authPath: join(directory, 'auth.json'), port: 0 };
 let runtime = await startLocal(config);
 try {
+  const homepage=await fetch(`http://127.0.0.1:${runtime.port}/`);
+  assert.equal(homepage.status,200);
+  const homepageHtml=await homepage.text();
+  assert.match(homepageHtml,/endnu ikke klar til installation/);
+  assert.ok(!homepageHtml.includes('<a '),'Missing installation URL must not produce a guessed link');
   const auth = JSON.parse(await readFile(config.authPath, 'utf8')) as {accounts: {name:string;token:string}[]};
   const token = (name:string) => auth.accounts.find(account => account.name === name)!.token;
   let requestId = 0;

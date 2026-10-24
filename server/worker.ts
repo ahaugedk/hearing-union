@@ -15,6 +15,7 @@ export interface Env {
   EVENT_CALLBACK_HOSTS?: string;
   PUBLISHER_NAME?: string;
   SUPPORT_URL?: string;
+  CHATGPT_APP_URL?: string;
 }
 const SITE_ORIGIN='https://hearing-union.ahaugedk.chatgpt.site';
 async function services(env: Env) {
@@ -48,7 +49,7 @@ async function handle(request: Request, env: Env, ctx: ExecutionContext): Promis
       await db.prepare('SELECT revision FROM app_revision WHERE id=1').get();
       return json(200,{status:'ok',runtime:'cloudflare-workers',storage:'d1'});
     }
-    const page=renderPublicPage(url.pathname,{publisherName:env.PUBLISHER_NAME,supportUrl:env.SUPPORT_URL,hosted:true});
+    const page=renderPublicPage(url.pathname,{publisherName:env.PUBLISHER_NAME,supportUrl:env.SUPPORT_URL,chatGPTAppUrl:env.CHATGPT_APP_URL,hosted:true});
     if(page!==null) return new Response(page,{headers:{'content-type':'text/html; charset=utf-8','content-security-policy':"default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'"}});
   }
   if (url.pathname !== '/mcp') return json(404,{error:'Not found'});

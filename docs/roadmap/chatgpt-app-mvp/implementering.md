@@ -12,9 +12,9 @@ role: "implementation"
 
 ## Eksisterende afsæt
 
-Projektet har lokal Node/SQLite-kode med konti, roller, præferencesamtykke, importeret kildebaseret viden, foredrag, eventabonnementer, holdbar leveringskø, anonym statistik og en autentificeret MCP-indgang, valideret gennem lokale HTTP-kald. Lokale informationssider, ratebegrænsning og backup/restore findes. Begge MCP Apps har kilde og build, men den visuelle hostoplevelse er ikke afprøvet. Sites-hosting, faktisk ChatGPT-login, faktisk eventmodtagelse i inaktiv chat, vedvarende host-trigger og offentlig udgivelse er endnu ikke leveret. Projektet ligger i Git-repositoriet `ahaugedk/hearing-union`; `main` er integrationsgren. Den lokale delleverance afslutter ikke nogen af de fulde platformafhængige faser nedenfor.
+Projektet har lokal Node/SQLite-kode med konti, roller, præferencesamtykke, importeret kildebaseret viden, foredrag, eventabonnementer, holdbar leveringskø, anonym statistik og en autentificeret MCP-indgang, valideret gennem lokale HTTP-kald. Privat Sites-deployment har verificeret hosted D1-skema og den kanoniske private MCP-plugin; aktuel version står i [deploymentoverdragelsen](../../../.openai/deployment-handoff.json). Faktisk autentificerede slutbrugerforløb, begge MCP Apps i ChatGPT, eventmodtagelse i inaktiv chat, vedvarende host-trigger og offentlig indsendelse er stadig åbne. Projektet ligger i `ahaugedk/hearing-union`; `main` er integrationsgren. Deployment er ikke samlet accept.
 
-Anders har efterfølgende bestilt lokal udvikling uden at afvente Sites-deployment. Lokale domænefunktioner, database og MCP-indgang udvikles og valideres nu; hostens identitet, D1-integration, faktisk ChatGPT-rendering og eventlevering verificeres ved den senere platformafprøvning. Lokal SQLite og lokal udviklingsidentitet dokumenterer ikke disse platformegenskaber. Faseafhængighederne gælder fortsat endelig capability-validering og udgivelse, men blokerer ikke det udtrykkeligt bestilte lokale arbejde.
+Anders har bestilt, at orkestratoren driver arbejdet til færdigt og udgivet produkt. Underagenter implementerer og retter fund; orkestratoren ejer arkitekturreview, code review, slutbrugertest og deployment. Kun reelle ejeroplysninger, adgangshandlinger eller væsentlige valg går til Anders gennem indbakke og Gmail. Lokal SQLite og lokal identitet beviser ikke hostens egenskaber.
 
 ## Milepæle og afhængigheder
 
@@ -43,6 +43,15 @@ Vælg yderligere kontrol kun ved konkret risiko: eksempelvis samtidige tilmeldin
 Fase 8 gennemgår [målforløbene](scenarier/index.md) i den integrerede løsning med rettelser, herunder faktisk eventmodtagelse med inaktiv chat og MCP Apps på desktop og mobil. Kør relevant statisk kontrol/build og smoke på den aktuelle kode. Løs arkitekturfund om authgrænse, fælles kaldesti, atomiske skrivninger, gyldighed og varig levering før færdigmelding.
 
 ## Aktivering og completion
+
+Resterende udgivelsesvej udføres i denne rækkefølge; næste konkrete bestilling og ejer står i [arbejdsoversigten](../../orkestrering/arbejdsoversigt.md):
+
+1. Orkestratoren afprøver autentificerede [brugerforløb](scenarier/index.md) mod den eksisterende kanoniske Sites-plugin: kildeimport og udløb, præferencesamtykke, foredragsvisning/tilmelding/genfinding, roller og kontoisolation, sletning og statistik. Fund sendes til underagenter og genafprøves.
+2. Afprøv faktisk [eventmodtagelse](kontrakter/events.md) i Work/Cloud med matching, ikke-match og afmelding. Et planlagt genforsøg skal gennemføres uden åben brugersession; implementér kun en understøttet vedvarende udløser. Afprøv også D1-bevaring og gendannelse med syntetiske data.
+3. Færdiggør [reviewmaterialet](kontrakter/udgivelse.md) fra bekræftet udgiver og faktiske dataforhold: fire offentlige HTTPS-sider, ikon, optaget demo, forberedte cases og reviewerens normale adgang. Afklar målrettede lande efter udgiverafklaringen; gæt ikke ud fra sprog eller domæne.
+4. Brug en understøttet offentlig reviewvej for den eksisterende Sites-app. Gennemfør domæne-/udgiververifikation, scans og faktisk review, håndtér fund, og publicér først den godkendte version. Kontrollér derefter den returnerede katalogadresse og en ny installation før `CHATGPT_APP_URL` aktiveres.
+
+Den kanoniske plugin-id er `plugin_asdk_app_sites_2a44f2a3a7f48191ad5e85365cdba550`. Opret ingen ekstra wrapper eller personlig plugin for at opnå en uploadvej. Et metadataudkast eller en privat deployment er hverken en indsendelse eller en offentlig godkendelse.
 
 Deploy gennem Sites' kildekode- og deploymentflow under det konkrete mandat. Genbrug Site/plugin-identitet. Følg [før-/efter-v1-reglen](../../arbejdsregler/levering/modelaendringer.md) for skemaændringer; indholdsændringer går gennem værktøjerne uden redeployment. Fjern midlertidige platformforsøg, når de rigtige funktioner overtager.
 

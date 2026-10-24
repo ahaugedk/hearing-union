@@ -1,7 +1,7 @@
 import { McpServer, createMcpHandler, ProtocolError } from '@modelcontextprotocol/server';
 import { OpenAIExtensions } from '@openai/mcp-extensions/server';
 import { z } from 'zod';
-import type { HearingUnion } from './domain.js';
+import { DomainError, type HearingUnion } from './domain.js';
 import type { EventService } from './events.js';
 import { subscribeSchema, unsubscribeSchema } from '../contracts/events.js';
 // Wire limits mirror the shared domain's accepted input, including nonblank text.
@@ -43,6 +43,7 @@ const schemas: Record<string, z.ZodType> = {
     admin_audit_log: z.strictObject(pagination),
     admin_usage_report: z.strictObject({ from: datetime, to: datetime, groupBy: z.enum(['date', 'tool', 'topic', 'outcome']).optional() }),
     admin_event_status: z.strictObject({}),
+    admin_deliver_events: z.strictObject({ limit: z.number().int().min(1).max(25).optional() }),
     owner_list_admins: z.strictObject({}),
     owner_set_admin: z.strictObject({ userId: id, enabled: z.boolean() }),
 };
@@ -69,6 +70,7 @@ const labels: Record<string, string> = {
     admin_usage_report: 'Hent anonyme tællere i højst 93 kalenderdage. Emnerapporter undertrykkes ved små grupper; ingen rapport viser unikke personer eller samtalehistorik.',
     admin_audit_log: 'Læs administratorhandlinger og indholdsversioner; separat fra anonym brugsstatistik.',
     admin_event_status: 'Læs kun aggregeret status for eventabonnementer og leveringer, uden callbackadresser eller nøgler.',
+    admin_deliver_events: 'Forsøg højst 25 forfaldne eventleveringer til eksisterende, udtrykkeligt tilvalgte abonnementer som administrator. Genkontrollerer relevans og returnerer kun antal sendt, fejlet og sprunget over. Kan kaldes af en autoriseret driftsopgave uden en åben brugersamtale.',
     owner_list_admins: 'List administratorer som ejer.',
     owner_set_admin: 'Tildel eller fjern administratoradgang som ejer efter udtrykkelig bestilling. Ejerrollen kan ikke ændres.',
 };
@@ -124,6 +126,8 @@ export function createHearingMcp(domain: HearingUnion, events: EventService | un
             });
         }
         for (const [name, inputSchema] of Object.entries(schemas)) {
+            if (name === 'admin_deliver_events' && !events)
+                continue;
             if (name.startsWith('owner_') && profile.role !== 'owner')
                 continue;
             if (name.startsWith('admin_') && !['owner', 'admin'].includes(profile.role))
@@ -132,14 +136,19 @@ export function createHearingMcp(domain: HearingUnion, events: EventService | un
             server.registerTool(name, {
                 description: labels[name] ?? `Administrationshandling: ${name}. Ændringer kræver den aktuelle versions værdi.`,
                 inputSchema,
-                annotations: { readOnlyHint: readOnly, destructiveHint: ['delete_account', 'lecture_unregister', 'admin_lecture_cancel', 'owner_set_admin', 'admin_knowledge_save', 'admin_lecture_save'].includes(name), idempotentHint: readOnly || ['lecture_register', 'lecture_unregister'].includes(name), openWorldHint: false },
+                annotations: { readOnlyHint: readOnly, destructiveHint: ['delete_account', 'lecture_unregister', 'admin_lecture_cancel', 'owner_set_admin', 'admin_knowledge_save', 'admin_lecture_save'].includes(name), idempotentHint: readOnly || ['lecture_register', 'lecture_unregister'].includes(name), openWorldHint: ['admin_deliver_events', 'admin_lecture_publish'].includes(name) },
                 ...(['lecture_search', 'lecture_get', 'my_registrations', 'admin_usage_report'].includes(name) ? { _meta: { ui: { resourceUri: name === 'admin_usage_report' ? analyticsResource : lectureResource } } } : {}),
             }, async (args) => {
                 try {
                     const current = await domain.resolveActor(actor);
-                    if (name === 'admin_event_status' && !['owner', 'admin'].includes(current.role))
-                        throw new ProtocolError(-32003, 'Adgang afvist.');
-                    const result = name === 'admin_event_status' ? (await events?.summary() ?? { enabled: false }) : await domain.execute(name, args ?? {}, actor);
+                    if (['admin_event_status', 'admin_deliver_events'].includes(name) && !['owner', 'admin'].includes(current.role))
+                        throw new DomainError('FORBIDDEN', 'Adgang afvist.');
+                    let result: unknown;
+                    if (name === 'admin_deliver_events' && events) {
+                        const counts = await events.drain(Date.now(), (args as { limit?: number }).limit ?? 25);
+                        result = { sent: counts.sent, failed: counts.failed, skipped: counts.skipped };
+                    }
+                    else result = name === 'admin_event_status' ? (await events?.summary() ?? { enabled: false }) : await domain.execute(name, args ?? {}, actor);
                     if (name === 'admin_lecture_publish')
                         drainAfterCommit();
                     return { structuredContent: result as Record<string, unknown>, content: [{ type: 'text' as const, text: JSON.stringify(result) }] };

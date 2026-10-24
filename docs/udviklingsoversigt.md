@@ -6,6 +6,7 @@ status: "stable"
 ---
 # Færdige forbedringer
 
+- 2026-10-24 — Konkret resterende udgivelsesvej og kø; fjernet ubekræftet udgiver fra metadata, valgt uddannelseskategori og præciseret reviewcasenes forberedelse — `orchestration/release-completion`.
 - 2026-10-24 — Hosted D1-schema anvendes gennem Sites' migrationssidecar under korrekt arkivrod; tabeller verificeret efter udgivelse — [PR #15](https://github.com/ahaugedk/hearing-union/pull/15).
 
 - 2026-10-24 — Minimal installationsforside med verificerbar katalogadresse som runtime-konfiguration og native MCP-deklaration; faktisk installation afventer kataloglink og fungerende hosted MCP — [PR #12](https://github.com/ahaugedk/hearing-union/pull/12).

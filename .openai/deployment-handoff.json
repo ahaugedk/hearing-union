@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "status": "deployed",
+  "status": "ready",
   "source": {
-    "branch": "fix/sites-archive-root",
-    "commit": "2be12f0f2a480366a300646f33e0abe8217b0067"
+    "branch": "integration/release-completion",
+    "commit": "84b630aae0af4d18bd62f12e6d275587d4dfc70d"
   },
   "validation": {
     "result": "passed",
@@ -19,14 +19,15 @@
       "npm run check:docs"
     ],
     "notes": [
-      "Exact Sites shared package-site.mjs tar boundary verified: every file under dist/, including dist/.openai/drizzle migration sidecar.",
-      "Root reviewed two-file packaging change. Existing full build/Worker smoke/package/dry-run/docs checks passed; official prepare-site-build.cjs processed extracted artifact and retained migration.",
-      "Install URL remains unset; public listing metadata still awaits user answer HU-Q-20261024-01. These do not block private runtime repair.",
-      "Sites version 5 succeeded, has_mcp=true, private plugin ID returned, and host schema tables verified. This is not a full authenticated end-user acceptance."
+      "Root reviewed both subagent deliveries and integrated changes; build/typecheck, local MCP and Worker smoke, deployment/package/unpacked checks and docs check passed.",
+      "New admin-only admin_deliver_events reuses existing bounded delivery service, rechecks role and returns aggregate counts only. Outbound annotation fixed for lecture publication too.",
+      "This private deployment prepares an authenticated writer; actual unattended scheduling, real callbacks and authenticated end-user acceptance remain open.",
+      "Public submission metadata remains an explicit draft; unconfirmed publisher removed, category and fixture setup corrected. No fake icon/demo/targeting or public URL verification claims.",
+      "HU-Q01 publisher/support and HU-Q02 private app activation were sent and tracked. Unblocked release preparation continues while replies are pending."
     ]
   },
   "database": {
-    "migration_required": true,
+    "migration_required": false,
     "notes": [
       "Sites accepted db/migrations/0001_initial.sql with the logical DB binding; no account ID, physical D1 ID, or Cloudflare credential was supplied.",
       "Preserve the provisioned binding and data on later deployments. Do not reset or perform a destructive migration.",
@@ -34,20 +35,15 @@
     ]
   },
   "release_notes": [
-    "Ultra minimal homepage with single configured install action; supporting privacy/terms/support pages only, no connection explainer.",
-    "Høreforeningen-inspired lime/charcoal/white and Trebuchet fallback from official design guide; no fabricated logo or publisher identity.",
-    "Roadmap, implementation queue and changelog updated; Gmail reply reconciliation documented.",
-    "Canonical migration SQL unchanged, packed in documented Sites Drizzle sidecar with journal and complete statement boundaries."
+    "Authenticated administrator event retry tool with bounded batch and role checks; no new auth, secret or public endpoint.",
+    "Concrete release completion path and implementation queue cover live content import, full user flows, events/drift, public review material and actual directory installation.",
+    "Remove invented publisher identity from release metadata; preserve canonical Sites plugin and no duplicate wrapper."
   ],
-  "blockers": [
-    "Verified ChatGPT directory/install URL is still unavailable; CHATGPT_APP_URL remains unset. Private Sites plugin exists but is absent from searchable directory.",
-    "Authenticated end-user /health, MCP tools and app installation remain unverified in this session; browser is sign-in gated and native plugin tools are not exposed here.",
-    "Final public publisher/data-controller/support metadata awaits tracked Gmail reply HU-Q-20261024-01."
-  ],
+  "blockers": [],
   "deployment": {
-    "site_version": 5,
-    "deployed_commit": "2be12f0f2a480366a300646f33e0abe8217b0067",
-    "deployed_at": "2026-10-24T12:47:59.562479+00:00",
-    "live_url": "https://hearing-union.ahaugedk.chatgpt.site"
+    "site_version": null,
+    "deployed_commit": null,
+    "deployed_at": null,
+    "live_url": null
   }
 }

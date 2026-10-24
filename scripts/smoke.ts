@@ -39,6 +39,25 @@ try {
   assert.ok(discovery);
   const profile=await call('get_profile',{},'user');
   assert.ok(profile);
+  const ownerTools=await rpc('tools/list',{});
+  assert.equal(ownerTools.tools.find((tool:{name:string})=>tool.name==='admin_lecture_publish').annotations.openWorldHint,true);
+  const deliveryTool=ownerTools.tools.find((tool:{name:string})=>tool.name==='admin_deliver_events');
+  assert.equal(deliveryTool.annotations.readOnlyHint,false);
+  assert.equal(deliveryTool.annotations.destructiveHint,false);
+  assert.equal(deliveryTool.annotations.openWorldHint,true);
+  assert.deepEqual(await call('admin_deliver_events',{limit:1}),{sent:0,failed:0,skipped:0});
+  const invalidBatch=await rpc('tools/call',{name:'admin_deliver_events',arguments:{limit:26}});
+  assert.ok(invalidBatch.isError,'Delivery batch must be bounded');
+  await call('owner_set_admin',{userId:profile.id,enabled:true});
+  assert.deepEqual(await call('admin_deliver_events',{limit:25},'user'),{sent:0,failed:0,skipped:0});
+  await call('owner_set_admin',{userId:profile.id,enabled:false});
+  assert.ok(!(await rpc('tools/list',{},'user')).tools.some((tool:{name:string})=>tool.name==='admin_deliver_events'));
+  const unauthorizedDrain=await fetch(`http://127.0.0.1:${runtime.port}/mcp`,{
+    method:'POST',headers:{'content-type':'application/json',accept:'application/json',authorization:`Bearer ${token('user')}`,'MCP-Protocol-Version':'2026-07-28','Mcp-Method':'tools/call','Mcp-Name':'admin_deliver_events'},
+    body:JSON.stringify({jsonrpc:'2.0',id:++requestId,method:'tools/call',params:{name:'admin_deliver_events',arguments:{limit:1},_meta:{'io.modelcontextprotocol/protocolVersion':'2026-07-28','io.modelcontextprotocol/clientCapabilities':{}}}})
+  });
+  const unauthorizedResult=await unauthorizedDrain.json() as {error?:unknown;result?:{isError?:boolean}};
+  assert.ok(unauthorizedResult.error || unauthorizedResult.result?.isError,'Ordinary user cannot drain deliveries');
   const lecture=await call('admin_lecture_save',{
     title:'Eksempelforedrag',description:'Syntetisk smoke-indhold',
     startsAt:new Date(Date.now()+86400000).toISOString(),endsAt:new Date(Date.now()+90000000).toISOString(),

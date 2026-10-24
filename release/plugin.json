@@ -3,10 +3,6 @@
   "name": "hearing-union",
   "version": "0.1.0",
   "description": "Development draft for Høreforeningens source-backed hearing information, lecture registration and explicitly requested event notifications in ChatGPT. Sites identity and D1 adapter are implemented; live platform verification and release review remain pending.",
-  "author": {
-    "name": "Luffe Hansen",
-    "email": "mail@hoereforeningen.dk"
-  },
   "homepage": "https://hearing-union.ahaugedk.chatgpt.site",
   "repository": "https://github.com/ahaugedk/hearing-union",
   "keywords": [
@@ -21,7 +17,7 @@
         "displayName": "Høreforeningen",
         "shortDescription": "Hearing knowledge and events",
         "longDescription": "Find source-backed Danish information from Høreforeningen, choose explicit topic and region preferences, and find or register for lectures. Administrators maintain content and inspect anonymous aggregate statistics through ChatGPT. Explicit event subscriptions are intended for supported Work/Cloud experiences and never register users automatically. Information is general and does not provide personal diagnoses. This metadata is a development draft: the local implementation is tested, while live Sites identity forwarding, real ChatGPT rendering and event receipt, reviewer access and public approval remain unverified.",
-        "developerName": "Luffe Hansen",
+        "category": "Education & Research",
         "capabilities": [
           "Source-backed hearing information",
           "Explicit preferences",
@@ -44,31 +40,31 @@
         "test_cases": {
           "positive": [
             {
-              "description": "Find current source-backed information",
+              "description": "Find current source-backed information. Setup: the owner imports and publishes the verified tinnitus source fixture through the normal administration tools; retain an expired fixture to verify exclusion.",
               "prompt": "Find Høreforeningens information om tinnitus, og vis kilderne.",
               "tools_triggered": "knowledge_search, knowledge_get",
               "expected_behavior": "Return current published tinnitus information with source links and retrieval/verification dates. Do not diagnose the reviewer, return expired content or claim to control ChatGPT memory."
             },
             {
-              "description": "Save only explicitly approved preferences",
+              "description": "Save only explicitly approved preferences. Setup: use the regular review account with a fresh current preference version and the published tinnitus topic from the first case.",
               "prompt": "Jeg vil vælge onlineforedrag om tinnitus. Vis mig først, hvilke præferencer du vil gemme, og hvordan de opbevares. Gem dem, når jeg har sagt ja.",
               "tools_triggered": "knowledge_search, get_profile, update_preferences",
               "expected_behavior": "Explain the exact topic and format preferences and retention, obtain explicit consent, then save using the current preference version. A new profile read shows the same choices. No diagnosis or event subscription is created."
             },
             {
-              "description": "Register and reopen a lecture through the MCP App",
+              "description": "Register and reopen a lecture through the MCP App. Setup: the separate administrator prepares a future synthetic online lecture named Reviewforedrag with spare capacity; two regular review accounts have distinct Sites identities.",
               "prompt": "Find det syntetiske onlineforedrag til review. Vis det i foredragsvisningen. Jeg vil tilmeldes, og bagefter vil jeg se min tilmelding igen.",
               "tools_triggered": "lecture_search, lecture_get, lecture_register, my_registrations",
               "expected_behavior": "Show the prepared future lecture and current availability. Register only after the request, then confirm persisted registration through a new read. The embedded view uses the same tools. Repeat registration does not consume another place; the separate second reviewer account cannot read the first account’s registration."
             },
             {
-              "description": "Explicit event subscription and inactive-chat delivery",
+              "description": "Explicit event subscription and inactive-chat delivery. Setup: use the supported Work/Cloud host, the regular account's explicitly saved online/tinnitus preferences, and a separate administrator able to publish matching and nonmatching synthetic lectures.",
               "prompt": "Giv mig besked her, når der udgives et nyt onlineforedrag, som matcher mine valgte interesser. Tilmeld mig ikke automatisk til foredraget.",
               "tools_triggered": "get_profile; events/list, events/subscribe; lecture_get",
               "expected_behavior": "In a supported Work/Cloud host, create a subscription only after the explicit request. Using the separate administrator account, publish one matching and one nonmatching synthetic lecture. With the original chat inactive, receive the matching event only, reopen current details, and verify no registration was created. Unsubscribe and confirm subsequent publications produce no new delivery."
             },
             {
-              "description": "Administrator maintenance and anonymous statistics",
+              "description": "Administrator maintenance and anonymous statistics. Setup: the administrator has a synthetic reviewpost with a known current version and a review time window containing the preceding actions; regular accounts have no administration role.",
               "prompt": "Som administrator vil jeg finde den syntetiske reviewpost, gemme og publicere en rettet version og derefter se den anonyme brugsstatistik for reviewperioden.",
               "tools_triggered": "admin_knowledge_list, admin_knowledge_save, admin_knowledge_publish, admin_usage_report",
               "expected_behavior": "The dedicated administrator can update the intended synthetic post using its current version and publish it; a regular read returns the updated version. The statistics MCP App shows aggregate calls/outcomes and suppresses small topic groups. No user identifiers, queries, conversation text or raw individual history appear."

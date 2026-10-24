@@ -2,8 +2,8 @@
   "schema_version": 1,
   "status": "ready",
   "source": {
-    "branch": "integration/release-completion",
-    "commit": "84b630aae0af4d18bd62f12e6d275587d4dfc70d"
+    "branch": "integration/verified-release-brand",
+    "commit": "fa7c170bc682a3b0c9f1c6a2f2d126179daece21"
   },
   "validation": {
     "result": "passed",
@@ -23,7 +23,9 @@
       "New admin-only admin_deliver_events reuses existing bounded delivery service, rechecks role and returns aggregate counts only. Outbound annotation fixed for lecture publication too.",
       "This private deployment prepares an authenticated writer; actual unattended scheduling, real callbacks and authenticated end-user acceptance remain open.",
       "Public submission metadata remains an explicit draft; unconfirmed publisher removed, category and fixture setup corrected. No fake icon/demo/targeting or public URL verification claims.",
-      "HU-Q01 publisher/support and HU-Q02 private app activation were sent and tracked. Unblocked release preparation continues while replies are pending."
+      "HU-Q01 publisher/support and HU-Q02 private app activation were sent and tracked. Unblocked release preparation continues while replies are pending.",
+      "Verified official favicon source SHA matches saved SVG; inspected 512/96 PNGs and exact official #BCCE41/#434445 colors. Root visually checked generated single-button page with synthetic destination.",
+      "Actual native get_profile succeeded with owner role in fresh context. HU-Q02 activation request closed and cancellation emailed; full end-user acceptance remains root-owned."
     ]
   },
   "database": {
@@ -37,7 +39,8 @@
   "release_notes": [
     "Authenticated administrator event retry tool with bounded batch and role checks; no new auth, secret or public endpoint.",
     "Concrete release completion path and implementation queue cover live content import, full user flows, events/drift, public review material and actual directory installation.",
-    "Remove invented publisher identity from release metadata; preserve canonical Sites plugin and no duplicate wrapper."
+    "Remove invented publisher identity from release metadata; preserve canonical Sites plugin and no duplicate wrapper.",
+    "Official source logo/favicon and derived review PNGs prepared as drafts; exact official colors applied. This combined release also includes reviewed PR16 event writer and release completion path."
   ],
   "blockers": [],
   "deployment": {

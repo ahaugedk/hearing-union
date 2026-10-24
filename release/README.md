@@ -4,7 +4,7 @@ Bevar https://hearing-union.ahaugedk.chatgpt.site og projekt `appgprj_6adb6ca4b9
 
 ## Byg, kontrollér og pak
 
-Kræver Node 24+ og Python 3.9+. Fra projektroden:
+Kræver Node 24+, GNU tar og Python 3.9+. Fra projektroden:
 
 ```sh
 npm ci
@@ -14,9 +14,10 @@ npm run smoke:worker
 npm run check:deployment
 npm run check:docs
 npm run pack
+npm run check:package
 ```
 
-`build` typekontrollerer, bygger begge MCP Apps som tekstmoduler, kontrollerer den versionerede D1-migration og udfører kun Wrangler dry-run. Outputtet er `dist/worker/worker.js` med to tekstmoduler; det er en Worker, ikke en statisk `index.html`-mappe. Arkivet `dist/hearing-union-deployment.tar.gz` indeholder Worker, tekstmoduler, `.openai/hosting.json`, `db/migrations/0001_initial.sql`, portabel Wrangler-konfiguration, kildeudsnit og pluginmetadata. Ingen lokale databaser, udviklingstokens eller nøglemateriale indgår.
+`build` typekontrollerer, bygger begge MCP Apps som tekstmoduler, kontrollerer den versionerede D1-migration og udfører kun Wrangler dry-run. Outputtet er `dist/worker/worker.js` med to tekstmoduler; det er en Worker, ikke en statisk `index.html`-mappe. Arkivet `dist/hearing-union-deployment.tar.gz` indeholder Worker, tekstmoduler, `.openai/hosting.json`, `db/migrations/0001_initial.sql`, portabel Wrangler-konfiguration, kildeudsnit og pluginmetadata. Ingen lokale databaser, udviklingstokens eller nøglemateriale indgår. Pakning udelader Wranglers tidsstemplede informationsfil og normaliserer rækkefølge, filrettigheder, ejer og tidsstempler; `check:package` sammenligner to pakninger byte for byte og afprøver den udpakkede Worker med dry-run.
 
 I dette administrerede miljø uden skrivbar standardkonfigurationsmappe kan Wrangler køres med `XDG_CONFIG_HOME=/tmp/hearing-config`; npm kan bruge `--cache /tmp/hearing-npm-cache`. Bevar miljøets proxy og CA-tillid.
 
@@ -54,4 +55,6 @@ Det kuraterede kildeudsnit følger med som `knowledge.json` i pakken. Import til
 4. Afprøv `/health`, ejerens stabile identitet og rolle, begge MCP Apps, viden, præferencer og foredrag. Bekræft at klientangivne identitetsheaders ikke kan ændre bruger eller rolle gennem platformens ingress. Verificér kontoisolation med en særskilt konto, når sitets deling senere udvides.
 5. Afprøv faktisk eventmodtagelse i ChatGPT og understøttet tidsstyret genlevering. Bevar platformens D1-data og genererede nøgle ved en ny version. Afklar offentligt review og juridiske driftsvilkår før offentlig udgivelse.
 
-Denne session eksponerer fortsat ingen Sites-værktøjer til læsning, kildekodeadgang, versionslagring eller deployment. Derfor kan den konkrete platformkontrakt, D1-provisionering, ingressbeskyttelse og faktisk ChatGPT-eventmodtagelse først endeligt verificeres i en session med de værktøjer. Pakken og lokal workerd/D1-validering er forberedt uden at deploye eller oprette eksterne ressourcer.
+Den faste [udgivelseskontrakt](../docs/drift/sites-udgivelse.md) ejer rollefordelingen: Codex Cloud implementerer og validerer; ChatGPTs Sites-udgiver publicerer og kontrollerer live-resultatet. GitHub er den autoritative kanal. Manglende direkte Sites-værktøjer i Codex Cloud er ikke en kodeblokering og udløser ingen efterspørgsel efter Cloudflare- eller Sites-credentials.
+
+Efter en valideret kodecommit oprettes en særskilt sidste commit, der alene udfylder `.openai/deployment-handoff.json`: `ready`, branch, den præcise kodecommit, faktisk kørte valideringskommandoer, migrationsbehov, korte release notes og ingen blokeringer. En PR med `[sites-deploy]` i titlen overdrager opgaven. Udgiveren bygger fra kodecommitten, anvender første migration gennem Sites, bevarer privat adgang og melder udgivet commit, Sites-version, tidspunkt og liveadresse eller konkret blokering tilbage i GitHub. Felterne under `deployment` udfyldes kun af udgiveren.

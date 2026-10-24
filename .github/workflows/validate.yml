@@ -23,6 +23,7 @@ jobs:
       - run: npm run check:deployment
       - run: npm run check:docs
       - run: npm run pack
+      - run: npm run check:package
       - uses: actions/upload-artifact@v4
         with:
           name: hearing-union-deployment

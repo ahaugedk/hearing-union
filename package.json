@@ -20,7 +20,8 @@
     "db:local": "tsx scripts/migrations.ts && wrangler d1 migrations apply DB --local",
     "check:deployment": "tsx scripts/check-deployment.ts",
     "smoke:worker": "tsx scripts/smoke-worker.ts",
-    "db:generate": "tsx scripts/migrations.ts --write"
+    "db:generate": "tsx scripts/migrations.ts --write",
+    "check:package": "tsx scripts/check-package.ts"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "5.20261024.1",

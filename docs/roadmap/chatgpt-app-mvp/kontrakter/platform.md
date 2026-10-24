@@ -10,10 +10,10 @@ role: "implementation"
 
 Fase 0 i [implementeringen](../implementering.md). Produktløftet og bestillingsgrænsen står i [visionen](../vision.md).
 
-**Formål:** Verificér at Sites, login, MCP Events og offentlig indsendelse kan kombineres, før hovedfunktionerne bygges.
+**Formål:** Verificér at de implementerede hovedfunktioner fungerer gennem Sites, login og MCP Events og kan indgå i offentlig indsendelse.
 
-1. Initialisér Sites-starteren og versionsstyring. Deklarér `mcp` og D1-bindingen `DB` i `.openai/hosting.json`; brug ingen R2-binding i MVP'en.
-2. Deploy et privat, minimalt endpoint med `server/discover`, `tools/list` og et autentificeret `get_profile`. Brug MCP `2026-07-28`, som Sites-instruktionerne foreskriver.
+1. Genbrug det eksisterende Sites-projekt og dets versionsstyrede kilde. Bevar `mcp` og D1-bindingen `DB` i `.openai/hosting.json`; brug ingen R2-binding i MVP'en.
+2. Afprøv den private deployments `server/discover`, `tools/list` og et autentificeret `get_profile`. Brug MCP `2026-07-28`, som Sites-instruktionerne foreskriver.
 3. Verificér to forskellige konti og at Sites leverer stabilt, Site-afgrænset bruger-id. Kontrollér at klienten ikke kan forfalske identitet via egne headers.
 4. Afprøv én statisk MCP App og ét testabonnement med callback-verifikation og faktisk eventlevering til en inaktiv chat.
 5. Afprøv en understøttet, ubemandet måde at genoptage fejlede leveringer på Sites. Start med et beskyttet endpoint, som en tilknyttet cloud-opgave kan kalde. Verificér adgang uden en åben brugersession; antag ikke, at vilkårlige Worker-cronjobs eller evigt kørende processer findes.
@@ -39,8 +39,8 @@ Sites-starterens aktuelle instruktioner for MCP, identitet, D1-migrationer og ub
 
 ## Aktuelle forudsætninger for forsøget
 
-Det officielle [MCP Extensions-grundlag](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md) beskriver `server/discover` og protokolversionen, men fastlægger ikke Sites-login, hostingmanifest eller ubemandet eventlevering. Repositoryets README henviser til Plugin Creator som byggeindgang; den funktion er ikke tilgængelig i den aktuelle session. Ingen identitetsheader eller manifeststruktur må udledes alene af planens forslag.
+Det officielle [MCP Extensions-grundlag](https://github.com/openai/mcp-extensions/blob/main/docs/spec.md) beskriver `server/discover` og protokolversionen. Sites' egne instruktioner ejer login, hostingmanifest og ubemandede kørsler; disse må ikke udledes alene af planens forslag.
 
-De officielle platformkilder på `developers.openai.com` kan nu læses fra cloud-miljøet. [Sites-oprettelsesvejledningen](https://developers.openai.com/codex/sites/creating-a-site) angiver ChatGPT på web eller desktop som indgangen til oprettelse, lagring, deployment og administration; CLI og IDE har ingen selvstændig Sites-administration. Den aktuelle session har fortsat ingen Sites-værktøjer. Sites-starter/deploymentadgang er derfor nødvendig for det faktiske forsøg. Arbejdsoversigten ejer næste handling; ingen af integrationsforsøgene ovenfor er gennemført.
+Orkestratoren har terminal, GitHub, Sites og underagenter. Det eksisterende Site har et verificeret hosted databaseskema og en kanonisk privat MCP-plugin; næste forsøg bruger denne forbindelse med rigtig brugeridentitet. Et deployment eller lokal injektion af identitetsheaders erstatter ikke faktisk autentificeret accept. [Arbejdsoversigten](../../../orkestrering/arbejdsoversigt.md) ejer næste handling.
 
 [Data- og forbindelsesvejledningen](https://developers.openai.com/codex/sites/data-and-connections) beskriver D1 og Sites-login, men etablerer ikke den stabile Site-afgrænsede identitet, som adgangsmodellen kræver. [Indsendelsesvejledningen](https://developers.openai.com/plugins/deploy/submission) beskriver offentlig pluginadgang og reviewerens normale loginvej. Sammenhængen mellem Sites-login og offentlig pluginadgang skal demonstreres i forsøget; dokumenternes separate funktioner er ikke bevis for en fungerende samlet adgangsmodel.

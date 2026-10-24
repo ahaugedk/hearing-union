@@ -5,3 +5,5 @@
 Validering bruger det faktisk kørende miljø efter [metoderne](../validering/metoder/index.md). Føj kun yderligere driftsblade til, når et konkret emne har et selvstændigt læsebehov.
 
 [Deploymentvejledningen](../../release/README.md) beskriver Workers, D1, OAuth og bindingen til det eksisterende Site.
+
+[Codex-koordinering](codex-koordinering.md) beskriver en ny Cloud-task via GitHub-omtale efter push til main og den nødvendige kontrol af bot-understøttelse.

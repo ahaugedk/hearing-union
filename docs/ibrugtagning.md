@@ -1,36 +1,41 @@
 ---
 type: "Setup Guide"
-title: "Tag arbejdsgangen i brug"
-description: "Tilpas projektets egne fakta og mandat, før første leverance bestilles."
+title: "Arbejd i Høreforeningens projekt"
+description: "Kort indgang til produktretning, udvikling, validering og GitHub-baseret koordinering."
 status: "stable"
 ---
-# Tag arbejdsgangen i brug
+# Arbejd i Høreforeningens projekt
 
-Pakken giver arbejdsformen; det nye projekt giver produktløfter, arkitektur, adgang og miljø. Indarbejd den i eksisterende dokumenter frem for at skabe et parallelt dokumentationssystem.
+Projektet bygger Høreforeningens ChatGPT-app på OpenAI Sites. GitHub er fælles sandhed for produktdokumenter, kodeleverancer, review og overdragelse mellem Codex Cloud og Sites-udgiveren.
 
-## Første afstemning
+## Find det autoritative grundlag
 
-1. Udfyld [projektprofilen](drift/projektprofil.md): produktfase, kildekode, kørsel, miljøejere, smoke-kommando og kerneforløb samt browser og integrationsvej. Ret eksisterende oplysninger frem for at kopiere dem flere steder.
-2. Skriv [produktvisionen](produkt/retning/vision.md) og [kompasset](produkt/retning/kompas.md). Fastlæg målgruppe, samlet løfte og produktets grænser. Tre spørgsmål er et kompas med dømmekraft, ingen score eller obligatorisk gate.
-3. Udfyld [systemgrænserne](arkitektur/systemgraenser.md). Generaliseringen overfører ikke kildeprojektets konkrete databaser, runtimes, pakkeformat eller forbud mod modelkørsel. Vælg projektets arkitektur på eget grundlag.
-4. Fastlæg [mandatet](orkestrering/mandat.md): hvem koordinerer og reviewer, hvad procesmandatet omfatter, hvilke planer der er sat i gang, og hvem der må integrere og publicere. Pakken indeholder ingen historiske godkendelser. Der kræves ikke en ny procesgodkendelse for hver handling inden for et allerede givet mandat.
-5. Opret første plans [tre roller](arbejdsregler/planer/struktur/tre-roller.md) fra [planskabelonen](skabeloner/plan/index.md). Afgørende teknisk usikkerhed undersøges, og væsentlige valg modnes før forelæggelse.
-6. Gennemgå [implementeringsklarheden](arbejdsregler/planer/forfatning/gennemgang.md), og sæt den konkrete leverance i [arbejdsoversigten](orkestrering/arbejdsoversigt.md). Retning, implementeringsklarhed og igangsættelse er tre forskellige forhold.
-7. Kør dokumentkontrollen med python3 scripts/check_okf.py fra projektroden. Den kontrollerer struktur, metadata og lokale links; den udfylder ikke projektets fakta og godkender intet produktvalg.
+1. Læs [produktvisionen](produkt/retning/vision.md) og [kompasset](produkt/retning/kompas.md) for det samlede løfte og produktets grænser.
+2. Brug [roadmappet](roadmap/index.md) til igangsat scope, scenarier og implementeringskontrakter.
+3. Følg [systemgrænserne](arkitektur/systemgraenser.md) og [projektprofilen](drift/projektprofil.md) for den aktuelle arkitektur, kommandoer og miljøer.
+4. Læs [mandatet](orkestrering/mandat.md) og [arbejdsoversigten](orkestrering/arbejdsoversigt.md), før nyt arbejde bestilles eller påbegyndes.
+5. Følg [udgivelseskontrakten](drift/sites-udgivelse.md), når en leverance skal overdrages til ChatGPT Sites.
 
-## Første bestilling til en agent
+Et udsagn har ét autoritativt hjem. Koden ejer implementeringsdetaljer; varige dokumenter ejer gældende produktløfter, arkitektur og arbejdsregler; midlertidige leverancer og beslutningsspor bliver i den aktive plan og Git.
 
-Læs AGENTS.md, docs/index.md og docs/drift/projektprofil.md. Læs kun de relevante arbejdsregler og planer. Undersøg eksisterende kode og kontrakter. Konkretisér første plan med vision, scenarier og faseinddelt implementering; markér antagelser og væsentlige produktvalg. Registrér modningsarbejdet i arbejdsoversigten. Byg kun produktkode inden for dokumenteret igangsættelse og mandat.
+## Arbejdsgang for en kodeleverance
 
-## Tilpasning uden dobbelt autoritet
+En arbejder bruger en afgrænset branch og læser kun de relevante dokumentgrene. Leverancen implementeres og valideres efter [risikobaseret validering](arbejdsregler/levering/risikobaseret-validering.md). Afleveringen indeholder resultat, branch og commit, smoke-resultat og konkrete mangler.
 
-| Kildeprojektets konkrete valg | Genbrugelig form |
-|---|---|
-| Et bestemt produkt og tre strategiske spørgsmål | Egen vision og tre spørgsmål i kompasset |
-| Bestemte runtime-, data- og adgangsregler | Egne systemgrænser med ét ansvar pr. fakta og beslutning |
-| Navngivne modeller, apps og CLI-kommandoer | Roller og konkrete værktøjer i projektprofilen |
-| Et bestemt antal miljøer og kvotereserver | Faktisk kapacitet og reserver i samme profil |
-| Stående tilladelser givet på bestemte datoer | Projektets eget eksplicitte mandat med scope og reference |
-| Allerede aktive planer, spørgsmål og timere | Tomme oversigter og inaktive kørsler |
+Orkestratoren reviewer hele ændringen mod aktuel `main`, arkitektur og plan. Fund sendes samlet tilbage gennem GitHub. Intet integreres eller publiceres med uløste reviewfund.
 
-Redaktion, der bevarer betydning, kræver ingen ny produktbeslutning. Et ændret produktprincip gør. Brug [dokumentvedligeholdelsen](arbejdsregler/dokumentation/vedligeholdelse.md) ved enhver opdatering.
+Ved Sites-udgivelse angiver `.openai/deployment-handoff.json` den præcise deployerbare commit. En separat handoff-commit kan derfor ligge efter kodecommitten. Sites-udgiveren publicerer den angivne kodecommit, bevarer projektets adgangspolitik og skriver version, URL eller blokering tilbage i GitHub.
+
+## Afklaringer til produktejeren
+
+Kun modne spørgsmål, der kræver et produktvalg eller en handling fra Anders, placeres i [afklaringsindbakken](orkestrering/afklaringer/indbakke.md). Tekniske problemer, som teamet selv kan løse, bliver på leverancen. Når en indbakkepost oprettes, sendes samtidig en kort Gmail med link til posten efter [afklaringsarbejdsgangen](orkestrering/afklaringer/arbejdsgang.md).
+
+## Kontrol
+
+Kør dokumentkontrollen fra projektroden:
+
+```sh
+python3 scripts/check_okf.py
+```
+
+Projektets konkrete build-, smoke- og opstartskommandoer står i [projektprofilen](drift/projektprofil.md). Skabeloner under [docs/skabeloner](skabeloner/index.md) er bevidst generelle og udfyldes kun, når de kopieres ind i en konkret plan eller leverance.

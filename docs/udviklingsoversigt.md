@@ -6,6 +6,6 @@ status: "stable"
 ---
 # Færdige forbedringer
 
-Ingen forbedringer er registreret i dette projekt endnu. Når en større logisk ændring er færdig, erstattes denne tekst af en tæt liste med én linje pr. ændring: faktisk dato, forbedringen i én sætning og commit. Saml beslægtede ændringer; detaljeret udviklingshistorik bliver i Git.
+- 2026-10-24 — GitHub-overdragelse mellem Codex Cloud og ChatGPT Sites med fast platformkontrakt og maskinlæsbar deploymentstatus — `e721306a481f595be3f9e306276e6267c904590e`.
 
 Registrering følger [completion](arbejdsregler/planer/levering/completion.md) og beviser ikke i sig selv, at en capability virker.

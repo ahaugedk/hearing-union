@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "status": "not_ready",
+  "status": "ready",
   "source": {
     "branch": "fix/sites-d1-binding-string",
     "commit": "41fbbc8798113783eceba9a59a2b834a58f82a61"
   },
   "validation": {
-    "result": "not_run",
+    "result": "passed",
     "commands": [
       "npm ci --cache /tmp/hearing-npm-cache --loglevel=error",
       "npm run build",
@@ -18,7 +18,9 @@
       "npm run check:package"
     ],
     "notes": [
-      "Sites requires the d1 manifest value to be a binding-name string. The source now declares d1 as DB and awaits full CI."
+      "GitHub Actions Validate deployment package passed with the Sites manifest declaring d1 as the logical binding string DB.",
+      "Two earlier Sites save attempts stopped during manifest validation; neither deployment nor D1 migration started.",
+      "source.commit is the deployable code commit. The following commit only refreshes this handoff."
     ]
   },
   "database": {
@@ -33,9 +35,7 @@
     "Fælles asynkron SQLite/D1-persistens bevarer viden, foredrag, præferencer, roller, statistik og eventkø; deterministisk pakke kan bygges fra Git uden secrets.",
     "Sites-udgiveren ejer publicering, migrationsanvendelse og livekontrol. Kontrollér runtime-callbackværter og understøttet genlevering, før live eventlevering erklæres aktiveret."
   ],
-  "blockers": [
-    "Awaiting GitHub Actions validation of the corrected d1 binding type."
-  ],
+  "blockers": [],
   "deployment": {
     "site_version": null,
     "deployed_commit": null,

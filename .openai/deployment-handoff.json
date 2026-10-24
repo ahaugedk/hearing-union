@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "status": "not_ready",
+  "source": {
+    "branch": null,
+    "commit": null
+  },
+  "validation": {
+    "result": "not_run",
+    "commands": [],
+    "notes": []
+  },
+  "database": {
+    "migration_required": false,
+    "notes": []
+  },
+  "release_notes": [],
+  "blockers": [
+    "The implementing agent must replace this placeholder before requesting deployment."
+  ],
+  "deployment": {
+    "site_version": null,
+    "deployed_commit": null,
+    "deployed_at": null,
+    "live_url": null
+  }
+}

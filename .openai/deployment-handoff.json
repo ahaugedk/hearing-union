@@ -1,23 +1,42 @@
 {
   "schema_version": 1,
-  "status": "not_ready",
+  "status": "ready",
   "source": {
-    "branch": null,
-    "commit": null
+    "branch": "deployment/cloudflare-sites",
+    "commit": "888956c167ea475865f119a8a7e1f85d665cfd72"
   },
   "validation": {
-    "result": "not_run",
-    "commands": [],
-    "notes": []
+    "result": "passed",
+    "commands": [
+      "npm ci --cache /tmp/hearing-npm-cache --loglevel=error",
+      "npm run build",
+      "npm run smoke",
+      "npm run smoke:worker",
+      "npm run check:deployment",
+      "npm run check:docs",
+      "npm run pack",
+      "npm run check:package"
+    ],
+    "notes": [
+      "Alle kommandoer bestod i et rent git archive af source.commit med Node 24.19.0. XDG_CONFIG_HOME=/tmp/hearing-config og WRANGLER_SEND_METRICS=false var sat for denne cloud-validering.",
+      "Worker/D1-smoke validerer Sites-user-id, privat ejerbootstrap, kontoisolation, kapacitet ved samtidige tilmeldinger, viden/FTS, præferencer, statistik, events, atomisk rollback og kontosletning.",
+      "check:package validerer byte-identiske arkiver og dry-run af udpakket Worker. Pakken fra rent Git-udtræk matcher også arbejdsmappens SHA-256: 6ad4763316491db1cebe47a261434443c45e02ccc8af7c17b0e9e833d6f4e93a.",
+      "PR-head er en separat handoff-commit; source.commit er dens umiddelbare forælder. Sites-udgiveren reviewer og bygger source.commit og udfører livekontrol gennem Sites."
+    ]
   },
   "database": {
-    "migration_required": false,
-    "notes": []
+    "migration_required": true,
+    "notes": [
+      "Anvend db/migrations/0001_initial.sql gennem Sites på den logiske DB-binding i .openai/hosting.json; ingen konto-id, fysisk D1-id eller Cloudflare-nøgle kræves.",
+      "Første versionerede grundskema; bevar eksisterende data og binding ved deployment. Ingen reset eller destruktiv datamigrering er bestilt."
+    ]
   },
-  "release_notes": [],
-  "blockers": [
-    "The implementing agent must replace this placeholder before requesting deployment."
+  "release_notes": [
+    "Eksisterende hearing-union-projekt og privat adgang bevares; Worker bruger Sites-headeren oai-authenticated-user-id uden egne login-, callback- eller sessionroutes.",
+    "Fælles asynkron SQLite/D1-persistens bevarer viden, foredrag, præferencer, roller, statistik og eventkø; deterministisk pakke kan bygges fra Git uden secrets.",
+    "Sites-udgiveren ejer publicering, migrationsanvendelse og livekontrol. Kontrollér runtime-callbackværter og understøttet genlevering, før live eventlevering erklæres aktiveret."
   ],
+  "blockers": [],
   "deployment": {
     "site_version": null,
     "deployed_commit": null,

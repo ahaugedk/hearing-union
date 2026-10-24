@@ -19,3 +19,7 @@ Workflowet aktiveres først ved merge til main. Repositoryet skal være forbunde
 Efter merge køres workflowet på main. Følg kommentarlinket i Actions-summary og kontrollér Codex-connectorens svar og task-link. Hvis botten ikke kan udløse Codex, registrér begrænsningen i PR'en; udgiv ikke løsningen som en verificeret automatisk opstart. En forbundet bruger kan afprøve samme opgave manuelt som PR-kommentar gennem den dokumenterede integration. Der skal ikke kopieres personlige tokens, ChatGPT-login eller skjulte credentials ind i workflowet for at omgå begrænsningen.
 
 Liveafprøvningen er ikke udført alene ved lokal scriptvalidering. CI og dette dispatch-workflow publicerer ikke til Sites og ændrer ikke den eksisterende deployment-handoff.
+
+## Observeret opstartsblokering
+
+Ved liveforsøget i [PR #10](https://github.com/ahaugedk/hearing-union/pull/10) den 24. oktober 2026 svarede Codex-connectoren: “To use Codex here, create an environment for this repo.” Den relevante repositorykobling skal derfor etableres i [Codex Cloud-miljøindstillingerne](https://chatgpt.com/codex/cloud/settings/environments), før en ny Cloud-task kan bekræftes. Det aktuelle Codex-miljø i denne samtale dokumenterer ikke i sig selv, at denne særskilte GitHub-opstartskobling findes. Efter opsætning gentages kommentarprøven; automatisk start fra workflowbotten er fortsat uverificeret.

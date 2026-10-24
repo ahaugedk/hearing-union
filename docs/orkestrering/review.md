@@ -6,7 +6,7 @@ status: "stable"
 ---
 # Review ved aflevering
 
-Al kode reviewes ved aflevering, før den kommer i main. Den ansvarlige reviewer følger [mandatet](mandat.md). Et uafhængigt review af arbejderens ændring er den normale rollefordeling; tilgængelige værktøjer og identiteter står i projektprofilen.
+Al kode reviewes ved aflevering, før den kommer i main. `/root` udfører selv arkitekturreview og code review af underagentens ændring efter [mandatet](mandat.md). Supplerende underagentreview erstatter ikke orkestratorens eget review.
 
 Læs hele forskellen mellem gældende main og grenen, også skema, migrationer, klientkode, assets, smoke og docs. Hold ændringen op mod AGENTS.md, [arkitekturen](../arkitektur/index.md) og planen: korrekthed, autoritativ adgang, konkret kode, fejl, genoptagelse, isolation og fuldstændig levering.
 
@@ -22,4 +22,4 @@ Følgende er reviewfund:
 
 Review bestiller ikke nye smoke-forløb. En konkret risiko får en selvstændig målrettet kontrol efter behov. Fund gives samlet til arbejderen, som retter på sin gren. Et begrundet afslag vurderes eksplicit af reviewansvarlig; uafklarede fund forsvinder ikke ved aflevering. Efter relevante ændringer læses den berørte diff igen. Ved integrationskonflikter kontrolleres også den samlede løsning.
 
-En stor diff kan fordeles mellem få reviewers efter ansvar, hvis mandat og værktøjer understøtter det. Orkestratoren samler fund og ejer den samlede integration efter [koordinationen](koordinering.md).
+Orkestratoren afprøver også slutbrugerens relevante forløb i den samlede løsning før accept. Før deployment udføres de mulige lokale og visuelle kontroller; produktionsspecifikke forløb kontrolleres efter deployment. Lokale tests og et vellykket deployment beviser ikke login, MCP Apps eller eventlevering i ChatGPT. Manglende host- eller browseradgang registreres præcist; uverificerede forløb erklæres ikke bestået. Rettelser delegeres tilbage til arbejderen.

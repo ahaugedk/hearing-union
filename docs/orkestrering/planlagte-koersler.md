@@ -6,14 +6,14 @@ status: "stable"
 ---
 # Planlagte udviklingskørsler
 
-Anders har bestilt timebaseret genoptagelse den 23. oktober 2026 og præciseret, at både Site og automation skal oprettes fra bunden. Tidligere tekst om en aktiveret automation er derfor afløst. Den aktuelle session har intet automationsværktøj. En direkte test af Codex CLI kunne heller ikke gennemføre et modelkald: den eksisterende CLI-loginbinding blev afvist med HTTP 401 og krav om fornyet login. Miljøet har ingen aktiv systemd-tjeneste eller crontab. Ingen timer er oprettet, og timebaseret genoptagelse er ikke verificeret. Det kræver en understøttet vedvarende runner med fungerende agentlogin eller ChatGPT-automation; et lokalt sleep-loop løser ikke disse forudsætninger.
+ChatGPT-automationen **Hearing Union koordinering** er aktiveret med timebaseret kadence i Europe/Copenhagen. Den genoptager orkestratorens arbejde i `ahaugedk/hearing-union` efter [mandatet](mandat.md). Faktisk aktivering og seneste resultat kontrolleres gennem automationsværktøjet.
 
 | Kørsel eller pulje | Kadence eller udløser | Faktisk status | Ansvar og aktiveringsgrundlag |
 |---|---|---|---|
-| Høreforeningens udviklingsorkestrering | Hver time; Europe/Copenhagen | Ikke oprettet; kræver et tilgængeligt automationsværktøj | Denne projektsamtale, `/root`, efter mandatet |
+| Hearing Union koordinering | Hver time; Europe/Copenhagen | Aktiveret i ChatGPT | Denne projektsamtale, `/root`, efter mandatet |
 
-Automationens prompt læser AGENTS, roadmap, mandat og arbejdsoversigt, kontrollerer eksisterende arbejderes status, reviewer afleveringer og starter næste afklarede leverance uden at dobbeltbestille. Den giver besked ved en milepæl, en fejl eller et nødvendigt svar; ellers er runden stille. Den skal stoppe med en konkret blokering, hvis projektfiler eller nødvendige værktøjer ikke er tilgængelige. Den aktuelle cloud-session kan læse projektet og køre dokumentkontrollen; en fremtidig automation skal selv verificere samme adgang. En lokal baggrundsproces kan ikke antages at overleve cloud-taskens ophør eller genoptage ChatGPT-sessionen.
+Prompten læser AGENTS, relevante planer, mandat, arbejdsoversigt og GitHub-afleveringer. Den kontrollerer eksisterende arbejdere før bestilling, delegerer implementering til underagenter og beholder arkitekturreview, code review, slutbrugertest og deployment hos orkestratoren. [Udgivelseskontrakten](../drift/sites-udgivelse.md) gælder også ved genoptagelse; allerede udgivne commits springes over. Dokumentændringer udløser ikke alene en ny produktudgivelse.
 
-Ved konkret aktivering registreres ansvarlig session, faktisk fungerende vækkemekanisme, kadence, afleveringssignal og driftens forudsætninger. Verificér, at mekanismen kan vække den relevante session; en opsætningsbesked er ikke nok. Vælg en passende sikkerhedsrunde og reager på afleveringer, hvor værktøjet understøtter det.
+Giv kun besked efter en handling, fejl eller et nødvendigt svar. Hver fremtidig kørsel verificerer selv adgang til GitHub, terminal, underagenter og Sites og registrerer præcise begrænsninger. Aktivering beviser ikke, at alle fremtidige værktøjskald eller tests kan gennemføres.
 
 Dokumentér begrænsninger som appens levetid, sessionens tilgængelighed og maskinens dvale, hvor de faktisk gælder. Ved pause startes ingen ny runde; gem sikkert arbejdsgrundlag og commit. Faktisk rest og nulstillingstid noteres efter [kvoteværnet](kvotevaern.md). Genoptagelse følger [mandatet](mandat.md).

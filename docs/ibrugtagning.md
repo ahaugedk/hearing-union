@@ -6,7 +6,7 @@ status: "stable"
 ---
 # Arbejd i Høreforeningens projekt
 
-GitHub er fælles sandhed for produktdokumenter, kode, review og overdragelse mellem Codex Cloud og Sites-udgiveren.
+GitHub er fælles sandhed for produktdokumenter, kode, review og udgivelsesstatus. Underagenter implementerer i denne projektsamtale; orkestratoren ejer review, slutbrugertest og deployment.
 
 1. Læs [produktvisionen](produkt/retning/vision.md) og [kompasset](produkt/retning/kompas.md).
 2. Find igangsat scope og scenarier i [roadmappet](roadmap/index.md).

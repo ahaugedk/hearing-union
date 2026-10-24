@@ -4,4 +4,4 @@
 
 Validering bruger det faktisk kørende miljø efter [metoderne](../validering/metoder/index.md). Føj kun yderligere driftsblade til, når et konkret emne har et selvstændigt læsebehov.
 
-[Deploymentvejledningen](../../release/README.md) beskriver Workers, D1, OAuth og bindingen til det eksisterende Site.
+[Deploymentvejledningen](../../release/README.md) beskriver Worker, D1, Sites-identitet og bindingen til det eksisterende Site.

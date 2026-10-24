@@ -6,14 +6,16 @@ status: "stable"
 ---
 # Koordination af udviklingsleverancer
 
-En koordineringsrunde er kort og venter ikke på en arbejder eller et menneskesvar:
+Orkestratoren bestiller implementering og rettelser direkte hos underagenter i denne samtale. GitHub bevarer kode, review og varig status; Codex Cloud og GitHub-omtaler af eksterne workers indgår ikke.
+
+En koordineringsrunde kontrollerer eksisterende arbejde og fortsætter uafhængigt af menneskesvar:
 
 1. Aflæs kapacitet og forbrug efter [kvoteværnet](kvotevaern.md).
 2. Læs [arbejdsoversigten](arbejdsoversigt.md), nye afleveringer og Git-status for berørte grene. Kontrollér, at en ejer stadig arbejder, før arbejdet genbestilles.
-3. [Review](review.md) afleverede grene mod gældende main og plan. Send samlede fund tilbage til arbejderen. Flet først, når fund er løst eller et begrundet afslag er vurderet og accepteret. Efter integration køres smoke ved milepælen, let visuel kontrol ved UI-ændring og fuld gennemgang med rettelser ved en færdig større feature.
+3. Orkestratoren udfører selv arkitektur- og [code review](review.md) af afleverede grene mod gældende main og plan. Send samlede fund tilbage til arbejderen. Flet først, når fund er løst eller et begrundet afslag er vurderet og accepteret. Orkestratoren ejer slutbrugertest, smoke ved milepælen, visuel kontrol ved UI-ændring og rettelsesrunder før en større feature accepteres.
 4. Start næste klarlagte leverance inden for igangsat scope efter rækkefølge, afhængigheder og ejergrænser. Parallelisér kun uafhængigt arbejde. Overhold faktisk miljøkapacitet fra projektprofilen, og dobbeltbestil aldrig samme leverance.
 5. Opdatér arbejdsoversigten, og føj kun modne spørgsmål til [indbakken](afklaringer/indbakke.md).
-6. Afslut runden. Giv besked ved en afsluttet milepæl, fejl eller nødvendigt svar; uændret tilstand er stille.
+6. Fortsæt nødvendige afleverings- og rettelsesrunder i den aktive samtale. Ved en planlagt runde gemmes sikkert arbejdsgrundlag før afslutning. Giv besked ved en afsluttet milepæl, fejl eller nødvendigt svar; uændret tilstand er stille.
 
 En [bestilling](../skabeloner/bestilling.md) angiver slutleverance, plan og relevante blade, ejergrænse, afhængigheder, arbejdsmappe, gren og normal valideringsvej. Et fælles interface har én navngiven ejer, før afhængigt arbejde starter.
 

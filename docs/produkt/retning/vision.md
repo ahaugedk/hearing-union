@@ -6,19 +6,17 @@ status: "stable"
 ---
 # Høreforeningens ChatGPT-app
 
-Høreforeningens viden og aktiviteter skal være tilgængelige dér, hvor brugeren allerede stiller sine spørgsmål: i ChatGPT. Appen giver kildebaserede, aktuelle svar om hørelse og foreningens tilbud og forbinder dem med handlinger som interessevalg, søgning efter foredrag, tilmelding og afmelding.
+Høreforeningens viden og aktiviteter skal være tilgængelige direkte i ChatGPT med tydelige kilder og en autentificeret forbindelse til brugerens konto. Brugeren kan finde viden, vælge interesser, opdage relevante foredrag og tilmelde eller afmelde sig. Proaktive beskeder kræver udtrykkeligt tilvalg.
 
-Brugeren møder én sammenhængende, autentificeret tjeneste. Personlige præferencer og tilmeldinger gemmes på brugerens egen interne konto og må ikke flyde mellem konti. Proaktive beskeder om relevante foredrag kræver et udtrykkeligt tilvalg. Administratorer vedligeholder viden og foredrag gennem de samme ChatGPT-indgange, og ejeren styrer administratoradgang.
+Personlige præferencer og tilmeldinger er isoleret pr. konto. Administratorer vedligeholder viden og foredrag gennem de samme ChatGPT-indgange, mens ejeren styrer administratoradgang. Målet er optagelse i den offentlige ChatGPT-appfortegnelse; en privat Sites-udgivelse er et udviklings- og valideringstrin.
 
-Produktet skal kunne optages i den offentlige ChatGPT-appfortegnelse. En privat Sites-udgivelse er udviklings- og valideringsmiljø, ikke det endelige udgivelsesmål. OpenAIs eksterne godkendelse kan understøttes med en komplet og reviewbar løsning, men kan ikke garanteres af projektet.
+## Grænser
 
-## Produktgrænser
-
-- Appen giver information og adgang til foreningens aktiviteter; den diagnosticerer eller behandler ikke.
-- Viden leveres med kilder og gyldighedskontrol. Appen instruerer ChatGPT i at hente den aktuelle version og ikke gemme den som hukommelse, men kan ikke tilbagekalde allerede leveret tekst eller garantere modellens hukommelsesadfærd.
+- Appen informerer og formidler aktiviteter; den diagnosticerer eller behandler ikke.
+- Viden leveres med kilder og gyldighedskontrol. Projektet kan ikke tilbagekalde allerede leveret tekst eller garantere ChatGPTs hukommelsesadfærd.
 - Der gemmes ikke diagnoser, rå samtaletekst eller identificerbar brugshistorik. Statistik er aggregeret og anonym.
 - Foredrag og tilmeldinger ligger i projektets egen database. Eksterne medlems-, booking- og betalingssystemer indgår ikke i MVP'en.
 - Produktet foretager ingen egne modelkald og kræver ingen OpenAI API-nøgle.
-- Den daglige administration sker gennem ChatGPT. Webfladen begrænses til nødvendige informations-, privatlivs-, support- og forbindelsessider.
+- Daglig administration sker gennem ChatGPT; webfladen begrænses til nødvendige informations-, privatlivs-, support- og forbindelsessider.
 
-Den igangsatte leverance og dens præcise MVP-scope står i [roadmappet](../../roadmap/chatgpt-app-mvp/index.md). [Kompasset](kompas.md) bruges ved løbende valg uden at udvide dette løfte.
+Det præcise MVP-scope står i [roadmappet](../../roadmap/chatgpt-app-mvp/index.md). [Kompasset](kompas.md) styrer løbende valg uden at udvide produktløftet.

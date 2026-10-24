@@ -1,0 +1,13 @@
+import { readFile, readdir } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const hosting=JSON.parse(await readFile('.openai/hosting.json','utf8'));
+assert.equal(hosting.project_id,'appgprj_6adb6ca4b9a0819187d043ebb4c091a5');
+assert.deepEqual(hosting.d1_databases,[{binding:'DB',migrations_dir:'db/migrations'}]);
+const config=JSON.parse(await readFile('wrangler.jsonc','utf8'));
+assert.equal(config.workers_dev,false);assert.equal(config.preview_urls,false);
+assert.equal(config.routes,undefined);assert.equal(config.account_id,undefined);
+assert.equal(config.d1_databases[0].binding,'DB');assert.equal(config.d1_databases[0].database_id,undefined);
+const files=await readdir('dist/worker');
+assert.ok(files.includes('worker.js'));assert.equal(files.filter(name=>name.endsWith('.txt')).length,2);
+assert.equal(await readFile('db/migrations/0001_initial.sql','utf8'),await readFile('dist/migrations/0001_initial.sql','utf8'));
+console.log('OK: existing Sites project, logical DB binding, versioned migration, Worker + two MCP Apps, no external OAuth/account/database ID, no alternate public Worker route. Sites publisher verifies ingress/provisioning and reports deployment through the GitHub handoff.');

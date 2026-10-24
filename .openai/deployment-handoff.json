@@ -1,23 +1,41 @@
 {
   "schema_version": 1,
-  "status": "not_ready",
+  "status": "ready",
   "source": {
-    "branch": null,
-    "commit": null
+    "branch": "deployment/cloudflare-sites",
+    "commit": "a34ba04ff4e621ef9acc64073792113cba58fca5"
   },
   "validation": {
-    "result": "not_run",
-    "commands": [],
-    "notes": []
+    "result": "passed",
+    "commands": [
+      "npm ci --cache /tmp/hearing-npm-cache --loglevel=error",
+      "npm run build",
+      "npm run smoke",
+      "npm run smoke:worker",
+      "npm run check:deployment",
+      "npm run check:docs",
+      "npm run pack",
+      "npm run check:package"
+    ],
+    "notes": [
+      "Alle dokumenterede valideringskommandoer bestod på den oprindelige deploymentleverance.",
+      "GitHub Actions Validate deployment package bestod efter reviewrettelserne i source.commit; Worker-smoke dækker nu flere valgte emner, og deployment-gaten bruger behaviorale identitetskontroller.",
+      "source.commit er den deployerbare kodecommit. PR-head kan være en senere handoff- eller integrationscommit."
+    ]
   },
   "database": {
-    "migration_required": false,
-    "notes": []
+    "migration_required": true,
+    "notes": [
+      "Anvend db/migrations/0001_initial.sql gennem Sites på den logiske DB-binding i .openai/hosting.json; ingen konto-id, fysisk D1-id eller Cloudflare-nøgle kræves.",
+      "Første versionerede grundskema; bevar eksisterende data og binding ved deployment. Ingen reset eller destruktiv datamigrering er bestilt."
+    ]
   },
-  "release_notes": [],
-  "blockers": [
-    "The implementing agent must replace this placeholder before requesting deployment."
+  "release_notes": [
+    "Eksisterende hearing-union-projekt og privat adgang bevares; Worker bruger Sites-headeren oai-authenticated-user-id uden egne login-, callback- eller sessionroutes.",
+    "Fælles asynkron SQLite/D1-persistens bevarer viden, foredrag, præferencer, roller, statistik og eventkø; deterministisk pakke kan bygges fra Git uden secrets.",
+    "Sites-udgiveren ejer publicering, migrationsanvendelse og livekontrol. Kontrollér runtime-callbackværter og understøttet genlevering, før live eventlevering erklæres aktiveret."
   ],
+  "blockers": [],
   "deployment": {
     "site_version": null,
     "deployed_commit": null,

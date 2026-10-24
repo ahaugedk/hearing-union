@@ -1,0 +1,3 @@
+CREATE TABLE IF NOT EXISTS app_revision (id INTEGER PRIMARY KEY CHECK(id=1),revision INTEGER NOT NULL DEFAULT 0);
+INSERT OR IGNORE INTO app_revision(id,revision) VALUES(1,0);
+CREATE TABLE IF NOT EXISTS app_commit_guard (id INTEGER PRIMARY KEY CHECK(id=1),valid INTEGER NOT NULL CONSTRAINT app_revision_conflict CHECK(valid=1));

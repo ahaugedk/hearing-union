@@ -4,7 +4,22 @@ En genbrugelig arbejdsgang fra produktretning og roadmap til reviewet, integrere
 
 ## Projektets udviklingsplan
 
-[Roadmappet](docs/roadmap/index.md) er indgangen til Høreforeningens ChatGPT-app. Planen har særskilt vision, brugerforløb og faseinddelt implementering; den beskriver planlagt arbejde, ikke et leveret system eller igangsat orkestrering.
+[Roadmappet](docs/roadmap/index.md) er indgangen til Høreforeningens ChatGPT-app. Planen har særskilt vision, brugerforløb og faseinddelt implementering; den beskriver planlagt arbejde, ikke et fuldt leveret system.
+
+## Lokal udvikling af Høreforeningens app
+
+Kræver Node.js 24 eller nyere samt Python 3.9+ til dokumentkontrollen. Kør fra projektroden:
+
+```sh
+npm ci
+npm run build
+npm run smoke
+npm run dev
+```
+
+Det lokale MCP-endpoint er `POST /mcp` på loopback, og `GET /health` viser udviklingsstatus. Første opstart opretter SQLite-database og tilfældige lokale identitetsnøgler i den ignorerede `.local/`-mappe. Smoke bruger sin egen midlertidige database og sletter den igen. Nøglerne i `.local/auth.json` bruges som Bearer-token af en lokal MCP-klient; del eller commit dem aldrig.
+
+Den lokale server har tre syntetiske konti: ejer og to brugere. Den understøtter viden, foredrag, eventabonnementer og anonym statistik. `npm run import:knowledge -- --verify-sources` importerer det afgrænsede kildeudsnit; gentagelse bevarer eksisterende indhold. `npm run events:drain` genoptager en begrænset passage af den holdbare eventkø. Den lokale adapter bruger fortsat syntetiske konti. Den separate Cloudflare Worker bruger D1 og Sites’ indbyggede brugeridentitet; faktisk Sites-kobling, platformens identitetsvideresendelse og eventlevering i ChatGPT kræver platformadgang. [Projektprofilen](docs/drift/projektprofil.md) ejer de gældende kommandoer og afgrænsninger. [Udgivelsesudkastet](release/README.md) beskriver build, pakning, identitetsopsætning, D1 og aktivering af det eksisterende Site. Kør `npm run smoke:worker` for den pakkede Worker og lokal D1; `npm run pack` laver deploymentarkivet.
 
 ## Pak ud i et nyt projekt
 
@@ -16,7 +31,7 @@ En genbrugelig arbejdsgang fra produktretning og roadmap til reviewet, integrere
 
     python3 scripts/check_okf.py
 
-Pakken starter ingen agenter, timere, services eller reset. Den indeholder ingen projektkode og er ikke et færdigt softwaresystem. Produktets konkrete kerneforløb og kommandoer skal fastlægges før udviklingsleverancer.
+Den oprindelige startpakke starter ingen agenter, timere eller reset. Projektets lokale udviklingsserver startes særskilt som beskrevet ovenfor; roadmappets fulde produkt er endnu ikke leveret.
 
 ## Det følger med
 

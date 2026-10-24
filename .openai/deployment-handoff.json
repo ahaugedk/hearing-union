@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "status": "ready",
+  "status": "not_ready",
   "source": {
-    "branch": "fix/sites-d1-manifest",
-    "commit": "3c53d04325143e364f7bff85d35f00c1e99ea345"
+    "branch": "fix/sites-d1-binding-string",
+    "commit": "41fbbc8798113783eceba9a59a2b834a58f82a61"
   },
   "validation": {
-    "result": "passed",
+    "result": "not_run",
     "commands": [
       "npm ci --cache /tmp/hearing-npm-cache --loglevel=error",
       "npm run build",
@@ -18,9 +18,7 @@
       "npm run check:package"
     ],
     "notes": [
-      "GitHub Actions Validate deployment package passed after changing the hosting manifest to the Sites-native d1 object.",
-      "The previous Sites save attempt stopped at manifest validation; no deployment or D1 migration was started.",
-      "source.commit is the deployable code commit. The following commit only refreshes this handoff."
+      "Sites requires the d1 manifest value to be a binding-name string. The source now declares d1 as DB and awaits full CI."
     ]
   },
   "database": {
@@ -35,7 +33,9 @@
     "Fælles asynkron SQLite/D1-persistens bevarer viden, foredrag, præferencer, roller, statistik og eventkø; deterministisk pakke kan bygges fra Git uden secrets.",
     "Sites-udgiveren ejer publicering, migrationsanvendelse og livekontrol. Kontrollér runtime-callbackværter og understøttet genlevering, før live eventlevering erklæres aktiveret."
   ],
-  "blockers": [],
+  "blockers": [
+    "Awaiting GitHub Actions validation of the corrected d1 binding type."
+  ],
   "deployment": {
     "site_version": null,
     "deployed_commit": null,

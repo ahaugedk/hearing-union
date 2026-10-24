@@ -7,4 +7,4 @@ okf_version: "0.2"
 
 [Roadmappet](roadmap/index.md) er indgangen til midlertidige planer, mens [orkestreringen](orkestrering/index.md) ejer klarhed, tildeling og igangsættelse. [Valideringen](validering/index.md) afgør, om hele løftet virker gennem normale indgange; [drift](drift/index.md) forbinder det med det faktiske miljø. Færdige forbedringer står kort i [udviklingsoversigten](udviklingsoversigt.md).
 
-[Skabelonerne](skabeloner/index.md) hjælper nye planer og leverancer i gang. Ved første brug følges [ibrugtagningen](ibrugtagning.md). Læs kun de grene, opgaven kræver.
+[Projektguiden](ibrugtagning.md) er den korte indgang for nye arbejdere. [Skabelonerne](skabeloner/index.md) bruges kun til nye konkrete planer og leverancer. Læs kun de grene, opgaven kræver.

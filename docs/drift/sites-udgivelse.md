@@ -6,7 +6,7 @@ status: "stable"
 ---
 # Udgivelse til ChatGPT Sites
 
-GitHub er overdragelsespunkt mellem den agent, der bygger produktet, og den agent, der udgiver det. En kodeleverance er klar til udgivelse, når dens pull request ændrer [den maskinlæsbare overdragelse](../../.openai/deployment-handoff.json) til `ready` og angiver den præcise commit. Udgiveren bruger denne commit, ikke en bevægelig gren, og skriver resultatet tilbage i samme fil og i pull requesten.
+Underagenter implementerer og afleverer til orkestratoren i projektsamtalen. Orkestratoren ejer arkitekturreview, code review, slutbrugertest og udgivelse. GitHub bevarer kode, review og [den maskinlæsbare overdragelse](../../.openai/deployment-handoff.json); Codex Cloud indgår ikke. En kodeleverance kan gøres klar med `ready` og den præcise deployerbare commit. Dokumentændringer kræver ikke i sig selv en ny produktudgivelse.
 
 ## Fast mål
 
@@ -19,19 +19,20 @@ GitHub er overdragelsespunkt mellem den agent, der bygger produktet, og den agen
 
 Sites håndterer login. Worker-kode læser den verificerede bruger fra `oai-authenticated-user-id` og kan bruge `oai-authenticated-user-email` og `oai-authenticated-user-full-name`; den opretter ikke en særskilt OAuth/OIDC-loginstrøm og kræver ingen ekstern issuer eller audience.
 
-D1 erklæres som en logisk binding i `.openai/hosting.json`, normalt `DB`. Sites provisionerer og binder databasen. Projektet kræver derfor hverken Cloudflare-konto-id, D1-id eller en Cloudflare-adgangsnøgle i Codex Cloud.
+D1 erklæres som en logisk binding i `.openai/hosting.json`, normalt `DB`. Sites provisionerer og binder databasen. Projektet kræver derfor hverken Cloudflare-konto-id, fysisk D1-id eller en Cloudflare-adgangsnøgle.
 
 Hemmelige værdier må ikke skrives i Git, pull requests eller overdragelsesfilen. Eventuelle øvrige runtime-hemmeligheder oprettes i den relevante platform og refereres kun ved navn.
 
 ## GitHub-overdragelse
 
-Den implementerende agent:
+Underagenten:
 
 1. holder `.openai/hosting.json`, Worker-indgangspunkt og eventuelle migrationer reproducerbare fra Git;
 2. kører den dokumenterede smoke-validering;
-3. udfylder `.openai/deployment-handoff.json` i sidste kodecommit og sætter kun `status` til `ready`, når den angivne commit kan udgives;
-4. åbner en pull request med titlen `[sites-deploy] ...`.
+3. afleverer gren, præcis kodecommit, validering og mangler til orkestratoren.
 
-Udgivelsesagenten kontrollerer overdragelsen og PR-head, bygger fra den angivne commit, anvender nødvendige migrationer gennem Sites og udgiver til projektet ovenfor. Ved succes registrerer den Sites-version, liveadresse og udgivet commit; ved fejl registrerer den den konkrete blokering uden at opfinde credentials eller ændre adgangspolitik.
+Orkestratoren reviewer hele ændringen, udfører relevante slutbrugertests og færdiggør overdragelsen. En separat sidste commit må opdatere handoffet uden at ændre den deployerbare kodecommit. En udgivelsesklar pull request mærkes `[sites-deploy]`.
+
+Orkestratoren kontrollerer overdragelsen og PR-head, bygger fra den angivne commit, anvender nødvendige migrationer gennem Sites og udgiver til projektet ovenfor. Ved succes registreres Sites-version, liveadresse og udgivet commit; ved fejl den konkrete blokering. Allerede registrerede deployments gentages ikke. Ingen credentials opfindes, og adgangspolitikken bevares.
 
 Automatisk udgivelse må ikke fortsætte, hvis commit ikke matcher, valideringen ikke er bestået, overdragelsen har blokeringer, eller ændringen kræver en væsentlig produktbeslutning.

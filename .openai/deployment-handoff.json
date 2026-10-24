@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "status": "deployed",
+  "status": "ready",
   "source": {
-    "branch": "integration/minimal-site",
-    "commit": "a1e4ffd246f132d36be593a49b26635473312617"
+    "branch": "fix/sites-archive-root",
+    "commit": "2be12f0f2a480366a300646f33e0abe8217b0067"
   },
   "validation": {
     "result": "passed",
@@ -19,10 +19,9 @@
       "npm run check:docs"
     ],
     "notes": [
-      "Subagents implemented minimal brand/site/docs and Sites Drizzle sidecar; root reviewed full integrated change and reran build, typecheck, local/Worker smoke, deployment/package and docs checks.",
-      "Root visually checked generated homepage with synthetic target: one lime installation action, white background, charcoal type. Real installation link remains unset until native app registration succeeds.",
-      "Current live MCP 503 and empty DB are addressed by packaging schema SQL at Sites' documented .openai/drizzle sidecar with journal; production schema application must be verified after deployment.",
-      "HU-Q-20261024-01 sent and tracked in Gmail; only final public publisher/privacy/review metadata awaits user answer."
+      "Exact Sites shared package-site.mjs tar boundary verified: every file under dist/, including dist/.openai/drizzle migration sidecar.",
+      "Root reviewed two-file packaging change. Existing full build/Worker smoke/package/dry-run/docs checks passed; official prepare-site-build.cjs processed extracted artifact and retained migration.",
+      "Install URL remains unset; public listing metadata still awaits user answer HU-Q-20261024-01. These do not block private runtime repair."
     ]
   },
   "database": {
@@ -38,15 +37,11 @@
     "Roadmap, implementation queue and changelog updated; Gmail reply reconciliation documented.",
     "Canonical migration SQL unchanged, packed in documented Sites Drizzle sidecar with journal and complete statement boundaries."
   ],
-  "blockers": [
-    "No verified ChatGPT directory URL; Sites returned private plugin ID plugin_asdk_app_sites_2a44f2a3a7f48191ad5e85365cdba550, but plugin search returned no listing. CHATGPT_APP_URL remains unset.",
-    "Post-deploy DB overview returned zero tables; hosted migration application is not verified. Follow-up packaging boundary fix delegated to subagent.",
-    "Final public publisher/data-controller/support metadata awaits HU-Q-20261024-01; question emailed with tracked Gmail thread."
-  ],
+  "blockers": [],
   "deployment": {
-    "site_version": 4,
-    "deployed_commit": "a1e4ffd246f132d36be593a49b26635473312617",
-    "deployed_at": "2026-10-24T12:42:09.534886Z",
-    "live_url": "https://hearing-union.ahaugedk.chatgpt.site"
+    "site_version": null,
+    "deployed_commit": null,
+    "deployed_at": null,
+    "live_url": null
   }
 }

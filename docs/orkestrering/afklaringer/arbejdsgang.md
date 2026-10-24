@@ -12,7 +12,9 @@ Forberedelse og tekniske afhængigheder registreres på leverancen i [arbejdsove
 
 Føj først et spørgsmål til [indbakken](indbakke.md), når det er klar til svar og blokerer et forestående skridt. Hver post angiver spørgsmål, anbefaling og svarmuligheder, link til oplæg, ansvarlig ejer og præcist blokeret scope. Kopiér ikke kontrakter eller godkendelser. Proceshandlinger inden for allerede givet mandat får ingen ny autorisationspost. Fremtidige spørgsmål venter i planen.
 
-Forelæg ét sammenhængende spørgsmål ad gangen inline i samtalen: kort baggrund, anbefaling først og realistiske alternativer med konsekvens. Beslægtede valg, der kun kan besvares samlet, er ét spørgsmål. Stilhed eller forløbet tid er intet svar.
+Når en post oprettes eller ændres, så den kræver Anders' svar eller handling, sender orkestratoren samtidig en kort mail fra den forbundne Gmail-konto til produktejerens verificerede Gmailadresse. Mailen indeholder emne, anbefaling, svarfrist hvis en reel frist findes, og et GitHub-link til indbakkeposten. GitHub-indbakken er autoritativ; mailen er kun notifikation og må ikke indeholde secrets eller blive en parallel beslutningshistorik. Der sendes ingen mail for interne tekniske udeståender eller uændret status.
+
+Forelæg ét sammenhængende spørgsmål ad gangen: kort baggrund, anbefaling først og realistiske alternativer med konsekvens. Beslægtede valg, der kun kan besvares samlet, er ét spørgsmål. Stilhed eller forløbet tid er intet svar.
 
 Kun afhængigt scope venter. Arbejderen afleverer spørgsmålet og fortsætter uafhængigt arbejde. Kræver et spørgsmål igen afgørende forberedelse, fjernes det fra indbakken, og arbejdet registreres på leverancen.
 

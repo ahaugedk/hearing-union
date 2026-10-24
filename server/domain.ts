@@ -219,9 +219,12 @@ export class HearingUnion {
                 if (a.consent !== true)
                     fail('INVALID_INPUT', 'Gennemgå de valgte emneinteresser, områder og formater samt opbevaringen. Indhent brugerens udtrykkelige samtykke, og send consent: true for at gemme.');
                 const format = validFormat(a.format, true), topics = strings(a.topics, 'topics'), regions = strings(a.regions, 'regions');
-                for (const id of topics)
-                    if (!await this.get(visibility + ' SELECT id FROM visible WHERE id=?', now, now, id))
+                if (topics.length) {
+                    const placeholders = topics.map(() => '?').join(',');
+                    const visible = await this.all(visibility + ` SELECT id FROM visible WHERE id IN (${placeholders})`, now, now, ...topics);
+                    if (visible.length !== topics.length)
                         fail('NOT_FOUND', 'Emnet findes ikke.');
+                }
                 await this.run('UPDATE user_preferences SET format=?,version=version+1 WHERE user_id=?', format, user.id);
                 await this.run('DELETE FROM user_topic_preferences WHERE user_id=?', user.id);
                 await this.run('DELETE FROM user_region_preferences WHERE user_id=?', user.id);

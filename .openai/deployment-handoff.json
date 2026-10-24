@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "ready",
+  "status": "deployed",
   "source": {
     "branch": "feature/install-home",
     "commit": "d8faa287b6bd9e94228f19692e44182a57f7b8a4"
@@ -21,7 +21,8 @@
     "notes": [
       "Root reviewed full code and architecture; implementation delegated to subagent.",
       "Destination URL validation passed. No verified store URL exists yet; initial deployment provisions native MCP and shows unavailable installation state until CHATGPT_APP_URL is set.",
-      "Visual preview failed to become healthy: local dev listens on port 3000 while managed preview requires port 4173. Browser live access is sign-in gated."
+      "Visual preview failed to become healthy: local dev listens on port 3000 while managed preview requires port 4173. Browser live access is sign-in gated.",
+      "Sites reports deployment succeeded and has_mcp=true; this does not mean app installation or authenticated domain operations passed."
     ]
   },
   "database": {
@@ -35,11 +36,13 @@
     "Single installation action configured by CHATGPT_APP_URL with honest unavailable state when unset.",
     "Declare native MCP and reproducible Sites server entrypoint; retain private access and data."
   ],
-  "blockers": [],
+  "blockers": [
+    "Installation not complete: Sites native MCP discovery returned HTTP 503; DB binding exists but database overview returned zero tables. No plugin ID or verified store URL returned. Migration packaging repair assigned to subagent."
+  ],
   "deployment": {
-    "site_version": null,
-    "deployed_commit": null,
-    "deployed_at": null,
-    "live_url": null
+    "site_version": 3,
+    "deployed_commit": "d8faa287b6bd9e94228f19692e44182a57f7b8a4",
+    "deployed_at": "2026-10-24T12:30:25.321233Z",
+    "live_url": "https://hearing-union.ahaugedk.chatgpt.site"
   }
 }

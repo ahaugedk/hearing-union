@@ -12,7 +12,13 @@ Forberedelse og tekniske afhængigheder registreres på leverancen i [arbejdsove
 
 Føj først et spørgsmål til [indbakken](indbakke.md), når det er klar til svar og blokerer et forestående skridt. Hver post angiver spørgsmål, anbefaling og svarmuligheder, link til oplæg, ansvarlig ejer og præcist blokeret scope. Kopiér ikke kontrakter eller godkendelser. Proceshandlinger inden for allerede givet mandat får ingen ny autorisationspost. Fremtidige spørgsmål venter i planen.
 
-Når en post oprettes eller ændres, så den kræver Anders' svar eller handling, sender orkestratoren samtidig en kort mail fra den forbundne Gmail-konto til produktejerens verificerede Gmailadresse. Mailen indeholder emne, anbefaling, svarfrist hvis en reel frist findes, og et GitHub-link til indbakkeposten. GitHub-indbakken er autoritativ; mailen er kun notifikation og må ikke indeholde secrets eller blive en parallel beslutningshistorik. Der sendes ingen mail for interne tekniske udeståender eller uændret status.
+Når en post kræver Anders' svar eller handling, oprettes indbakkepost og kort Gmail i samme runde. Modtageren er den verificerede produktejer Anders Hauge, `anders.hauge.dk@gmail.com`. Brug et unikt spørgsmål-id, fx `HU-Q-20261024-01`, i både post og mailemne. Mailen indeholder spørgsmålet, anbefalingen, eventuel reel frist og GitHub-linket. Anders kan svare direkte på mailen; GitHub ejer den foldede beslutning.
+
+Indbakkeposten gemmer spørgsmål-id, verificeret modtager, Gmail-tråd-id, sendt besked-id og senest behandlede svar-id. Et mislykket sendeforsøg markeres præcist; kontrollér den eksisterende tråd før genforsøg. Send ikke samme oplæg igen ved uændret status, og send ingen mail for interne tekniske udeståender.
+
+Ved genoptagelse læser orkestratoren nye svar i de registrerede HU-Q-tråde, uanset læst/ulæst-status. Behandl kun direkte, ny svartekst fra den verificerede produktejer, som kan knyttes entydigt til spørgsmålet. En afsendt forespørgsel fra samme Gmail-konto er ikke et svar: udelad kendte udgående besked-id'er og citeret historik. Er svar, afsender eller scope uklart, eller modsiger svaret gældende beslutninger, behold afhængigheden og bed om en kort afklaring i samme tråd. Stilhed er ingen godkendelse.
+
+Fold kun beslutningens nødvendige betydning, dato, scope og beskedreference ind i planen; kopiér ikke private mailtekster, andre emner eller secrets til GitHub. Opdatér senest behandlede svar-id, så genoptagelse ikke genanvender svaret. En afsendt mail eller ændret læsestatus beviser ikke behandling.
 
 Forelæg ét sammenhængende spørgsmål ad gangen: kort baggrund, anbefaling først og realistiske alternativer med konsekvens. Beslægtede valg, der kun kan besvares samlet, er ét spørgsmål. Stilhed eller forløbet tid er intet svar.
 

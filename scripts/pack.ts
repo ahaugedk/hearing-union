@@ -2,6 +2,7 @@ import { readFile, writeFile, copyFile, mkdir, readdir, rm } from 'node:fs/promi
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { gzipSync } from 'node:zlib';
+import './migrations.js';
 const config=JSON.parse(await readFile('wrangler.jsonc','utf8'));
 delete config.$schema;
 config.main='dist/server/index.js';config.d1_databases[0].migrations_dir='db/migrations';
@@ -20,7 +21,7 @@ await mkdir('dist/dist/server',{recursive:true});
 await copyFile('dist/worker/worker.js','dist/dist/server/index.js');
 await copyFile('dist/worker/worker.js.map','dist/dist/server/worker.js.map');
 for(const file of files.filter(file=>file.endsWith('.txt')))await copyFile(`dist/worker/${file}`,`dist/dist/server/${file}`);
-const entries=['wrangler.json','.openai/hosting.json','plugin.json','DEPLOYMENT.md','dist/server','db','knowledge.json'];
+const entries=['wrangler.json','.openai/hosting.json','.openai/drizzle','plugin.json','DEPLOYMENT.md','dist/server','db','knowledge.json'];
 const tar=execFileSync('tar',['--sort=name','--mtime=@0','--owner=0','--group=0','--numeric-owner','--mode=u+rwX,go+rX','-cf','-','-C','dist',...entries],{maxBuffer:32*1024*1024});
 await writeFile('dist/hearing-union-deployment.tar.gz',gzipSync(tar,{level:9}));
 const archive=await readFile('dist/hearing-union-deployment.tar.gz');

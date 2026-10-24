@@ -101,8 +101,6 @@ export async function startLocal(options: {
             if (origin && origin !== `http://${host}`)
                 return reply(403, { error: 'Forbidden origin' });
             const url = new URL(incoming.url ?? '/', `http://${host}`);
-            if (url.pathname === '/health' && incoming.method === 'GET')
-                return reply(200, { status: 'ok', mode: 'local-development' });
             if (incoming.method === 'GET') {
                 const page = renderPublicPage(url.pathname, pageConfig);
                 if (page !== null) {
@@ -121,14 +119,16 @@ export async function startLocal(options: {
                     return reply(429, { error: 'Too many requests' });
                 return reply(200, await events.drain(Date.now(), 1));
             }
-            if (url.pathname !== '/mcp')
-                return reply(404, { error: 'Not found' });
-            if (incoming.method !== 'POST')
-                return reply(405, { error: 'POST required' });
             const token = /^Bearer ([0-9a-f]{64})$/.exec(incoming.headers.authorization ?? '')?.[1];
             const account = token && auth.accounts.find(a => timingSafeEqual(Buffer.from(a.token), Buffer.from(token)));
             if (!account)
                 return reply(401, { error: 'Authentication required' });
+            if (url.pathname === '/health' && incoming.method === 'GET')
+                return reply(200, { status: 'ok', mode: 'local-development' });
+            if (url.pathname !== '/mcp')
+                return reply(404, { error: 'Not found' });
+            if (incoming.method !== 'POST')
+                return reply(405, { error: 'POST required' });
             const rate = await consumeRateLimit(db, account.subject);
             if (!rate.allowed) {
                 outgoing.setHeader('retry-after', rate.retryAfterSeconds);

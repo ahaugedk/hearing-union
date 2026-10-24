@@ -12,9 +12,10 @@ function installPage(address?: string): string {
 }
 export function renderPublicPage(path: string, config: PublicPageConfig = {}): string | null {
   if (path === '/' || path === '/purpose') return installPage(config.chatGPTAppUrl);
+  if (path !== '/privacy' && path !== '/terms' && path !== '/support') return null;
   const publisher = config.publisherName?.trim();
   let support: string | undefined;
-  const supportAddress = config.supportUrl ?? 'mailto:mail@hoereforeningen.dk';
+  const supportAddress = config.supportUrl;
   if (supportAddress) {
     if (/[\r\n]/.test(supportAddress)) throw new Error('Invalid support address');
     const url = new URL(supportAddress);

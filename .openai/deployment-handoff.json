@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "status": "deployed",
+  "status": "ready",
   "source": {
-    "branch": "integration/verified-release-brand",
-    "commit": "fa7c170bc682a3b0c9f1c6a2f2d126179daece21"
+    "branch": "fix/public-review-routes",
+    "commit": "7f007fd6a7e80f0f5ea9c053f7a42955d6e50259"
   },
   "validation": {
     "result": "passed",
@@ -16,15 +16,12 @@
       "node --import tsx scripts/check-deployment.ts",
       "node --import tsx scripts/pack.ts",
       "node --import tsx scripts/check-package.ts",
-      "npm run check:docs"
+      "python3 scripts/check_okf.py"
     ],
     "notes": [
-      "Root reviewed and integrated PR16/17; the recorded runtime source remains deployed as private Sites version 6. Its validation commands passed.",
-      "PR18 draft review packaging merged after complete root review, independent deterministic/unpacked archive validation, docs check and GitHub CI. It changes no runtime behavior or audience and has not caused another deployment.",
-      "25 curated knowledge nodes imported and published through authenticated native admin tools; all source URLs returned HTTPS 200. Native search/tree/relations and expiry across parent/child reads passed; original content restored and all 25 remain published.",
-      "Native owner test: synthetic lecture publication/search, registration, idempotent repeated registration, persisted readback and unregister passed. Fixture cancelled, no active test registration remains; personal preferences unchanged. Aggregate usage read succeeded.",
-      "Canonical event source/filter discovery and authenticated empty queue drain succeeded. Existing hourly coordination prompt includes one bounded drain; actual callback, notification receipt and later retry are unverified. No new automation or subscription was created.",
-      "HU-Q02 activation resolved automatically and cancelled by email. HU-Q01 publisher/support remains pending: stored thread contains only its known outbound message. Multiple real users, preferences/deletion, MCP App host, backup/restore and public release acceptance remain open."
+      "Root reviewed full subagent diff and follow-up fix. Routing check tests actual Worker bundle with no DB binding, missing identity, invalid page config, cross-origin/host denial and protected MCP/health/writes. Independent root routing and deterministic/unpacked package checks passed; existing smoke remains passed.",
+      "Root visually inspected generated support page: no unconfirmed contact link. This is local QA; existing private Sites ingress is preserved and live anonymous accessibility is not claimed.",
+      "No DB/schema/manifest/audience change. This bounded private fix is ready; complete MVP acceptance and public submission still have the dependencies in the work queue, including HU-Q01."
     ]
   },
   "database": {
@@ -36,16 +33,12 @@
     ]
   },
   "release_notes": [
-    "Authenticated administrator event retry tool with bounded batch and role checks; no new auth, secret or public endpoint.",
-    "Concrete release completion path and implementation queue cover live content import, full user flows, events/drift, public review material and actual directory installation.",
-    "Remove invented publisher identity from release metadata; preserve canonical Sites plugin and no duplicate wrapper.",
-    "Official source logo/favicon and derived review PNGs prepared as drafts; exact official colors applied. This combined release also includes reviewed PR16 event writer and release completion path."
+    "Serve only existing fixed informational GET routes without opening domain services/database before visitor auth, preparing later public policy access while preserving private Site ingress.",
+    "Protect MCP, health, unknown routes and writes; invalid support configuration cannot alter protected-route auth handling.",
+    "Remove unconfirmed default support email; explicit confirmed configuration is required. Policies/terms remain drafts.",
+    "Includes PR18 verified official icon files in the canonical Sites archive; no duplicate plugin."
   ],
-  "blockers": [
-    "Full acceptance still requires another real normal-user identity for consent/preferences, role/isolation/deletion and capacity concurrency; actual MCP App host interaction is unverified. Owner-only live tests are not complete end-user acceptance.",
-    "Real event subscription/callback, notification receipt, later unattended retry and hosted D1 restore remain unverified. Canonical event discovery and empty drain do not prove delivery.",
-    "Public publisher/data-controller/support identity awaits HU-Q-20261024-01. Public policies, countries, actual recorded demo, normal reviewer access, canonical public submission/review and actual directory install link are incomplete."
-  ],
+  "blockers": [],
   "deployment": {
     "site_version": 6,
     "deployed_commit": "fa7c170bc682a3b0c9f1c6a2f2d126179daece21",

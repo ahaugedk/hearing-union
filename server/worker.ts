@@ -40,17 +40,19 @@ async function handle(request: Request, env: Env, ctx: ExecutionContext): Promis
   if (url.origin !== origin) return json(403,{error:'Forbidden host'});
   const browserOrigin = request.headers.get('origin');
   if (browserOrigin && browserOrigin !== origin) return json(403,{error:'Forbidden origin'});
+  // Only the renderer's fixed informational pages are anonymous. Private Sites
+  // ingress still controls access; no domain service or database is opened here.
+  if (request.method === 'GET') {
+    const page=renderPublicPage(url.pathname,{publisherName:env.PUBLISHER_NAME,supportUrl:env.SUPPORT_URL,chatGPTAppUrl:env.CHATGPT_APP_URL,hosted:true});
+    if(page!==null) return new Response(page,{headers:{'content-type':'text/html; charset=utf-8','content-security-policy':"default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'"}});
+  }
   let authInfo;
   try { authInfo = authenticate(request); }
   catch { return json(401,{error:'Sites authentication required'}); }
-  if (request.method === 'GET') {
-    if (url.pathname === '/health') {
-      const {db}=await services(env);
-      await db.prepare('SELECT revision FROM app_revision WHERE id=1').get();
-      return json(200,{status:'ok',runtime:'cloudflare-workers',storage:'d1'});
-    }
-    const page=renderPublicPage(url.pathname,{publisherName:env.PUBLISHER_NAME,supportUrl:env.SUPPORT_URL,chatGPTAppUrl:env.CHATGPT_APP_URL,hosted:true});
-    if(page!==null) return new Response(page,{headers:{'content-type':'text/html; charset=utf-8','content-security-policy':"default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'"}});
+  if (request.method === 'GET' && url.pathname === '/health') {
+    const {db}=await services(env);
+    await db.prepare('SELECT revision FROM app_revision WHERE id=1').get();
+    return json(200,{status:'ok',runtime:'cloudflare-workers',storage:'d1'});
   }
   if (url.pathname !== '/mcp') return json(404,{error:'Not found'});
   if (request.method !== 'POST') return json(405,{error:'POST required'},{allow:'POST'});
